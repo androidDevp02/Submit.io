@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "269353432767",
+    "firebase_url": "https://autoform-dad3b-default-rtdb.firebaseio.com",
+    "project_id": "autoform-dad3b",
+    "storage_bucket": "autoform-dad3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:269353432767:android:03d5968389dff401d0b80a",
+        "android_client_info": {
+          "package_name": "com.yogeshj.autoform"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "269353432767-6tad1va8spnqfqm533am3rjodfic69eq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.yogeshj.autoform",
+            "certificate_hash": "28bb49147e7962a2e89e12f3db926793cf3bac20"
+          }
+        },
+        {
+          "client_id": "269353432767-nfmhn2datdf9qohmvnmvi9sq969gsf8f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqzBwtYR_fmeAfXtNhOUKI0bUP8m21ZPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "269353432767-nfmhn2datdf9qohmvnmvi9sq969gsf8f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

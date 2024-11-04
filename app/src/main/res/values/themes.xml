@@ -1,8 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.AutoForm" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.AutoForm" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+         <item name="colorPrimary">#094CB3</item>
     </style>
 
     <style name="Theme.AutoForm" parent="Base.Theme.AutoForm" />

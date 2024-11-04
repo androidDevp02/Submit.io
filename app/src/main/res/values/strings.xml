@@ -1,3 +1,28 @@
 <resources>
-    <string name="app_name">AutoForm</string>
+    <string name="app_name">Submit.io</string>
+    <color name="iconColor">#4CAF50</color>
+    <string-array name="gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Others</item>
+    </string-array>
+    <string-array name="status">
+        <item>Live</item>
+        <item>Upcoming</item>
+        <item>Expired</item>
+    </string-array>
+    <string-array name="education_level">
+        <item>School</item>
+        <item>College</item>
+    </string-array>
+    <string-array name="category">
+        <item>Engineering</item>
+        <item>Medical</item>
+        <item>Civil Services</item>
+        <item>Law</item>
+        <item>Design Courses</item>
+        <item>Hotel Management</item>
+        <item>National Defence Academy</item>
+        <item>Indian Statistical Service</item>
+    </string-array>
 </resources>
