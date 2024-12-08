@@ -44,9 +44,7 @@ class UploadFormSignUpAdapter(private var dataList: ArrayList<UploadFormSignUpMo
                             val registeredRef = FirebaseDatabase.getInstance().getReference("UploadFormRegisteredUsers")
                             registeredRef.child(uniqueKey).setValue(dataList[position])
                                 .addOnSuccessListener {
-                                    FirstScreenActivity.auth.currentUser?.let { user ->
-                                        user.sendEmailVerification()
-                                    }
+                                    FirstScreenActivity.auth.currentUser?.sendEmailVerification()
                                     val registrationRef = FirebaseDatabase.getInstance().getReference("UploadFormRegistrationUsers")
                                     registrationRef.child(uniqueKey).removeValue()
                                         .addOnSuccessListener {

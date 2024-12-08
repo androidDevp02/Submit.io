@@ -5,11 +5,14 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
 import android.view.Window
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,6 +33,16 @@ class FieldSelectActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFieldSelectBinding.inflate(layoutInflater)
@@ -38,6 +51,9 @@ class FieldSelectActivity : AppCompatActivity() {
         initLoadingDialog()
 
         FirstScreenActivity.auth = FirebaseAuth.getInstance()
+
+        MobileAds.initialize(this@FieldSelectActivity)
+        handler.post(loadAdRunnable)
 
 //        preSelectField()
 

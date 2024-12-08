@@ -11,8 +11,8 @@ class FormDetails {
     var deadline:String?=null
     var examDescription:String?=null
     var eligibility:String?=null
-    var importantDetails:String?=null
-    var paymentNumber:String?=null
+    private var importantDetails:String?=null
+    private var paymentNumber:String?=null
     var fees:Int=0
     var status:String?=null
 

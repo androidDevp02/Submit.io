@@ -7,10 +7,7 @@ import android.text.InputType
 import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -49,9 +46,9 @@ class ChooseFormActivity : AppCompatActivity() {
             input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
             builder.setView(input)
 
-            builder.setPositiveButton("OK") { dialog, which ->
+            builder.setPositiveButton("OK") { _, _ ->
                 val link = input.text.toString()
-                if (link!=null && link.isNotEmpty()) {
+                if (link.isNotEmpty()) {
                     dbRef.child(FirstScreenActivity.auth.currentUser!!.uid).child(exam!!).child("link").setValue(link)
                         .addOnSuccessListener {
                             Toast.makeText(this, "Link added successfully", Toast.LENGTH_SHORT).show()
@@ -63,7 +60,7 @@ class ChooseFormActivity : AppCompatActivity() {
 
                 }
             }
-            builder.setNegativeButton("Cancel") { dialog, which ->
+            builder.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
             }
 

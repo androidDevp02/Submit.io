@@ -5,11 +5,15 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.Window
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -28,12 +32,25 @@ class UserSignUpActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityUserSignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initLoadingDialog()
+
+        MobileAds.initialize(this@UserSignUpActivity)
+        handler.post(loadAdRunnable)
 
         binding.logo.apply { alpha = 0f; translationY = -50f }
         binding.welcome.apply { alpha = 0f; translationY = -20f }
@@ -42,12 +59,12 @@ class UserSignUpActivity : AppCompatActivity() {
         binding.btnSignUp.apply { alpha = 0f; translationY = 20f }
         binding.btnLogin.apply { alpha = 0f; translationY = 20f }
 
-        startFadeInAndSlideUpAnimation(binding.logo, 300);
-        startFadeInAndSlideUpAnimation(binding.welcome, 500);
-        startFadeInAndSlideUpAnimation(binding.signupText, 700);
-        startFadeInAndSlideUpAnimation(binding.signupCard, 900);
-        startFadeInAndSlideUpAnimation(binding.btnSignUp, 1100);
-        startFadeInAndSlideUpAnimation(binding.btnLogin, 1300);
+        startFadeInAndSlideUpAnimation(binding.logo, 300)
+        startFadeInAndSlideUpAnimation(binding.welcome, 500)
+        startFadeInAndSlideUpAnimation(binding.signupText, 700)
+        startFadeInAndSlideUpAnimation(binding.signupCard, 900)
+        startFadeInAndSlideUpAnimation(binding.btnSignUp, 1100)
+        startFadeInAndSlideUpAnimation(binding.btnLogin, 1300)
 
         FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
@@ -80,6 +97,7 @@ class UserSignUpActivity : AppCompatActivity() {
 
                         FirstScreenActivity.auth.currentUser?.sendEmailVerification()
                             ?.addOnSuccessListener {
+
                                 Toast.makeText(this@UserSignUpActivity,"Please verify your email address before logging in",Toast.LENGTH_LONG).show()
                                 val intent = Intent(this, UserLoginActivity::class.java)
                                 if (baseContext != this@UserSignUpActivity) {
@@ -102,8 +120,8 @@ class UserSignUpActivity : AppCompatActivity() {
     }
 
     private fun startFadeInAndSlideUpAnimation(view: View, delay: Long) {
-        view.setAlpha(0f)
-        view.setTranslationY(50F)
+        view.alpha = 0f
+        view.translationY = 50F
 
 
         view.animate().alpha(1f).translationY(0F).setStartDelay(delay).setDuration(500).setInterpolator(AccelerateDecelerateInterpolator()).start()

@@ -75,7 +75,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/formLogo" />
 
-    <!-- RecyclerView for form details -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/formDetailsRecyclerView"
         android:layout_width="match_parent"
@@ -87,5 +86,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/formTitle"
         tools:listitem="@layout/view_form_rv_item" />
+
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-2095090407853200/8424341037" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

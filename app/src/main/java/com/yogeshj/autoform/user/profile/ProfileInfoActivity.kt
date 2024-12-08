@@ -6,13 +6,15 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Window
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,8 +27,6 @@ import com.yogeshj.autoform.user.HomeScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityProfileInfoBinding
-import com.yogeshj.autoform.uploadForm.ChooseFormActivity
-import com.yogeshj.autoform.uploadForm.FormDetails
 import java.util.Date
 
 
@@ -41,6 +41,16 @@ class ProfileInfoActivity : AppCompatActivity() {
     lateinit var currentUser: User
 
     private lateinit var dialog:Dialog
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -66,6 +76,9 @@ class ProfileInfoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
+
+        MobileAds.initialize(this@ProfileInfoActivity)
+        handler.post(loadAdRunnable)
 
         binding.heading.apply { alpha = 0f; translationY = -20f }
         binding.imageFrame.apply { alpha = 0f; translationY = -20f }

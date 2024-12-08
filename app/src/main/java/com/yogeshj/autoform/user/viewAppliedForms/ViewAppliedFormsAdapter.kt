@@ -9,7 +9,6 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.AppliedFormRvItemBinding
-import com.yogeshj.autoform.uploadForm.YourFormsModel
 
 class ViewAppliedFormsAdapter(private var dataList: ArrayList<ViewAppliedFormsModel>, var context: Context) :
     RecyclerView.Adapter<ViewAppliedFormsAdapter.ViewHolder>() {
@@ -26,7 +25,6 @@ class ViewAppliedFormsAdapter(private var dataList: ArrayList<ViewAppliedFormsMo
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-
         Glide.with(context)
             .load(dataList[position].icon)
             .placeholder(R.drawable.user_icon)

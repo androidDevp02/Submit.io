@@ -1,4 +1,4 @@
-//package com.yogeshj.autoform.CardFormRecyclerView
+package com.yogeshj.autoform.CardFormRecyclerView
 //
 //import android.app.AlertDialog
 //import android.content.Context
@@ -18,7 +18,7 @@
 //import com.yogeshj.autoform.FirstScreenActivity
 //import com.yogeshj.autoform.R
 //import com.yogeshj.autoform.databinding.CardFormRvItemBinding
-//import com.yogeshj.autoform.user.ExamDetailsActivity
+//import com.yogeshj.autoform.user.examApply.ExamDetailsActivity
 //import com.yogeshj.autoform.user.HomeScreenActivity
 //import com.yogeshj.autoform.user.viewAppliedForms.ViewAppliedFormsModel
 //
@@ -166,21 +166,9 @@
 //
 
 
-
-
-
-
-
-
-
-
-
-package com.yogeshj.autoform.CardFormRecyclerView
-
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -188,19 +176,13 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
-import com.yogeshj.autoform.user.ExamDetailsActivity
+import com.yogeshj.autoform.user.examApply.ExamDetailsActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.CardFormRvItemBinding
-import com.yogeshj.autoform.uploadForm.FormDetails
 import com.yogeshj.autoform.uploadForm.ViewLinkRegistered.ViewLinkRegisteredModel
-import com.yogeshj.autoform.uploadForm.viewRegisteredStudents.ViewRegisteredModel
 import com.yogeshj.autoform.user.HomeScreenActivity
-import com.yogeshj.autoform.user.viewAppliedForms.ViewAppliedFormsModel
 
 class CardFormAdapter(private var dataList: ArrayList<CardFormModel>, var context: Context) :
     RecyclerView.Adapter<CardFormAdapter.ViewHolder>() {
@@ -253,7 +235,7 @@ class CardFormAdapter(private var dataList: ArrayList<CardFormModel>, var contex
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("Are you sure you want to mark this form as applied? This action can't be undone!")
 
-                builder.setPositiveButton("Yes") { dialog, which ->
+                builder.setPositiveButton("Yes") { _, _ ->
                     val dbRef = FirebaseDatabase.getInstance().getReference("LinkApplied")
                     dbRef.child(FirstScreenActivity.auth.currentUser!!.uid).child(dataList[position].examName).setValue(
                         ViewLinkRegisteredModel(dataList[position].imageId,dataList[position].examName,dataList[position].examHost)
@@ -264,7 +246,7 @@ class CardFormAdapter(private var dataList: ArrayList<CardFormModel>, var contex
                     intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 }
-                builder.setNegativeButton("Cancel") { dialog, which ->
+                builder.setNegativeButton("Cancel") { dialog, _ ->
                     dialog.cancel()
                 }
                 builder.show()

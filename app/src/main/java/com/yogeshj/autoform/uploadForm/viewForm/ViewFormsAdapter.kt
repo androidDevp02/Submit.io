@@ -2,7 +2,6 @@ package com.yogeshj.autoform.uploadForm.viewForm
 
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.yogeshj.autoform.databinding.ViewFormRvItemBinding

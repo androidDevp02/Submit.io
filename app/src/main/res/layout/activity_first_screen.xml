@@ -15,19 +15,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.3" />
+        app:layout_constraintGuide_percent="0.2" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/app_logo_txt"
+        android:src="@drawable/logo"
+        android:scaleType="centerCrop"
+        android:elevation="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/top_guideline"/>
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Login Type"
+        android:text="@string/select_login_type_txt"
         android:textSize="28sp"
         android:textStyle="bold"
         android:textColor="@android:color/white"
         android:elevation="4dp"
         android:textAlignment="center"
-        app:layout_constraintTop_toTopOf="@id/top_guideline"
+        app:layout_constraintTop_toBottomOf="@id/logo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="16dp"
@@ -61,12 +73,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Login as User"
+                android:text="@string/login_as_user_txt"
                 android:textSize="18sp"
                 android:gravity="center"
                 android:paddingStart="8dp"
                 android:textColor="@android:color/black" />
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -97,12 +110,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Upload a New Form"
+                android:text="@string/upload_a_new_form_txt"
                 android:textSize="18sp"
                 android:paddingStart="8dp"
                 android:textColor="@android:color/black" />
         </LinearLayout>
+
     </androidx.cardview.widget.CardView>
 
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-2095090407853200/8424341037"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

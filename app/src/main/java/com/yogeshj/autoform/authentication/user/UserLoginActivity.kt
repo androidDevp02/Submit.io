@@ -14,6 +14,8 @@ import android.view.Window
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -33,6 +35,15 @@ class UserLoginActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +51,9 @@ class UserLoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
+
+        MobileAds.initialize(this@UserLoginActivity)
+        handler.post(loadAdRunnable)
 
         binding.logo.apply { alpha = 0f; translationY = -50f }
         binding.welcome.apply { alpha = 0f; translationY = -20f }
@@ -55,8 +69,7 @@ class UserLoginActivity : AppCompatActivity() {
         binding.btnLogin.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(800).start()
         binding.btnSignup.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(1000).start()
 
-        FirstScreenActivity.auth = FirebaseAuth.getInstance()
-
+        FirstScreenActivity.auth.signOut()
         binding.btnSignup.setOnClickListener {
             startActivity(Intent(this@UserLoginActivity, UserSignUpActivity::class.java))
             finish()
@@ -70,11 +83,13 @@ class UserLoginActivity : AppCompatActivity() {
             input.inputType=InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             builder.setView(input)
 
-            builder.setPositiveButton("Send Email") { dialog, which ->
+            builder.setPositiveButton("Send Email") { _, _ ->
                 val email = input.text.toString()
                 if(email.isNotEmpty()){
+                    showLoading()
                     FirstScreenActivity.auth.sendPasswordResetEmail(email)
                         .addOnSuccessListener {
+                            hideLoading()
                             Toast.makeText(this@UserLoginActivity,"Please check your email to reset the password.",Toast.LENGTH_LONG).show()
                             binding.forgotPasswordText.visibility = View.GONE
                             Handler(Looper.getMainLooper()).postDelayed({
@@ -82,6 +97,7 @@ class UserLoginActivity : AppCompatActivity() {
                             }, 60000)
                         }
                         .addOnFailureListener {
+                            hideLoading()
                             Toast.makeText(this@UserLoginActivity,"Failed to send email. Please try again later.",Toast.LENGTH_LONG).show()
                         }
 
@@ -91,7 +107,7 @@ class UserLoginActivity : AppCompatActivity() {
                     Toast.makeText(this@UserLoginActivity,"Email cannot be empty",Toast.LENGTH_LONG).show()
                 }
             }
-            builder.setNegativeButton("Cancel") { dialog, which ->
+            builder.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
             }
 
@@ -101,8 +117,8 @@ class UserLoginActivity : AppCompatActivity() {
 
         binding.btnLogin.setOnClickListener {
             showLoading()
-            var email = binding.emailLogin.text.toString()
-            var password = binding.passwordLogin.text.toString()
+            val email = binding.emailLogin.text.toString()
+            val password = binding.passwordLogin.text.toString()
 
 
             if (email.isEmpty() || password.isEmpty()) {
@@ -114,8 +130,8 @@ class UserLoginActivity : AppCompatActivity() {
                 FirstScreenActivity.auth.signOut()
                 FirstScreenActivity.auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener {
+                        hideLoading()
                         if (it.isSuccessful) {
-                            hideLoading()
                             val verification=FirstScreenActivity.auth.currentUser?.isEmailVerified
                             if(verification==true){
                                 startActivity(Intent(this@UserLoginActivity,AdminFirstScreenActivity::class.java))
@@ -132,7 +148,7 @@ class UserLoginActivity : AppCompatActivity() {
                     }
             }else {
 
-
+                showLoading()
                 val db = FirebaseDatabase.getInstance().getReference("Users")
                 db.addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {

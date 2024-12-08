@@ -43,7 +43,6 @@ class FormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
     private lateinit var database: FirebaseDatabase
     private lateinit var storage: FirebaseStorage
     private lateinit var selectedImg:Uri
-    private lateinit var dialog:AlertDialog.Builder
 
     private lateinit var dialog2:Dialog
 
@@ -70,17 +69,17 @@ class FormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
         binding.statusEditText.setAdapter(arrayAdapter2)
     }
 
-    var day=0
-    var month=0
-    var year=0
+    private var day=0
+    private var month=0
+    private var year=0
 
 
 //    companion object{
-        var savedDay=0
-        var savedMonth=0
-        var savedYear=0
+        private var savedDay=0
+        private var savedMonth=0
+        private var savedYear=0
 //    }
-    lateinit var currentEditText:TextInputEditText
+    private lateinit var currentEditText:TextInputEditText
 
     private fun getDateTime(){
         val cal= Calendar.getInstance()
@@ -207,7 +206,7 @@ class FormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
                     input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
                     builder.setView(input)
 
-                    builder.setPositiveButton("OK") { dialog, which ->
+                    builder.setPositiveButton("OK") { _, _ ->
                         val link = input.text.toString()
                         if (link.isNotEmpty()) {
                             showLoading()
@@ -257,7 +256,7 @@ class FormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
                             Toast.makeText(this@FormDetailsActivity,"Link cannot be empty.",Toast.LENGTH_LONG).show()
                         }
                     }
-                    builder.setNegativeButton("Cancel") { dialog, which ->
+                    builder.setNegativeButton("Cancel") { dialog, _ ->
                         hideLoading()
                         dialog.cancel()
                     }
@@ -395,7 +394,7 @@ class FormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
 
         val keysArray = keysList.toTypedArray()
 
-        builder.setItems(keysArray) { dialog, which ->
+        builder.setItems(keysArray) { _, which ->
             val selectedKey = keysArray[which]
             val editText = EditText(this)
             if(selectedKey=="school start year")
@@ -403,7 +402,7 @@ class FormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
             else if(selectedKey=="school end year")
                 editText.setText("from")
             else if(selectedKey=="other")
-                editText.setHint("Enter the detail you want")
+                editText.hint = "Enter the detail you want"
             else
                 editText.setText(selectedKey)
             editText.layoutParams = LinearLayout.LayoutParams(

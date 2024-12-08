@@ -2,8 +2,12 @@ package com.yogeshj.autoform.authentication.uploadForm
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.yogeshj.autoform.authentication.admin.UploadFormSignUpModel
@@ -14,10 +18,23 @@ class UploadFormSignUpDetailsActivity : AppCompatActivity() {
 
     private lateinit var dbRef: DatabaseReference
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityUploadFormSignUpDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        MobileAds.initialize(this@UploadFormSignUpDetailsActivity)
+        handler.post(loadAdRunnable)
 
         binding.btnSubmit.setOnClickListener {
             if(binding.etWebsiteLink.text.toString().isEmpty() || binding.etInstituteName.text.toString().isEmpty() || binding.etHeadName.text.toString().isEmpty()

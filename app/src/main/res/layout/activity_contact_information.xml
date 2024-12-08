@@ -9,7 +9,6 @@
     android:background="@drawable/background_gradient"
     tools:context=".user.profile.ContactInformation">
 
-    <!-- Navigation Bar -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
@@ -47,7 +46,6 @@
             app:layout_constraintVertical_bias="0.5" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!-- Form Fields -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -116,5 +114,16 @@
                 android:textColor="#212121" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-2095090407853200/8424341037" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

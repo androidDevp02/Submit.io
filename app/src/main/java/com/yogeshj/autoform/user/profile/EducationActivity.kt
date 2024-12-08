@@ -4,11 +4,14 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -24,6 +27,16 @@ class EducationActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         val edu=resources.getStringArray(R.array.education_level)
@@ -37,6 +50,9 @@ class EducationActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
+
+        MobileAds.initialize(this@EducationActivity)
+        handler.post(loadAdRunnable)
 
         binding.navBar.apply { alpha = 0f; translationY = -30f }
         binding.linearLayout.apply { alpha = 0f; translationY = 20f }

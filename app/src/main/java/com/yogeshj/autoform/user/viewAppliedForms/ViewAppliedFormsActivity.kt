@@ -4,12 +4,13 @@ import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.Window
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -17,13 +18,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
-import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityViewAppliedFormsBinding
-import com.yogeshj.autoform.uploadForm.FormDetails
 import com.yogeshj.autoform.uploadForm.ViewLinkRegistered.ViewLinkRegisteredModel
-import com.yogeshj.autoform.uploadForm.YourFormsAdapter
-import com.yogeshj.autoform.uploadForm.YourFormsModel
-import com.yogeshj.autoform.uploadForm.viewRegisteredStudents.ViewRegisteredModel
 
 class  ViewAppliedFormsActivity : AppCompatActivity() {
 
@@ -34,11 +30,24 @@ class  ViewAppliedFormsActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityViewAppliedFormsBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initLoadingDialog()
+
+        MobileAds.initialize(this@ViewAppliedFormsActivity)
+        handler.post(loadAdRunnable)
 
         binding.navBar.apply { alpha = 0f; translationY = -30f }
         binding.recyclerForms.apply { alpha = 0f; translationY = 20f }

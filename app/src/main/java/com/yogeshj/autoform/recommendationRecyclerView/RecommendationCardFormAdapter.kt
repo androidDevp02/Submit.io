@@ -1,175 +1,3 @@
-//package com.yogeshj.autoform.recommendationRecyclerView
-//
-//import android.app.AlertDialog
-//import android.content.Context
-//import android.content.Intent
-//import android.view.LayoutInflater
-//import android.view.View
-//import android.view.ViewGroup
-//import android.widget.Toast
-//import androidx.recyclerview.widget.RecyclerView
-//import com.bumptech.glide.Glide
-//import com.bumptech.glide.request.RequestOptions
-//import com.google.firebase.database.DataSnapshot
-//import com.google.firebase.database.DatabaseError
-//import com.google.firebase.database.FirebaseDatabase
-//import com.google.firebase.database.ValueEventListener
-//import com.yogeshj.autoform.FirstScreenActivity
-//import com.yogeshj.autoform.R
-//import com.yogeshj.autoform.databinding.RecommendationCardFormRvItemsBinding
-//import com.yogeshj.autoform.uploadForm.viewRegisteredStudents.ViewRegisteredModel
-//import com.yogeshj.autoform.user.ExamDetailsActivity
-//import com.yogeshj.autoform.user.HomeScreenActivity
-//import com.yogeshj.autoform.user.viewAppliedForms.ViewAppliedFormsModel
-//
-//class RecommendationCardFormAdapter(
-//    private var dataList: ArrayList<RecommendationCardFormModel>,
-//    private val context: Context
-//) : RecyclerView.Adapter<RecommendationCardFormAdapter.ViewHolder>() {
-//
-//    inner class ViewHolder(val binding: RecommendationCardFormRvItemsBinding) : RecyclerView.ViewHolder(binding.root)
-//
-//    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-//        val view = RecommendationCardFormRvItemsBinding.inflate(LayoutInflater.from(context), parent, false)
-//        return ViewHolder(view)
-//    }
-//
-//    override fun getItemCount(): Int = dataList.size
-//
-//    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        val item = dataList[position]
-//        val currentUserId = FirstScreenActivity.auth.currentUser?.uid ?: return
-//
-//        // Fetch application status from Firebase
-//        fetchApplicationStatus(currentUserId, item.examName) { isApplied ->
-//            holder.binding.markAsAppliedButton.apply {
-//                text = if (isApplied) "Applied" else "Mark as Applied"
-//                isEnabled = !isApplied
-//            }
-//        }
-//
-//        // Load image using Glide
-//        Glide.with(context)
-//            .load(item.imageId)
-//            .placeholder(R.drawable.user_icon)
-//            .error(R.drawable.user_icon)
-//            .apply(RequestOptions().centerCrop().circleCrop())
-//            .into(holder.binding.logoImg)
-//
-//        // Bind other text and icons based on item properties
-//        holder.binding.apply {
-//            examHeading.text = item.examName
-//            subHeading.text = item.examHost
-//            deadlineInfo.text = item.deadline
-//            examDateInfo.text = item.examDate
-//            categoryInfo.text = item.category
-//            feesInfo.text = "${item.fees}"
-//
-//            // Configure status-based icons and visibility
-//            when (item.status) {
-//                "Live" -> {
-//                    statusIcon.setImageResource(R.drawable.live_icon)
-//                    statusText.text = "Live"
-//                    tentativeDate.visibility = View.GONE
-//                    tentativeDeadline.visibility = View.GONE
-//                }
-//                "Upcoming" -> {
-//                    statusIcon.setImageResource(R.drawable.upcoming_icon)
-//                    statusText.text = "Upcoming"
-//                    tentativeDate.visibility = View.VISIBLE
-//                    tentativeDeadline.visibility = View.VISIBLE
-//                }
-//                "Expired" -> {
-//                    statusIcon.setImageResource(R.drawable.expired_icon)
-//                    statusText.text = "Expired"
-//                    tentativeDate.visibility = View.GONE
-//                    tentativeDeadline.visibility = View.GONE
-//                }
-//            }
-//
-//            // Set up "Mark as Applied" button behavior
-//            markAsAppliedButton.setOnClickListener {
-//                handleMarkAsApplied(holder, item, currentUserId)
-//            }
-//
-//            // Set up "View Form" button behavior
-//            viewFormButton.setOnClickListener {
-//                openExamDetails(item)
-//            }
-//        }
-//    }
-//
-//    private fun fetchApplicationStatus(userId: String, examName: String, callback: (Boolean) -> Unit) {
-//        val dbRef = FirebaseDatabase.getInstance().getReference("LinkApplied")
-//        dbRef.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val isApplied = snapshot.children.any { it.getValue(ViewRegisteredModel::class.java)?.name == examName }
-//                callback(isApplied)
-//            }
-//            override fun onCancelled(error: DatabaseError) {
-//                callback(false)
-//            }
-//        })
-//    }
-//
-//    private fun handleMarkAsApplied(holder: ViewHolder, item: RecommendationCardFormModel, userId: String) {
-//        val currentStatus = holder.binding.statusText.text.toString()
-//
-//        when {
-//            currentStatus == "Live" && holder.binding.markAsAppliedButton.text == "Mark as Applied" -> {
-//                AlertDialog.Builder(context).apply {
-//                    setTitle("Confirm Application")
-//                    setMessage("Are you sure you want to mark this form as applied? This action can't be undone!")
-//                    setPositiveButton("Yes") { _, _ ->
-//                        markFormAsApplied(item, userId)
-//                        holder.binding.markAsAppliedButton.text = "Applied"
-//                        holder.binding.markAsAppliedButton.isEnabled = false
-//
-//                        // Refresh HomeScreenActivity after marking applied
-//                        context.startActivity(Intent(context, HomeScreenActivity::class.java).apply {
-//                            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//                        })
-//                    }
-//                    setNegativeButton("Cancel") { dialog, _ -> dialog.dismiss() }
-//                    show()
-//                }
-//            }
-//            holder.binding.markAsAppliedButton.text != "Mark as Applied" -> {
-//                Toast.makeText(context, "The form is already marked as applied!", Toast.LENGTH_LONG).show()
-//            }
-//            else -> {
-//                Toast.makeText(context, "Please wait for the form to come live!", Toast.LENGTH_LONG).show()
-//            }
-//        }
-//    }
-//
-//    private fun markFormAsApplied(item: RecommendationCardFormModel, userId: String) {
-//        val dbRef = FirebaseDatabase.getInstance().getReference("LinkApplied")
-//        dbRef.child(userId).child(item.examName).setValue(
-//            ViewAppliedFormsModel(item.imageId, item.examName, item.examHost)
-//        )
-//    }
-//
-//    private fun openExamDetails(item: RecommendationCardFormModel) {
-//        val intent = Intent(context, ExamDetailsActivity::class.java).apply {
-//            putExtra("heading", item.examName)
-//            putExtra("subheading", item.examHost)
-//            putExtra("registered", item.registered)
-//            putExtra("fees", item.fees)
-//            flags = Intent.FLAG_ACTIVITY_NEW_TASK
-//        }
-//        context.startActivity(intent)
-//    }
-//}
-
-
-
-
-
-
-
-
-
 package com.yogeshj.autoform.recommendationRecyclerView
 
 import android.app.AlertDialog
@@ -182,18 +10,13 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
-import com.yogeshj.autoform.user.ExamDetailsActivity
+import com.yogeshj.autoform.user.examApply.ExamDetailsActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.RecommendationCardFormRvItemsBinding
 import com.yogeshj.autoform.uploadForm.ViewLinkRegistered.ViewLinkRegisteredModel
-import com.yogeshj.autoform.uploadForm.viewRegisteredStudents.ViewRegisteredModel
 import com.yogeshj.autoform.user.HomeScreenActivity
-import com.yogeshj.autoform.user.viewAppliedForms.ViewAppliedFormsModel
 
 class RecommendationCardFormAdapter(private var dataList: ArrayList<RecommendationCardFormModel>, var context: Context) :
     RecyclerView.Adapter<RecommendationCardFormAdapter.ViewHolder>() {
@@ -264,7 +87,7 @@ class RecommendationCardFormAdapter(private var dataList: ArrayList<Recommendati
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("Are you sure you want to mark this form as applied? This action can't be undone!")
 
-                builder.setPositiveButton("Yes") { dialog, which ->
+                builder.setPositiveButton("Yes") { _, _ ->
                     val dbRef = FirebaseDatabase.getInstance().getReference("LinkApplied")
                     dbRef.child(FirstScreenActivity.auth.currentUser!!.uid).child(dataList[position].examName).setValue(
                         ViewLinkRegisteredModel(dataList[position].imageId,dataList[position].examName,dataList[position].examHost)
@@ -275,7 +98,7 @@ class RecommendationCardFormAdapter(private var dataList: ArrayList<Recommendati
                     intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 }
-                builder.setNegativeButton("Cancel") { dialog, which ->
+                builder.setNegativeButton("Cancel") { dialog, _ ->
                     dialog.cancel()
                 }
                 builder.show()

@@ -1,25 +1,25 @@
 package com.yogeshj.autoform.uploadForm.viewForm
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.yogeshj.autoform.CardFormRecyclerView.CardFormAdapter
-import com.yogeshj.autoform.CardFormRecyclerView.CardFormModel
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityViewFormsBinding
-import com.yogeshj.autoform.recommendationRecyclerView.RecommendationCardFormAdapter
-import com.yogeshj.autoform.recommendationRecyclerView.RecommendationCardFormModel
 import com.yogeshj.autoform.uploadForm.FormDetails
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class ViewFormsActivity : AppCompatActivity() {
 
@@ -28,10 +28,28 @@ class ViewFormsActivity : AppCompatActivity() {
     lateinit var myAdapter: ViewFormsAdapter
     lateinit var dataList: ArrayList<ViewFormModel>
 
+    private lateinit var dialog: Dialog
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityViewFormsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initLoadingDialog()
+        showLoading()
+
+        MobileAds.initialize(this@ViewFormsActivity)
+        handler.post(loadAdRunnable)
 
         binding.back.setOnClickListener{
             finish()
@@ -84,9 +102,31 @@ class ViewFormsActivity : AppCompatActivity() {
                     }
 
                 }
+                hideLoading()
             }
             override fun onCancelled(error: DatabaseError) {
+                hideLoading()
             }
         })
+    }
+
+    private fun initLoadingDialog() {
+        dialog = Dialog(this@ViewFormsActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_wait)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    private fun showLoading() {
+        if (!dialog.isShowing) {
+            dialog.show()
+        }
+    }
+
+    private fun hideLoading() {
+        if (dialog.isShowing) {
+            dialog.dismiss()
+        }
     }
 }

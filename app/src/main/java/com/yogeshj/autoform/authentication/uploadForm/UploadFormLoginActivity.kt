@@ -14,6 +14,8 @@ import android.view.Window
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +27,6 @@ import com.yogeshj.autoform.R
 import com.yogeshj.autoform.uploadForm.FormDetailsActivity
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityUploadFormLoginBinding
-import com.yogeshj.autoform.user.FieldSelectActivity
 
 class UploadFormLoginActivity : AppCompatActivity() {
 
@@ -33,12 +34,25 @@ class UploadFormLoginActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityUploadFormLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initLoadingDialog()
+
+        MobileAds.initialize(this@UploadFormLoginActivity)
+        handler.post(loadAdRunnable)
 
         binding.logo.apply { alpha = 0f; translationY = -50f }
         binding.welcome.apply { alpha = 0f; translationY = -20f }
@@ -54,7 +68,7 @@ class UploadFormLoginActivity : AppCompatActivity() {
         binding.btnLogin.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(800).start()
         binding.btnSignup.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(1000).start()
 
-        FirstScreenActivity.auth = FirebaseAuth.getInstance()
+        FirstScreenActivity.auth.signOut()
 
         binding.forgotPasswordText.setOnClickListener {
             val builder = AlertDialog.Builder(this@UploadFormLoginActivity)
@@ -64,7 +78,7 @@ class UploadFormLoginActivity : AppCompatActivity() {
             input.inputType= InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             builder.setView(input)
 
-            builder.setPositiveButton("Send Email") { dialog, which ->
+            builder.setPositiveButton("Send Email") { _, _ ->
                 val email = input.text.toString()
                 if(email.isNotEmpty()){
                     FirstScreenActivity.auth.sendPasswordResetEmail(email)
@@ -85,7 +99,7 @@ class UploadFormLoginActivity : AppCompatActivity() {
                     Toast.makeText(this@UploadFormLoginActivity,"Email cannot be empty",Toast.LENGTH_LONG).show()
                 }
             }
-            builder.setNegativeButton("Cancel") { dialog, which ->
+            builder.setNegativeButton("Cancel") { dialog, _ ->
                 dialog.cancel()
             }
 

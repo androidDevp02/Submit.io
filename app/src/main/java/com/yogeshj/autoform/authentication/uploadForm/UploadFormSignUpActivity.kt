@@ -17,7 +17,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.authentication.User
-import com.yogeshj.autoform.authentication.user.UserLoginActivity
 import com.yogeshj.autoform.databinding.ActivityUploadFormSignUpBinding
 
 class UploadFormSignUpActivity : AppCompatActivity() {
@@ -41,12 +40,12 @@ class UploadFormSignUpActivity : AppCompatActivity() {
         binding.btnSignUp.apply { alpha = 0f; translationY = 20f }
         binding.btnLogin.apply { alpha = 0f; translationY = 20f }
 
-        startFadeInAndSlideUpAnimation(binding.logo, 300);
-        startFadeInAndSlideUpAnimation(binding.welcome, 500);
-        startFadeInAndSlideUpAnimation(binding.signupText, 700);
-        startFadeInAndSlideUpAnimation(binding.signupCard, 900);
-        startFadeInAndSlideUpAnimation(binding.btnSignUp, 1100);
-        startFadeInAndSlideUpAnimation(binding.btnLogin, 1300);
+        startFadeInAndSlideUpAnimation(binding.logo, 300)
+        startFadeInAndSlideUpAnimation(binding.welcome, 500)
+        startFadeInAndSlideUpAnimation(binding.signupText, 700)
+        startFadeInAndSlideUpAnimation(binding.signupCard, 900)
+        startFadeInAndSlideUpAnimation(binding.btnSignUp, 1100)
+        startFadeInAndSlideUpAnimation(binding.btnLogin, 1300)
 
         FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
@@ -67,18 +66,15 @@ class UploadFormSignUpActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
             FirstScreenActivity.auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task->
                     if (task.isSuccessful) {
-
                         addUserToDatabase(name, email, FirstScreenActivity.auth.currentUser!!.uid)
-
                         FirstScreenActivity.auth.currentUser?.sendEmailVerification()
                             ?.addOnSuccessListener {
                                 Toast.makeText(this@UploadFormSignUpActivity,"Please verify your email address before logging in",Toast.LENGTH_LONG).show()
 
-                                val intent = Intent(this, UploadFormLoginActivity::class.java)
+                                val intent = Intent(this,UploadFormLoginActivity::class.java)
                                 if (baseContext != this@UploadFormSignUpActivity) {
                                     finish()
                                 }
@@ -100,13 +96,13 @@ class UploadFormSignUpActivity : AppCompatActivity() {
     }
 
     private fun startFadeInAndSlideUpAnimation(view: View, delay: Long) {
-        view.setAlpha(0f)
-        view.setTranslationY(50F)
+        view.alpha = 0f
+        view.translationY = 50f
 
 
         view.animate()
             .alpha(1f)
-            .translationY(0F)
+            .translationY(0f)
             .setStartDelay(delay)
             .setDuration(500)
             .setInterpolator(AccelerateDecelerateInterpolator())

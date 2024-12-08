@@ -9,9 +9,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/textViewWait"
         android:layout_centerHorizontal="true"
-        android:text="Please Wait..."
+        android:text="@string/please_wait_txt"
         android:textColor="@color/black"
-        android:textSize="10dp"/>
+        android:textSize="20sp"/>
 
     <com.jpardogo.android.googleprogressbar.library.GoogleProgressBar
         android:layout_width="50dp"

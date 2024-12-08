@@ -5,6 +5,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -19,11 +22,13 @@ import com.yogeshj.autoform.authentication.user.UserLoginActivity
 import com.yogeshj.autoform.databinding.ActivityFirstScreenBinding
 import com.yogeshj.autoform.uploadForm.FormDetailsActivity
 import com.yogeshj.autoform.user.HomeScreenActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 //Admin@123
+//5267 3181 8797 5449
 
 
 //notification
-//Add integration
 
 class FirstScreenActivity : AppCompatActivity() {
     private lateinit var binding:ActivityFirstScreenBinding
@@ -33,10 +38,23 @@ class FirstScreenActivity : AppCompatActivity() {
         lateinit var auth: FirebaseAuth
     }
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityFirstScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        MobileAds.initialize(this) {}
+        handler.post(loadAdRunnable)
 
         binding.title.apply { alpha = 0f; translationY = -30f }
         binding.loginAsUserCard.apply { alpha = 0f; translationX = -30f }
@@ -56,6 +74,7 @@ class FirstScreenActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         if(currentUser!=null)
         {
+            //go to users/admin page if already logged in
             val db = FirebaseDatabase.getInstance().getReference("Users")
             db.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -79,6 +98,8 @@ class FirstScreenActivity : AppCompatActivity() {
 
                 }
             })
+
+            //go to upload form page if already logged in
             val db2 = FirebaseDatabase.getInstance().getReference("UploadFormUsers")
             db2.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -110,11 +131,6 @@ class FirstScreenActivity : AppCompatActivity() {
             finish()
         }
 
-//        binding.loginAsAdmin.setOnClickListener {
-//            startActivity(Intent(this@FirstScreenActivity,AdminLoginActivity::class.java))
-//            finish()
-//        }
-
         binding.loginAsUploadformCard.setOnClickListener {
             startActivity(Intent(this@FirstScreenActivity,UploadFormLoginActivity::class.java))
             finish()
@@ -131,6 +147,7 @@ class FirstScreenActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.visibility = View.INVISIBLE
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -139,6 +156,7 @@ class FirstScreenActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.visibility = View.VISIBLE
         }
     }
 }

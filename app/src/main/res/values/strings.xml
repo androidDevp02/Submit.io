@@ -1,5 +1,32 @@
 <resources>
     <string name="app_name">Submit.io</string>
+    <string name="save_txt">Save</string>
+    <string name="logout_button_txt">Logout Button</string>
+    <string name="welcome_back_admin_txt">Welcome Back, Admin</string>
+    <string name="back_txt">Back</string>
+    <string name="applied_exams_txt">Applied Exams</string>
+    <string name="awards_and_achievements_txt">Awards and Achievements</string>
+    <string name="title_txt">Title</string>
+    <string name="issuer_txt">Issuer</string>
+    <string name="awarded_date_txt">Awarded Date</string>
+    <string name="education_level_txt">Education Level</string>
+    <string name="course_txt">Course</string>
+    <string name="college_school_txt">College/School</string>
+    <string name="from_txt">From</string>
+    <string name="to_txt">To</string>
+    <string name="percentage_cgpa_txt">Percentage/CGPA</string>
+    <string name="education_txt">Education</string>
+    <string name="user_name_txt">User Name</string>
+    <string name="welcome_txt">Welcome,</string>
+    <string name="search_for_a_exam_txt">Search for an exam</string>
+    <string name="recommended_forms_txt">Recommended Forms</string>
+    <string name="view_applied_forms_txt">View Applied Forms</string>
+    <string name="view_profile_txt">View Profile</string>
+    <string name="please_wait_txt">Please Wait...</string>
+    <string name="app_logo_txt">App logo</string>
+    <string name="select_login_type_txt">Select Login Type</string>
+    <string name="login_as_user_txt">Login as User</string>
+    <string name="upload_a_new_form_txt">Upload a New Form</string>
     <color name="iconColor">#4CAF50</color>
     <string-array name="gender">
         <item>Male</item>

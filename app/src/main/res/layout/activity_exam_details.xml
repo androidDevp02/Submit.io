@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     android:padding="16dp"
-    tools:context=".user.ExamDetailsActivity">
+    tools:context=".user.examApply.ExamDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_bar"
@@ -213,6 +213,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btn_layout"
             android:text="Exam Description"
+            android:textSize="12sp"
             app:layout_constraintEnd_toStartOf="@id/eligibility_btn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -243,6 +244,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/btn_layout"
             android:text="Eligibility"
+            android:textSize="12sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/exam_description_btn"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -275,26 +277,62 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:textStyle="bold"
         android:text="Apply"
         android:textSize="24sp"/>
 
+<!--    <Button-->
+<!--        android:id="@+id/apply_btn"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:text="Apply"-->
+<!--        android:textSize="16sp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/adView"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/view_website_btn"/>-->
+
+<!--    <Button-->
+<!--        android:id="@+id/view_website_btn"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="16dp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:text="View Website"-->
+<!--        android:textSize="16sp"-->
+<!--        android:layout_marginStart="2dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/adView"-->
+<!--        app:layout_constraintStart_toEndOf="@id/apply_btn"-->
+<!--        app:layout_constraintEnd_toEndOf="parent" />-->
+
+
     <Button
         android:id="@+id/applied_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/adView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:visibility="gone"
         android:text="Applied"
         android:textStyle="bold"
         android:textSize="24sp"/>
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-2095090407853200/8424341037" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

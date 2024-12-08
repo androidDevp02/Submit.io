@@ -1,14 +1,23 @@
 package com.yogeshj.autoform.uploadForm.viewRegisteredStudents
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
+import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
+import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityViewRegisteredBinding
 
 class ViewRegisteredActivity : AppCompatActivity() {
@@ -20,10 +29,29 @@ class ViewRegisteredActivity : AppCompatActivity() {
 
     private var examName:String?=null
 
+    private lateinit var dialog:Dialog
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityViewRegisteredBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initLoadingDialog()
+
+        MobileAds.initialize(this@ViewRegisteredActivity)
+        handler.post(loadAdRunnable)
+
+
         adapter = ViewRegisteredAdapter(datalist, this)
         binding.studentsRecyclerView.layoutManager = LinearLayoutManager(this)
         binding.studentsRecyclerView.adapter = adapter
@@ -38,11 +66,13 @@ class ViewRegisteredActivity : AppCompatActivity() {
 
     }
     private fun fetchRegisteredStudents() {
-        val currentUserId = FirstScreenActivity.auth.currentUser?.uid ?: return
+        showLoading()
+//        val currentUserId = FirstScreenActivity.auth.currentUser?.uid ?: return
         val databaseReference = FirebaseDatabase.getInstance().getReference("Payment")
 
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                datalist.clear()
                 for (paymentSnapshot in snapshot.children) {
                     val examNameDb = paymentSnapshot.child("examName").value as? String
                     if (examNameDb == examName) {
@@ -63,11 +93,33 @@ class ViewRegisteredActivity : AppCompatActivity() {
                 }
                 adapter.notifyDataSetChanged()
                 binding.registered.text="Registered: ${datalist.size}"
+                hideLoading()
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("FirebaseError", "Failed to retrieve data: ${error.message}")
+                hideLoading()
             }
         })
+    }
+
+    private fun initLoadingDialog() {
+        dialog = Dialog(this@ViewRegisteredActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_wait)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    private fun showLoading() {
+        if (!dialog.isShowing) {
+            dialog.show()
+        }
+    }
+
+    private fun hideLoading() {
+        if (dialog.isShowing) {
+            dialog.dismiss()
+        }
     }
 }

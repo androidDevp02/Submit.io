@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     android:padding="16dp"
-    tools:context=".user.ReviewDataActivity">
+    tools:context=".user.examApply.ReviewDataActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_bar"

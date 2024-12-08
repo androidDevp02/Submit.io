@@ -6,12 +6,16 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,8 +34,10 @@ import com.yogeshj.autoform.user.profile.UpdateProfileActivity
 import com.yogeshj.autoform.recommendationRecyclerView.RecommendationCardFormAdapter
 import com.yogeshj.autoform.recommendationRecyclerView.RecommendationCardFormModel
 import com.yogeshj.autoform.uploadForm.FormDetails
+import com.yogeshj.autoform.user.searchForms.SearchActivity
+import com.yogeshj.autoform.user.subscription.SubscriptionActivity
+import com.yogeshj.autoform.user.subscription.SubscriptionPaymentModel
 import com.yogeshj.autoform.user.viewAppliedForms.ViewAppliedFormsActivity
-import com.yogeshj.autoform.user.viewAppliedForms.ViewAppliedFormsModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -65,6 +71,15 @@ class HomeScreenActivity : AppCompatActivity() {
 //
 //    }
 
+    private val handler = Handler(Looper.getMainLooper())
+    private val adInterval = 31_000L
+    private val loadAdRunnable = object : Runnable {
+        override fun run() {
+            val adRequest = AdRequest.Builder().build()
+            binding.adView.loadAd(adRequest)
+            handler.postDelayed(this, adInterval)
+        }
+    }
 
 
 
@@ -73,14 +88,48 @@ class HomeScreenActivity : AppCompatActivity() {
         binding=ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
         initLoadingDialog()
-        FirstScreenActivity.auth =FirebaseAuth.getInstance()
+        FirstScreenActivity.auth=FirebaseAuth.getInstance()
         initializeUIAnimations()
         setupEventListeners()
         showLoading()
+
+        MobileAds.initialize(this@HomeScreenActivity)
+        handler.post(loadAdRunnable)
+
+        val dbRef = FirebaseDatabase.getInstance().getReference("SubscriptionPayment")
+        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                appliedFormNames.clear()
+                if (snapshot.exists()) {
+                    for (snap in snapshot.children) {
+                        val subscriptionDetails = snap.getValue(SubscriptionPaymentModel::class.java)
+                        if (subscriptionDetails?.userId == FirstScreenActivity.auth.currentUser?.uid) {
+                            val endDate = subscriptionDetails?.endDate
+
+                            if (endDate != null && System.currentTimeMillis() > endDate) {
+                                // Subscription expired
+                                binding.subscribe.text = "Subscribe"
+                                snap.ref.removeValue()
+                            }
+                            else
+                                binding.subscribe.text="Premium Member"
+                            break
+                        }
+                    }
+                }
+                hideLoading()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                hideLoading()
+            }
+        })
+
         fetchAppliedForms {
             setRecyclerViewRecommendation()
             setRecyclerViewCategory()
             setRecyclerView()
+            hideLoading()
         }
     }
 
@@ -108,6 +157,16 @@ class HomeScreenActivity : AppCompatActivity() {
     }
 
     private fun setupEventListeners() {
+
+        binding.subscribe.setOnClickListener {
+            if(binding.subscribe.text=="Subscribe")
+                startActivity(Intent(this@HomeScreenActivity, SubscriptionActivity::class.java))
+        }
+
+        binding.recommendationSeeAll.setOnClickListener {
+            startActivity(Intent(this@HomeScreenActivity,RecommendationSeeAllActivity::class.java))
+        }
+
         binding.viewForms.setOnClickListener {
             startActivity(Intent(this@HomeScreenActivity,ViewAppliedFormsActivity::class.java))
         }
@@ -131,6 +190,7 @@ class HomeScreenActivity : AppCompatActivity() {
     }
 
     private fun fetchAppliedForms(onComplete: () -> Unit) {
+        showLoading()
         val dbRef = FirebaseDatabase.getInstance().getReference("LinkApplied")
         dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -236,7 +296,7 @@ class HomeScreenActivity : AppCompatActivity() {
                                             continue
                                     if(appliedFormNames.contains(currentUser.examName))
                                         continue
-                                    dataListRecommendation.add(RecommendationCardFormModel(currentUser.icon!!, currentUser.examName?:"No exam name",currentUser.examHostName?:"No host name",currentUser.deadline?:"DD/MM/YYYY",currentUser.examDate?:"DD/MM/YYYY",0,currentUser.fees?:0,currentUser.category!!,currentUser.status!!))
+                                    dataListRecommendation.add(RecommendationCardFormModel(currentUser.icon!!, currentUser.examName?:"No exam name",currentUser.examHostName?:"No host name",currentUser.deadline?:"DD/MM/YYYY",currentUser.examDate?:"DD/MM/YYYY",0,currentUser.fees,currentUser.category!!,currentUser.status!!))
                                 }
                             }
                         }
@@ -277,7 +337,7 @@ class HomeScreenActivity : AppCompatActivity() {
                                     if(currentExam.status=="Live" || currentExam.status=="Upcoming"){
                                         examSnap.ref.child("status").setValue("Expired")
                                     }
-                                    dataList.add(CardFormModel(currentExam.icon!!, currentExam.examName?:"No exam name",currentExam.examHostName?:"No host name",currentExam.deadline?:"DD/MM/YYYY",currentExam.examDate?:"DD/MM/YYYY",0,currentExam.fees?:0,currentExam.category!!,currentExam.status!!))
+                                    dataList.add(CardFormModel(currentExam.icon!!, currentExam.examName?:"No exam name",currentExam.examHostName?:"No host name",currentExam.deadline?:"DD/MM/YYYY",currentExam.examDate?:"DD/MM/YYYY",0,currentExam.fees,currentExam.category!!,currentExam.status!!))
                                     continue
                                 }
 
@@ -285,7 +345,7 @@ class HomeScreenActivity : AppCompatActivity() {
 //                                        tempDataList.add(CardFormModel(currentExam.icon!!, currentExam.examName?:"No exam name",currentExam.examHostName?:"No host name",currentExam.deadline?:"DD/MM/YYYY",currentExam.examDate?:"DD/MM/YYYY",0,currentExam.fees?:0,currentExam.category!!,currentExam.status?:"Not Set"))
                                     continue
                                 }
-                                    dataList.add(CardFormModel(currentExam.icon!!, currentExam.examName?:"No exam name",currentExam.examHostName?:"No host name",currentExam.deadline?:"DD/MM/YYYY",currentExam.examDate?:"DD/MM/YYYY",0,currentExam.fees?:0,currentExam.category!!,currentExam.status?:"Not Set"))
+                                    dataList.add(CardFormModel(currentExam.icon!!, currentExam.examName?:"No exam name",currentExam.examHostName?:"No host name",currentExam.deadline?:"DD/MM/YYYY",currentExam.examDate?:"DD/MM/YYYY",0,currentExam.fees,currentExam.category!!,currentExam.status?:"Not Set"))
                             }
                         }
 
