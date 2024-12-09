@@ -1,39 +1,39 @@
-//package com.yogeshj.autoform
-//
+package com.yogeshj.autoform
+
 //import android.content.Intent
-//import android.os.Bundle
+import android.os.Bundle
 //import android.os.Handler
 //import android.os.Looper
 //import android.text.Editable
 //import android.text.TextWatcher
 //import android.view.View
 //import android.widget.Toast
-//import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 //import com.google.firebase.FirebaseException
 //import com.google.firebase.FirebaseTooManyRequestsException
-//import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuth
 //import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 //import com.google.firebase.auth.FirebaseAuthMissingActivityForRecaptchaException
 //import com.google.firebase.auth.PhoneAuthCredential
 //import com.google.firebase.auth.PhoneAuthOptions
 //import com.google.firebase.auth.PhoneAuthProvider
-//import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
-//import com.yogeshj.autoform.databinding.ActivityOtpBinding
+import com.google.firebase.auth.PhoneAuthProvider.ForceResendingToken
+import com.yogeshj.autoform.databinding.ActivityOtpBinding
 //import java.util.concurrent.TimeUnit
-//
-//class OtpActivity : AppCompatActivity() {
-//
-//    private lateinit var binding:ActivityOtpBinding
-//
-//    private lateinit var auth: FirebaseAuth
-//    private lateinit var otp:String
-//    private lateinit var resendToken: ForceResendingToken
-//    private lateinit var phoneNumber:String
-//
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        binding=ActivityOtpBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
+
+class OtpActivity : AppCompatActivity() {
+
+    private lateinit var binding:ActivityOtpBinding
+
+    private lateinit var auth: FirebaseAuth
+    private lateinit var otp:String
+    private lateinit var resendToken: ForceResendingToken
+    private lateinit var phoneNumber:String
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding=ActivityOtpBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 //
 //        otp=intent.getStringExtra("OTP").toString()
 //        resendToken=intent.getParcelableExtra("resendToken")!!
@@ -193,5 +193,5 @@
 //            }
 //        }
 //
-//    }
-//}
+    }
+}

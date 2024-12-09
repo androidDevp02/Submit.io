@@ -1,13 +1,13 @@
-//package com.yogeshj.autoform
-//
+package com.yogeshj.autoform
+
 //import android.content.ContentValues.TAG
 //import android.content.Intent
-//import android.os.Bundle
+import android.os.Bundle
 //import android.util.Log
 //import android.view.View
 //import android.widget.Toast
 //import androidx.activity.enableEdgeToEdge
-//import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 //import androidx.core.view.ViewCompat
 //import androidx.core.view.WindowInsetsCompat
 //import com.google.firebase.FirebaseException
@@ -18,20 +18,20 @@
 //import com.google.firebase.auth.PhoneAuthCredential
 //import com.google.firebase.auth.PhoneAuthOptions
 //import com.google.firebase.auth.PhoneAuthProvider
-//import com.yogeshj.autoform.databinding.ActivityPhoneBinding
+import com.yogeshj.autoform.databinding.ActivityPhoneBinding
 //import java.util.concurrent.TimeUnit
 //
-//class PhoneActivity : AppCompatActivity() {
-//    private lateinit var binding:ActivityPhoneBinding
+class PhoneActivity : AppCompatActivity() {
+    private lateinit var binding:ActivityPhoneBinding
 //
 //    private lateinit var auth:FirebaseAuth
 //
 //    private lateinit var number:String
 //
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        binding=ActivityPhoneBinding.inflate(layoutInflater)
-//        setContentView(binding.root)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding=ActivityPhoneBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 //        auth= FirebaseAuth.getInstance()
 //        binding.phoneProgressBar.visibility=View.INVISIBLE
 //        binding.sendOTPBtn.setOnClickListener {
@@ -124,5 +124,5 @@
 //                    // Update UI
 //                }
 //            }
-//    }
-//}
+    }
+}

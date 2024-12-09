@@ -15,6 +15,13 @@
         android:theme="@style/Base.Theme.AutoForm"
         tools:targetApi="31">
         <activity
+            android:name=".otpCode.TempActivity"
+            android:exported="false" />
+        <activity
+            android:name=".otpCode.OtpVerifyActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".user.subscription.SubscriptionActivity"
             android:exported="false" />
         <activity
@@ -71,21 +78,21 @@
         <activity
             android:name=".authentication.uploadForm.UploadFormLoginActivity"
             android:exported="false" />
-        <activity
-            android:name=".authentication.admin.AdminSignUpActivity"
-            android:exported="false" />
-        <activity
-            android:name=".authentication.admin.AdminLoginActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".authentication.admin.AdminSignUpActivity"-->
+<!--            android:exported="false" />-->
+<!--        <activity-->
+<!--            android:name=".authentication.admin.AdminLoginActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".authentication.user.UserSignUpActivity"
             android:exported="false" />
         <activity
             android:name=".authentication.user.UserLoginActivity"
             android:exported="false" />
-        <activity
-            android:name=".AppliedFormsActivity"
-            android:exported="false" />
+<!--        <activity-->
+<!--            android:name=".AppliedFormsActivity"-->
+<!--            android:exported="false" />-->
         <activity
             android:name=".user.examApply.ReviewDataActivity"
             android:exported="false"
@@ -119,6 +126,9 @@
             android:exported="false" />
         <activity
             android:name=".SplashScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".otpCode.MobileNumberActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -126,9 +136,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
+
+<!--        <activity-->
+<!--            android:name=".MainActivity"-->
+<!--            android:exported="false" />-->
 
         <meta-data
             android:name="com.razorpay.ApiKey"
