@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Users"
+        android:id="@+id/users"
+        android:icon="@drawable/user_icon"/>
+    <item android:title="Requests"
+        android:id="@+id/requests"
+        android:icon="@drawable/create_account"/>
+    <item android:title="Forms"
+        android:id="@+id/forms"
+        android:icon="@drawable/ic_form"/>
+</menu>

@@ -15,29 +15,26 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.MobileAds
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.yogeshj.autoform.CardFormRecyclerView.CardFormAdapter
-import com.yogeshj.autoform.CardFormRecyclerView.CardFormModel
+import com.yogeshj.autoform.user.userFormFragment.CardFormRecyclerView.CardFormAdapter
+import com.yogeshj.autoform.user.userFormFragment.CardFormRecyclerView.CardFormModel
 import com.yogeshj.autoform.FirstScreenActivity
-import com.yogeshj.autoform.IntroActivity
+import com.yogeshj.autoform.splashScreenAndIntroScreen.IntroActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.authentication.User
-import com.yogeshj.autoform.categoriesRecyclerView.CategoriesAdapter
-import com.yogeshj.autoform.categoriesRecyclerView.CategoriesModel
+import com.yogeshj.autoform.user.userFormFragment.categoriesRecyclerView.CategoriesAdapter
+import com.yogeshj.autoform.user.userFormFragment.categoriesRecyclerView.CategoriesModel
 import com.yogeshj.autoform.databinding.ActivityHomeScreenBinding
-import com.yogeshj.autoform.user.profile.UpdateProfileActivity
-import com.yogeshj.autoform.recommendationRecyclerView.RecommendationCardFormAdapter
-import com.yogeshj.autoform.recommendationRecyclerView.RecommendationCardFormModel
+import com.yogeshj.autoform.user.userFormFragment.profile.UpdateProfileActivity
+import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.RecommendationCardFormAdapter
+import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.RecommendationCardFormModel
 import com.yogeshj.autoform.uploadForm.FormDetails
-import com.yogeshj.autoform.user.searchForms.SearchActivity
-import com.yogeshj.autoform.user.subscription.SubscriptionActivity
-import com.yogeshj.autoform.user.subscription.SubscriptionPaymentModel
-import com.yogeshj.autoform.user.viewAppliedForms.ViewAppliedFormsActivity
+import com.yogeshj.autoform.user.userFormFragment.RecommendationSeeAllActivity
+import com.yogeshj.autoform.user.userFormFragment.searchForms.SearchActivity
+import com.yogeshj.autoform.user.userSubscriptionFragment.SubscriptionActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -87,50 +84,50 @@ class HomeScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityHomeScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        initLoadingDialog()
-        FirstScreenActivity.auth=FirebaseAuth.getInstance()
-        initializeUIAnimations()
-        setupEventListeners()
-        showLoading()
-
-        MobileAds.initialize(this@HomeScreenActivity)
-        handler.post(loadAdRunnable)
-
-        val dbRef = FirebaseDatabase.getInstance().getReference("SubscriptionPayment")
-        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                appliedFormNames.clear()
-                if (snapshot.exists()) {
-                    for (snap in snapshot.children) {
-                        val subscriptionDetails = snap.getValue(SubscriptionPaymentModel::class.java)
-                        if (subscriptionDetails?.userId == FirstScreenActivity.auth.currentUser?.uid) {
-                            val endDate = subscriptionDetails?.endDate
-
-                            if (endDate != null && System.currentTimeMillis() > endDate) {
-                                // Subscription expired
-                                binding.subscribe.text = "Subscribe"
-                                snap.ref.removeValue()
-                            }
-                            else
-                                binding.subscribe.text="Premium Member"
-                            break
-                        }
-                    }
-                }
-                hideLoading()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                hideLoading()
-            }
-        })
-
-        fetchAppliedForms {
-            setRecyclerViewRecommendation()
-            setRecyclerViewCategory()
-            setRecyclerView()
-            hideLoading()
-        }
+//        initLoadingDialog()
+//        FirstScreenActivity.auth=FirebaseAuth.getInstance()
+//        initializeUIAnimations()
+//        setupEventListeners()
+//        showLoading()
+//
+//        MobileAds.initialize(this@HomeScreenActivity)
+//        handler.post(loadAdRunnable)
+//
+//        val dbRef = FirebaseDatabase.getInstance().getReference("SubscriptionPayment")
+//        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                appliedFormNames.clear()
+//                if (snapshot.exists()) {
+//                    for (snap in snapshot.children) {
+//                        val subscriptionDetails = snap.getValue(SubscriptionPaymentModel::class.java)
+//                        if (subscriptionDetails?.userId == FirstScreenActivity.auth.currentUser?.uid) {
+//                            val endDate = subscriptionDetails?.endDate
+//
+//                            if (endDate != null && System.currentTimeMillis() > endDate) {
+//                                // Subscription expired
+//                                binding.subscribe.text = "Subscribe"
+//                                snap.ref.removeValue()
+//                            }
+//                            else
+//                                binding.subscribe.text="Premium Member"
+//                            break
+//                        }
+//                    }
+//                }
+//                hideLoading()
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                hideLoading()
+//            }
+//        })
+//
+//        fetchAppliedForms {
+//            setRecyclerViewRecommendation()
+//            setRecyclerViewCategory()
+//            setRecyclerView()
+//            hideLoading()
+//        }
     }
 
     private fun initializeUIAnimations() {
@@ -164,12 +161,12 @@ class HomeScreenActivity : AppCompatActivity() {
         }
 
         binding.recommendationSeeAll.setOnClickListener {
-            startActivity(Intent(this@HomeScreenActivity,RecommendationSeeAllActivity::class.java))
+            startActivity(Intent(this@HomeScreenActivity, RecommendationSeeAllActivity::class.java))
         }
 
-        binding.viewForms.setOnClickListener {
-            startActivity(Intent(this@HomeScreenActivity,ViewAppliedFormsActivity::class.java))
-        }
+//        binding.viewForms.setOnClickListener {
+//            startActivity(Intent(this@HomeScreenActivity,ViewAppliedFormsActivity::class.java))
+//        }
 
         binding.search.setOnClickListener {
             startActivity(Intent(this, SearchActivity::class.java))

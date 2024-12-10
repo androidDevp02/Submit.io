@@ -78,4 +78,8 @@ dependencies {
 
     //google adds
     implementation(libs.play.services.ads)
+
+    //fragment
+    implementation(libs.androidx.fragment.ktx)
+
 }

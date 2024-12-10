@@ -28,7 +28,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.yogeshj.autoform.FirstScreenActivity
-import com.yogeshj.autoform.IntroActivity
+import com.yogeshj.autoform.splashScreenAndIntroScreen.IntroActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityFormDetailsBinding
 import java.util.ArrayList

@@ -27,6 +27,7 @@ import com.yogeshj.autoform.R
 import com.yogeshj.autoform.uploadForm.FormDetailsActivity
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityUploadFormLoginBinding
+import com.yogeshj.autoform.uploadForm.UploadFormMainActivity
 
 class UploadFormLoginActivity : AppCompatActivity() {
 
@@ -155,7 +156,7 @@ class UploadFormLoginActivity : AppCompatActivity() {
 
                                         val verification=FirstScreenActivity.auth.currentUser?.isEmailVerified
                                         if(verification==true){
-                                            startActivity(Intent(this@UploadFormLoginActivity,FormDetailsActivity::class.java))
+                                            startActivity(Intent(this@UploadFormLoginActivity,UploadFormMainActivity::class.java))
                                             finish()
                                         }
                                         else

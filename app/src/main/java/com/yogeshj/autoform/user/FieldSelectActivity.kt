@@ -23,7 +23,7 @@ import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityFieldSelectBinding
-import com.yogeshj.autoform.user.profile.ProfileInfoActivity
+import com.yogeshj.autoform.user.userFormFragment.profile.ProfileInfoActivity
 
 class FieldSelectActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFieldSelectBinding

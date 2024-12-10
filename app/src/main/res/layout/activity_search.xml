@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:background="@drawable/background_gradient"
-    tools:context=".user.searchForms.SearchActivity">
+    tools:context=".user.userFormFragment.searchForms.SearchActivity">
 
 
     <EditText

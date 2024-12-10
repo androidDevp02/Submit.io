@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:background="@drawable/background_gradient"
-    tools:context=".user.profile.LanguageActivity">
+    tools:context=".user.userFormFragment.profile.LanguageActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_bar"

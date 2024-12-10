@@ -2,6 +2,7 @@ package com.yogeshj.autoform.otpCode
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
@@ -34,6 +35,7 @@ class MobileNumberActivity : AppCompatActivity() {
 
         callbacks=object :PhoneAuthProvider.OnVerificationStateChangedCallbacks(){
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                Toast.makeText(this@MobileNumberActivity, "Verification Completed!", Toast.LENGTH_SHORT).show()
                 signInWithPhoneAuthCredential(credential)
             }
 
@@ -53,6 +55,7 @@ class MobileNumberActivity : AppCompatActivity() {
                 storedVerificationId=verificationId
                 resendToken=token
 
+                Toast.makeText(this@MobileNumberActivity, "OTP Sent!", Toast.LENGTH_SHORT).show()
                 val intent=Intent(this@MobileNumberActivity, OtpVerifyActivity::class.java)
                 intent.putExtra("storedVerificationId",storedVerificationId)
                 startActivity(intent)
@@ -61,9 +64,14 @@ class MobileNumberActivity : AppCompatActivity() {
         }
 
         binding.getOTP.setOnClickListener {
-            startPhoneNumberVerification(binding.mobileNo.text.toString())
+            val phoneNumber = binding.mobileNo.text.toString()
+            if (phoneNumber.isNotBlank()) {
+                Toast.makeText(this@MobileNumberActivity, "Sending OTP to $phoneNumber", Toast.LENGTH_SHORT).show()
+                startPhoneNumberVerification(phoneNumber)
+            } else {
+                Toast.makeText(this@MobileNumberActivity, "Please enter a valid phone number", Toast.LENGTH_SHORT).show()
+            }
         }
-
     }
     private fun startPhoneNumberVerification(phoneNumber:String){
         val options=PhoneAuthOptions.newBuilder(auth)
@@ -72,6 +80,7 @@ class MobileNumberActivity : AppCompatActivity() {
             .setActivity(this@MobileNumberActivity)
             .setCallbacks(callbacks)
             .build()
+
         PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
@@ -80,7 +89,7 @@ class MobileNumberActivity : AppCompatActivity() {
             .addOnCompleteListener(this) {
                 if(it.isSuccessful){
                     val user=it.result?.user
-
+                    Toast.makeText(this@MobileNumberActivity,"Hi1",Toast.LENGTH_LONG).show()
                     val intent=Intent(this@MobileNumberActivity, TempActivity::class.java)
                     startActivity(intent)
                 }

@@ -26,7 +26,8 @@ import com.yogeshj.autoform.user.FieldSelectActivity
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.authentication.User
-import com.yogeshj.autoform.authentication.admin.AdminFirstScreenActivity
+import com.yogeshj.autoform.admin.AdminFirstScreenActivity
+import com.yogeshj.autoform.admin.AdminMainActivity
 import com.yogeshj.autoform.databinding.ActivityUserLoginBinding
 
 class UserLoginActivity : AppCompatActivity() {
@@ -134,7 +135,7 @@ class UserLoginActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             val verification=FirstScreenActivity.auth.currentUser?.isEmailVerified
                             if(verification==true){
-                                startActivity(Intent(this@UserLoginActivity,AdminFirstScreenActivity::class.java))
+                                startActivity(Intent(this@UserLoginActivity, AdminMainActivity::class.java))
                                 finish()
                             }
                             else

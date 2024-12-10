@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.authentication.User
-import com.yogeshj.autoform.authentication.admin.AdminFirstScreenActivity
+import com.yogeshj.autoform.admin.AdminFirstScreenActivity
 import com.yogeshj.autoform.authentication.uploadForm.UploadFormLoginActivity
 import com.yogeshj.autoform.authentication.user.UserLoginActivity
 import com.yogeshj.autoform.databinding.ActivityFirstScreenBinding
@@ -24,11 +24,13 @@ import com.yogeshj.autoform.uploadForm.FormDetailsActivity
 import com.yogeshj.autoform.user.HomeScreenActivity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.yogeshj.autoform.admin.AdminMainActivity
+import com.yogeshj.autoform.uploadForm.UploadFormMainActivity
+import com.yogeshj.autoform.user.UserMainActivity
+
 //Admin@123
 //5267 3181 8797 5449
 
-
-//notification
 
 class FirstScreenActivity : AppCompatActivity() {
     private lateinit var binding:ActivityFirstScreenBinding
@@ -83,10 +85,11 @@ class FirstScreenActivity : AppCompatActivity() {
                             val curr = snap.getValue(User::class.java)!!
                             if (curr.uid == auth.currentUser!!.uid) {
                                 if(curr.email=="yogesh.jaiswal21b@iiitg.ac.in"){
-                                    startActivity(Intent(this@FirstScreenActivity,AdminFirstScreenActivity::class.java))
+                                    startActivity(Intent(this@FirstScreenActivity,
+                                        AdminMainActivity::class.java))
                                 }
                                 else
-                                    startActivity(Intent(this@FirstScreenActivity, HomeScreenActivity::class.java))
+                                    startActivity(Intent(this@FirstScreenActivity, UserMainActivity::class.java))
                                 finish()
                                 break
                             }
@@ -107,7 +110,7 @@ class FirstScreenActivity : AppCompatActivity() {
                         for (snap in snapshot.children) {
                             val curr = snap.getValue(User::class.java)!!
                             if (curr.uid == auth.currentUser!!.uid) {
-                                startActivity(Intent(this@FirstScreenActivity, FormDetailsActivity::class.java))
+                                startActivity(Intent(this@FirstScreenActivity, UploadFormMainActivity::class.java))
                                 finish()
                                 break
                             }

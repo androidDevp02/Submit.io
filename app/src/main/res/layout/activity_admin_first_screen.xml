@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/background_gradient"
-    tools:context=".authentication.admin.AdminFirstScreenActivity">
+    tools:context=".admin.AdminFirstScreenActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_bar"

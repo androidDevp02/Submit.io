@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     android:padding="16dp"
-    tools:context=".user.profile.ProfileInfoActivity">
+    tools:context=".user.userFormFragment.profile.ProfileInfoActivity">
 
 
     <TextView

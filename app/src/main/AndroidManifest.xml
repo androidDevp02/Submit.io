@@ -15,20 +15,31 @@
         android:theme="@style/Base.Theme.AutoForm"
         tools:targetApi="31">
         <activity
+            android:name=".uploadForm.UploadFormMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".user.userSubscriptionFragment.ConfirmSubscriptionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".user.UserMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".admin.AdminMainActivity"
+            android:exported="false" />
+        <activity
             android:name=".otpCode.TempActivity"
             android:exported="false" />
         <activity
             android:name=".otpCode.OtpVerifyActivity"
             android:exported="false" />
-
         <activity
-            android:name=".user.subscription.SubscriptionActivity"
+            android:name=".user.userSubscriptionFragment.SubscriptionActivity"
             android:exported="false" />
         <activity
-            android:name=".user.RecommendationSeeAllActivity"
+            android:name=".user.userFormFragment.RecommendationSeeAllActivity"
             android:exported="false" />
         <activity
-            android:name=".authentication.admin.AdminFirstScreenActivity"
+            android:name=".admin.AdminFirstScreenActivity"
             android:exported="false" />
         <activity
             android:name=".authentication.uploadForm.UploadFormSignUpDetailsActivity"
@@ -43,25 +54,25 @@
             android:name=".uploadForm.viewForm.ViewFormsActivity"
             android:exported="false" />
         <activity
-            android:name=".PhoneActivity"
+            android:name=".otpCode.otpTemporary.PhoneActivity"
             android:exported="false" />
         <activity
-            android:name=".OtpActivity"
+            android:name=".otpCode.otpTemporary.OtpActivity"
             android:exported="false" />
         <activity
             android:name=".FirstScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".IntroActivity"
+            android:name=".splashScreenAndIntroScreen.IntroActivity"
             android:theme="@style/Theme.Intro" />
         <activity
-            android:name=".user.searchForms.SearchActivity"
+            android:name=".user.userFormFragment.searchForms.SearchActivity"
             android:exported="false" />
         <activity
             android:name=".uploadForm.ChooseFormActivity"
             android:exported="false" />
         <activity
-            android:name=".user.examApply.AdditionalDetailsRequiredActivity"
+            android:name=".user.userFormFragment.examApply.AdditionalDetailsRequiredActivity"
             android:exported="false" />
         <activity
             android:name=".uploadForm.FillApplicationFormDetailsActivity"
@@ -77,70 +88,65 @@
             android:exported="false" />
         <activity
             android:name=".authentication.uploadForm.UploadFormLoginActivity"
-            android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".authentication.admin.AdminSignUpActivity"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".authentication.admin.AdminLoginActivity"-->
-<!--            android:exported="false" />-->
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".authentication.admin.AdminSignUpActivity" -->
+        <!-- android:exported="false" /> -->
+        <!-- <activity -->
+        <!-- android:name=".authentication.admin.AdminLoginActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
             android:name=".authentication.user.UserSignUpActivity"
             android:exported="false" />
         <activity
             android:name=".authentication.user.UserLoginActivity"
-            android:exported="false" />
-<!--        <activity-->
-<!--            android:name=".AppliedFormsActivity"-->
-<!--            android:exported="false" />-->
+            android:exported="false" /> <!-- <activity -->
+        <!-- android:name=".AppliedFormsActivity" -->
+        <!-- android:exported="false" /> -->
         <activity
-            android:name=".user.examApply.ReviewDataActivity"
+            android:name=".user.userFormFragment.examApply.ReviewDataActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".user.examApply.ExamDetailsActivity"
+            android:name=".user.userFormFragment.examApply.ExamDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".user.profile.LanguageActivity"
+            android:name=".user.userFormFragment.profile.LanguageActivity"
             android:exported="false" />
         <activity
-            android:name=".user.profile.AwardsAndAchievement"
+            android:name=".user.userFormFragment.profile.AwardsAndAchievement"
             android:exported="false" />
         <activity
-            android:name=".user.profile.EducationActivity"
+            android:name=".user.userFormFragment.profile.EducationActivity"
             android:exported="false" />
         <activity
-            android:name=".user.profile.ContactInformation"
+            android:name=".user.userFormFragment.profile.ContactInformation"
             android:exported="false" />
         <activity
-            android:name=".user.profile.UpdateProfileActivity"
+            android:name=".user.userFormFragment.profile.UpdateProfileActivity"
             android:exported="false" />
         <activity
             android:name=".user.HomeScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".user.profile.ProfileInfoActivity"
+            android:name=".user.userFormFragment.profile.ProfileInfoActivity"
             android:exported="false" />
         <activity
             android:name=".user.FieldSelectActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashScreenActivity"
+            android:name=".otpCode.MobileNumberActivity"
             android:exported="false" />
         <activity
-            android:name=".otpCode.MobileNumberActivity"
+            android:name=".splashScreenAndIntroScreen.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-<!--        <activity-->
-<!--            android:name=".MainActivity"-->
-<!--            android:exported="false" />-->
-
+        </activity> <!-- <activity -->
+        <!-- android:name=".MainActivity" -->
+        <!-- android:exported="false" /> -->
         <meta-data
             android:name="com.razorpay.ApiKey"
             android:value="rzp_test_0DG18Nx16j11Ph" />

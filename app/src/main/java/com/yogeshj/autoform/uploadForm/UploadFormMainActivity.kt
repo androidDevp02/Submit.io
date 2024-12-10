@@ -1,0 +1,41 @@
+package com.yogeshj.autoform.uploadForm
+
+import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.commit
+import com.yogeshj.autoform.R
+import com.yogeshj.autoform.databinding.ActivityUploadFormMainBinding
+import com.yogeshj.autoform.uploadForm.pastFormsFragment.PastFormFragment
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.UploadFormFragment
+
+class UploadFormMainActivity : AppCompatActivity() {
+
+    private lateinit var binding:ActivityUploadFormMainBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding=ActivityUploadFormMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.bottomNavigationBar.setOnItemSelectedListener {
+            when(it.itemId){
+                R.id.upload -> replaceFragment(UploadFormFragment())
+                R.id.past_forms -> replaceFragment(PastFormFragment())
+
+                else -> {
+
+                }
+            }
+            true
+        }
+
+    }
+
+    private fun replaceFragment(fragment: Fragment){
+        supportFragmentManager.commit {
+            replace(R.id.frame_layout,fragment)
+        }
+    }
+
+}
