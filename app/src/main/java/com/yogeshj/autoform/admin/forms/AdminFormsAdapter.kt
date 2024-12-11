@@ -1,6 +1,5 @@
 package com.yogeshj.autoform.admin.forms
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
