@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityExamDetailsBinding
-import com.yogeshj.autoform.uploadForm.FormDetails
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 
 class ExamDetailsActivity : AppCompatActivity() {
 

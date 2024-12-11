@@ -22,7 +22,7 @@ import com.yogeshj.autoform.user.userFormFragment.CardFormRecyclerView.CardFormM
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivitySearchBinding
-import com.yogeshj.autoform.uploadForm.FormDetails
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 
 class SearchActivity : AppCompatActivity() {
     private lateinit var binding:ActivitySearchBinding

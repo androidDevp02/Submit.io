@@ -27,6 +27,7 @@ import com.yogeshj.autoform.user.HomeScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityProfileInfoBinding
+import com.yogeshj.autoform.user.UserMainActivity
 import java.util.Date
 
 
@@ -187,7 +188,7 @@ class ProfileInfoActivity : AppCompatActivity() {
                                 dbRef.child(currentUser.uid!!).child("state").setValue(binding.state.text.toString())
                                 dbRef.child(currentUser.uid!!).child("profilePic").setValue(uri.toString())
                                 hideLoading()
-                                startActivity(Intent(this@ProfileInfoActivity, HomeScreenActivity::class.java))
+                                startActivity(Intent(this@ProfileInfoActivity, UserMainActivity::class.java))
                                 finish()
                             }
                         }
@@ -210,7 +211,7 @@ class ProfileInfoActivity : AppCompatActivity() {
                     dbRef.child(currentUser.uid!!).child("gender").setValue(binding.gender.text.toString())
                     dbRef.child(currentUser.uid!!).child("state").setValue(binding.state.text.toString())
                     hideLoading()
-                    startActivity(Intent(this@ProfileInfoActivity, HomeScreenActivity::class.java))
+                    startActivity(Intent(this@ProfileInfoActivity, UserMainActivity::class.java))
                     finish()
                 }
             }

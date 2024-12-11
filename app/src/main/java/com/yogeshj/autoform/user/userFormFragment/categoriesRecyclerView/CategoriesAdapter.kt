@@ -14,9 +14,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.user.userFormFragment.CardFormRecyclerView.CardFormModel
 import com.yogeshj.autoform.R
-import com.yogeshj.autoform.user.HomeScreenActivity
 import com.yogeshj.autoform.databinding.CategoriesRvItemBinding
-import com.yogeshj.autoform.uploadForm.FormDetails
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import com.yogeshj.autoform.user.userFormFragment.UserFormFragment
 import java.text.SimpleDateFormat
 import java.util.Calendar

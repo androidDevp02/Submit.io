@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
@@ -32,6 +33,8 @@ class UserMainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding=ActivityUserMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         binding.bottomNavigationBar.setOnItemSelectedListener {
             when(it.itemId){

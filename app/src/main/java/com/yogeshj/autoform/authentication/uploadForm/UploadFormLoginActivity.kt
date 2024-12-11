@@ -17,14 +17,12 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
-import com.yogeshj.autoform.uploadForm.FormDetailsActivity
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityUploadFormLoginBinding
 import com.yogeshj.autoform.uploadForm.UploadFormMainActivity

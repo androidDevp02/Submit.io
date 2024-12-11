@@ -7,8 +7,10 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.view.Window
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -16,16 +18,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.authentication.User
-import com.yogeshj.autoform.admin.AdminFirstScreenActivity
 import com.yogeshj.autoform.authentication.uploadForm.UploadFormLoginActivity
 import com.yogeshj.autoform.authentication.user.UserLoginActivity
 import com.yogeshj.autoform.databinding.ActivityFirstScreenBinding
-import com.yogeshj.autoform.uploadForm.FormDetailsActivity
-import com.yogeshj.autoform.user.HomeScreenActivity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.yogeshj.autoform.admin.AdminMainActivity
 import com.yogeshj.autoform.uploadForm.UploadFormMainActivity
+import com.yogeshj.autoform.uploadForm.temporaryFiles.FormDetailsActivity
 import com.yogeshj.autoform.user.UserMainActivity
 
 //Admin@123
@@ -89,7 +89,7 @@ class FirstScreenActivity : AppCompatActivity() {
                                         AdminMainActivity::class.java))
                                 }
                                 else
-                                    startActivity(Intent(this@FirstScreenActivity, UserMainActivity::class.java))
+                                    startActivity(Intent(this@FirstScreenActivity,UserMainActivity::class.java))
                                 finish()
                                 break
                             }
@@ -103,14 +103,17 @@ class FirstScreenActivity : AppCompatActivity() {
             })
 
             //go to upload form page if already logged in
+//            Log.d("EMAILC", auth.currentUser!!.email!!+" "+ auth.currentUser!!.uid)
             val db2 = FirebaseDatabase.getInstance().getReference("UploadFormUsers")
             db2.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         for (snap in snapshot.children) {
                             val curr = snap.getValue(User::class.java)!!
+//                            Log.d("EMAILS",curr.email!!)
                             if (curr.uid == auth.currentUser!!.uid) {
-                                startActivity(Intent(this@FirstScreenActivity, UploadFormMainActivity::class.java))
+//                                Toast.makeText(this@FirstScreenActivity,"Upload From user is logged in",Toast.LENGTH_LONG).show()
+                                startActivity(Intent(this@FirstScreenActivity,UploadFormMainActivity::class.java))
                                 finish()
                                 break
                             }
@@ -123,6 +126,8 @@ class FirstScreenActivity : AppCompatActivity() {
                     hideLoading()
                 }
             })
+
+
 
         }
         else

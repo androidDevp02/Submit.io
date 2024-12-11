@@ -26,7 +26,7 @@ import com.razorpay.PaymentResultWithDataListener
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityReviewDataBinding
-import com.yogeshj.autoform.uploadForm.FormDetails
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import com.yogeshj.autoform.user.HomeScreenActivity
 import com.yogeshj.autoform.user.userFormFragment.profile.ProfileInfoActivity
 import org.json.JSONObject

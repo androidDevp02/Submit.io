@@ -40,32 +40,39 @@ class UploadFormSignUpAdapter(private var dataList: ArrayList<UploadFormSignUpMo
                 FirstScreenActivity.auth.createUserWithEmailAndPassword(dataList[position].loginMailId!!,"Temporary@123")
                     .addOnCompleteListener { task ->
                         if (task.isSuccessful) {
-                            addUserToDatabase(dataList[position].instituteName!!,dataList[position].loginMailId!!,uniqueKey)
-                            val registeredRef = FirebaseDatabase.getInstance().getReference("UploadFormRegisteredUsers")
-                            registeredRef.child(uniqueKey).setValue(dataList[position])
-                                .addOnSuccessListener {
-                                    FirstScreenActivity.auth.currentUser?.sendEmailVerification()
-                                    val registrationRef = FirebaseDatabase.getInstance().getReference("UploadFormRegistrationUsers")
-                                    registrationRef.child(uniqueKey).removeValue()
-                                        .addOnSuccessListener {
-                                            FirstScreenActivity.auth.sendPasswordResetEmail(dataList[position].loginMailId!!)
-                                                .addOnSuccessListener {
-                                                    Toast.makeText(context,"Verification complete. Password reset email sent to ${dataList[position].loginMailId}.",Toast.LENGTH_LONG).show()
-                                                    dataList.removeAt(position)
-                                                    notifyItemRemoved(position)
-                                                }
-                                                .addOnFailureListener {
-                                                    Toast.makeText(context,"Failed to send reset email. Try again later.",Toast.LENGTH_LONG).show()
-                                                }
-                                        }
-                                        .addOnFailureListener {
-                                            Toast.makeText(context,"Error removing registration entry.",Toast.LENGTH_SHORT).show()
-                                        }
-                                }
-                                .addOnFailureListener {
-                                    Toast.makeText(context,"Error saving to registered users.",Toast.LENGTH_SHORT).show()
-                                }
-                        } else {
+                            val uid = task.result?.user?.uid
+                            if (uid != null) {
+                                addUserToDatabase(dataList[position].instituteName!!,dataList[position].loginMailId!!,uid)
+                                val registeredRef = FirebaseDatabase.getInstance().getReference("UploadFormRegisteredUsers")
+                                registeredRef.child(uniqueKey).setValue(dataList[position])
+                                    .addOnSuccessListener {
+                                        FirstScreenActivity.auth.currentUser?.sendEmailVerification()
+                                        val registrationRef = FirebaseDatabase.getInstance().getReference("UploadFormRegistrationUsers")
+                                        registrationRef.child(uniqueKey).removeValue()
+                                            .addOnSuccessListener {
+                                                FirstScreenActivity.auth.sendPasswordResetEmail(dataList[position].loginMailId!!)
+                                                    .addOnSuccessListener {
+                                                        Toast.makeText(context,"Verification complete. Password reset email sent to ${dataList[position].loginMailId}.", Toast.LENGTH_LONG).show()
+                                                        dataList.removeAt(position)
+                                                        notifyItemRemoved(position)
+                                                    }
+                                                    .addOnFailureListener {
+                                                        Toast.makeText(
+                                                            context,"Failed to send reset email. Try again later.",Toast.LENGTH_LONG).show()
+                                                    }
+                                            }
+                                            .addOnFailureListener {
+                                                Toast.makeText(context,"Error removing registration entry.",Toast.LENGTH_SHORT).show()
+                                            }
+                                    }
+                                    .addOnFailureListener {
+                                        Toast.makeText(context,"Error saving to registered users.",Toast.LENGTH_SHORT).show()
+                                    }
+                            }
+                            else {
+                                Toast.makeText(context,"Error: UID is null.",Toast.LENGTH_SHORT).show()
+                            }
+                        }else {
                             Toast.makeText(context,"Error creating user: ${task.exception?.message}",Toast.LENGTH_LONG).show()
                         }
                     }

@@ -1,4 +1,4 @@
-package com.yogeshj.autoform.uploadForm
+package com.yogeshj.autoform.uploadForm.uploadNewFormFragment
 
 class FormDetails {
 

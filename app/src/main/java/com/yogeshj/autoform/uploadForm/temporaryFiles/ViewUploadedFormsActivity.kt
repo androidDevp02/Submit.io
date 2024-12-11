@@ -1,4 +1,4 @@
-package com.yogeshj.autoform.uploadForm
+package com.yogeshj.autoform.uploadForm.temporaryFiles
 
 import android.app.Dialog
 import android.graphics.Color
@@ -19,6 +19,9 @@ import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityViewUploadedFormsBinding
+import com.yogeshj.autoform.uploadForm.pastFormsFragment.YourFormsAdapter
+import com.yogeshj.autoform.uploadForm.pastFormsFragment.YourFormsModel
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 
 class ViewUploadedFormsActivity : AppCompatActivity() {
     private lateinit var binding:ActivityViewUploadedFormsBinding

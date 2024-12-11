@@ -35,7 +35,7 @@ import com.yogeshj.autoform.user.userFormFragment.categoriesRecyclerView.Categor
 import com.yogeshj.autoform.databinding.FragmentUserFormBinding
 import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.RecommendationCardFormAdapter
 import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.RecommendationCardFormModel
-import com.yogeshj.autoform.uploadForm.FormDetails
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import com.yogeshj.autoform.user.userFormFragment.profile.UpdateProfileActivity
 import com.yogeshj.autoform.user.userFormFragment.searchForms.SearchActivity
 import java.text.SimpleDateFormat

@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import com.google.firebase.auth.FirebaseAuth
+import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityUploadFormMainBinding
 import com.yogeshj.autoform.uploadForm.pastFormsFragment.PastFormFragment
@@ -18,7 +20,9 @@ class UploadFormMainActivity : AppCompatActivity() {
         binding=ActivityUploadFormMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.bottomNavigationBar.setOnItemSelectedListener {
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
+
+        binding.bottomNavigationBarUploadForm.setOnItemSelectedListener {
             when(it.itemId){
                 R.id.upload -> replaceFragment(UploadFormFragment())
                 R.id.past_forms -> replaceFragment(PastFormFragment())
@@ -34,7 +38,7 @@ class UploadFormMainActivity : AppCompatActivity() {
 
     private fun replaceFragment(fragment: Fragment){
         supportFragmentManager.commit {
-            replace(R.id.frame_layout,fragment)
+            replace(R.id.frame_layout_upload_form,fragment)
         }
     }
 

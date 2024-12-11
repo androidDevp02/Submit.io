@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#F5F5F5"
     android:padding="16dp"
-    tools:context=".uploadForm.ChooseFormActivity">
+    tools:context=".uploadForm.temporaryFiles.ChooseFormActivity">
 
     <TextView
         android:id="@+id/titleText"

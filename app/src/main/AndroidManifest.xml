@@ -48,10 +48,10 @@
             android:name=".user.viewAppliedForms.ViewAppliedFormsActivity"
             android:exported="false" />
         <activity
-            android:name=".uploadForm.viewRegisteredStudents.ViewRegisteredActivity"
+            android:name=".uploadForm.pastFormsFragment.viewRegisteredStudents.ViewRegisteredActivity"
             android:exported="false" />
         <activity
-            android:name=".uploadForm.viewForm.ViewFormsActivity"
+            android:name=".uploadForm.pastFormsFragment.viewForm.ViewFormsActivity"
             android:exported="false" />
         <activity
             android:name=".otpCode.otpTemporary.PhoneActivity"
@@ -69,19 +69,19 @@
             android:name=".user.userFormFragment.searchForms.SearchActivity"
             android:exported="false" />
         <activity
-            android:name=".uploadForm.ChooseFormActivity"
+            android:name=".uploadForm.temporaryFiles.ChooseFormActivity"
             android:exported="false" />
         <activity
             android:name=".user.userFormFragment.examApply.AdditionalDetailsRequiredActivity"
             android:exported="false" />
         <activity
-            android:name=".uploadForm.FillApplicationFormDetailsActivity"
+            android:name=".uploadForm.temporaryFiles.FillApplicationFormDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".uploadForm.ViewUploadedFormsActivity"
+            android:name=".uploadForm.temporaryFiles.ViewUploadedFormsActivity"
             android:exported="false" />
         <activity
-            android:name=".uploadForm.FormDetailsActivity"
+            android:name=".uploadForm.temporaryFiles.FormDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".authentication.uploadForm.UploadFormSignUpActivity"

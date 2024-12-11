@@ -1,4 +1,4 @@
-package com.yogeshj.autoform.uploadForm
+package com.yogeshj.autoform.uploadForm.pastFormsFragment
 
 import android.content.Context
 import android.content.Intent
@@ -9,8 +9,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.AppliedFormRvItemBinding
-import com.yogeshj.autoform.uploadForm.viewForm.ViewFormsActivity
-import com.yogeshj.autoform.uploadForm.viewRegisteredStudents.ViewRegisteredActivity
+import com.yogeshj.autoform.uploadForm.pastFormsFragment.viewForm.ViewFormsActivity
+import com.yogeshj.autoform.uploadForm.pastFormsFragment.viewRegisteredStudents.ViewRegisteredActivity
 
 class YourFormsAdapter(private var dataList: ArrayList<YourFormsModel>, var context: Context) :
     RecyclerView.Adapter<YourFormsAdapter.ViewHolder>() {

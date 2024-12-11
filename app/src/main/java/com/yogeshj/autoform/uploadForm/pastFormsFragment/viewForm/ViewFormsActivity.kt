@@ -1,4 +1,4 @@
-package com.yogeshj.autoform.uploadForm.viewForm
+package com.yogeshj.autoform.uploadForm.pastFormsFragment.viewForm
 
 import android.app.Dialog
 import android.graphics.Color
@@ -19,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityViewFormsBinding
-import com.yogeshj.autoform.uploadForm.FormDetails
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 
 class ViewFormsActivity : AppCompatActivity() {
 

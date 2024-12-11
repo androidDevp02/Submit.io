@@ -31,12 +31,9 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
-import com.yogeshj.autoform.databinding.ActivityFormDetailsBinding
 import com.yogeshj.autoform.databinding.FragmentUploadFormBinding
 import com.yogeshj.autoform.splashScreenAndIntroScreen.IntroActivity
-import com.yogeshj.autoform.uploadForm.FormDetails
-import com.yogeshj.autoform.uploadForm.FormDetailsActivity
-import com.yogeshj.autoform.uploadForm.ViewUploadedFormsActivity
+import com.yogeshj.autoform.uploadForm.pastFormsFragment.PastFormFragment
 import java.util.ArrayList
 import java.util.Calendar
 import java.util.Date
@@ -171,8 +168,7 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
         binding.logout.setOnClickListener {
             FirstScreenActivity.auth.signOut()
             TaskStackBuilder.create(context)
-                .addNextIntentWithParentStack(
-                    Intent(context,FirstScreenActivity::class.java))
+                .addNextIntentWithParentStack(Intent(context,FirstScreenActivity::class.java))
                 .addNextIntent(Intent(context, IntroActivity::class.java))
                 .startActivities()
 //            startActivity(Intent(context,FirstScreenActivity::class.java))
@@ -227,8 +223,7 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
                                 if(it.isSuccessful){
                                     reference.downloadUrl.addOnSuccessListener { uri ->
                                         dbRef.child(FirstScreenActivity.auth.currentUser!!.uid).child(binding.examNameEditText.text.toString()).setValue(
-                                            FormDetails(
-                                                FirstScreenActivity.auth.currentUser!!.uid,binding.examNameEditText.text.toString(),
+                                            FormDetails(FirstScreenActivity.auth.currentUser!!.uid,binding.examNameEditText.text.toString(),
                                                 binding.examHostNameEditText.text.toString(),uri.toString(),binding.categoryEditText.text.toString(),binding.examDateEditText.text.toString(),binding.deadlineEditText.text.toString(),
                                                 binding.examDescriptionEditText.text.toString(),binding.eligibilityEditText.text.toString(),"","",binding.feesEditText.text.toString().toInt(),binding.statusEditText.text.toString())
                                         ).addOnSuccessListener {
@@ -237,14 +232,13 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
                                                 .addOnSuccessListener {
 
 //                                                Toast.makeText(this, "Link added successfully", Toast.LENGTH_SHORT).show()
-                                                    startActivity(
-                                                        Intent(context,
-                                                            FormDetailsActivity::class.java)
-                                                    )
-                                                    startActivity(
-                                                        Intent(context,
-                                                            ViewUploadedFormsActivity::class.java)
-                                                    )
+                                                    val transaction = parentFragmentManager.beginTransaction()
+                                                    transaction.replace(R.id.frame_layout_upload_form, PastFormFragment())
+                                                    transaction.addToBackStack(null)
+                                                    transaction.commit()
+
+//                                                    startActivity(Intent(context,FormDetailsActivity::class.java))
+//                                                    startActivity(Intent(context,ViewUploadedFormsActivity::class.java))
                                                     hideLoading()
                                                     Toast.makeText(context,"Form & Link Uploaded Successfully!", Toast.LENGTH_LONG).show()
 //                                                    finish()
@@ -382,13 +376,15 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
                                                 .child("Application Form Details").setValue(formData)
                                                 .addOnSuccessListener {
                                                     hideLoading()
-                                                    Toast.makeText(context,"Form submitted successfully",
-                                                        Toast.LENGTH_LONG).show()
+                                                    Toast.makeText(context,"Form submitted successfully",Toast.LENGTH_LONG).show()
+                                                    val transaction = parentFragmentManager.beginTransaction()
+                                                    transaction.replace(R.id.frame_layout_upload_form, PastFormFragment())
+                                                    transaction.addToBackStack(null)
+                                                    transaction.commit()
                                                 }
                                                 .addOnFailureListener {
                                                     hideLoading()
-                                                    Toast.makeText(context,"Failed to submit form",
-                                                        Toast.LENGTH_LONG).show()
+                                                    Toast.makeText(context,"Failed to submit form",Toast.LENGTH_LONG).show()
                                                 }
                                         }.addOnFailureListener {
                                             hideLoading()

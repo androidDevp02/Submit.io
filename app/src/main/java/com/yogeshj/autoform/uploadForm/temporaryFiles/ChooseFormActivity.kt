@@ -1,4 +1,4 @@
-package com.yogeshj.autoform.uploadForm
+package com.yogeshj.autoform.uploadForm.temporaryFiles
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -69,7 +69,7 @@ class ChooseFormActivity : AppCompatActivity() {
 
 
         binding.customFormOption.setOnClickListener {
-            val intent= Intent(this@ChooseFormActivity,FillApplicationFormDetailsActivity::class.java)
+            val intent= Intent(this@ChooseFormActivity, FillApplicationFormDetailsActivity::class.java)
             intent.putExtra("exam",exam)
             intent.putExtra("host",host)
             startActivity(intent)

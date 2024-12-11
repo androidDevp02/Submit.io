@@ -10,14 +10,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.yogeshj.autoform.user.userFormFragment.CardFormRecyclerView.CardFormAdapter
-import com.yogeshj.autoform.user.userFormFragment.CardFormRecyclerView.CardFormModel
-import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.FragmentFormsBinding
-import com.yogeshj.autoform.uploadForm.FormDetails
-import com.yogeshj.autoform.user.HomeScreenActivity.Companion.appliedFormNames
-import com.yogeshj.autoform.user.HomeScreenActivity.Companion.dataList
-import com.yogeshj.autoform.user.HomeScreenActivity.Companion.myAdapter
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

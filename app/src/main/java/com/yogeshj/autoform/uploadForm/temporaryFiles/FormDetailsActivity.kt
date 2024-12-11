@@ -1,4 +1,4 @@
-package com.yogeshj.autoform.uploadForm
+package com.yogeshj.autoform.uploadForm.temporaryFiles
 
 import android.app.AlertDialog
 import android.app.DatePickerDialog
@@ -31,6 +31,7 @@ import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.splashScreenAndIntroScreen.IntroActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityFormDetailsBinding
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import java.util.ArrayList
 import java.util.Calendar
 import java.util.Date
@@ -155,7 +156,7 @@ class FormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
         }
 
         binding.viewForms.setOnClickListener {
-            startActivity(Intent(this@FormDetailsActivity,ViewUploadedFormsActivity::class.java))
+            startActivity(Intent(this@FormDetailsActivity, ViewUploadedFormsActivity::class.java))
         }
 
         binding.logout.setOnClickListener {
@@ -225,8 +226,10 @@ class FormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
                                                 .addOnSuccessListener {
 
 //                                                Toast.makeText(this, "Link added successfully", Toast.LENGTH_SHORT).show()
-                                                    startActivity(Intent(this@FormDetailsActivity,FormDetailsActivity::class.java))
-                                                    startActivity(Intent(this@FormDetailsActivity,ViewUploadedFormsActivity::class.java))
+                                                    startActivity(Intent(this@FormDetailsActivity,
+                                                        FormDetailsActivity::class.java))
+                                                    startActivity(Intent(this@FormDetailsActivity,
+                                                        ViewUploadedFormsActivity::class.java))
                                                     hideLoading()
                                                     Toast.makeText(this@FormDetailsActivity,"Form & Link Uploaded Successfully!", Toast.LENGTH_LONG).show()
                                                     finish()

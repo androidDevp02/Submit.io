@@ -1,4 +1,4 @@
-package com.yogeshj.autoform.uploadForm.viewForm
+package com.yogeshj.autoform.uploadForm.pastFormsFragment.viewForm
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.yogeshj.autoform.databinding.ViewFormRvItemBinding
 
-class ViewFormsAdapter(private val dataList: ArrayList<ViewFormModel>,var context: Context) :
+class ViewFormsAdapter(private val dataList: ArrayList<ViewFormModel>, var context: Context) :
     RecyclerView.Adapter<ViewFormsAdapter.ViewHolder>() {
 
     inner class ViewHolder(var binding: ViewFormRvItemBinding) : RecyclerView.ViewHolder(binding.root)

@@ -1,4 +1,4 @@
-package com.yogeshj.autoform.uploadForm.viewRegisteredStudents
+package com.yogeshj.autoform.uploadForm.pastFormsFragment.viewRegisteredStudents
 
 import android.app.Dialog
 import android.graphics.Color

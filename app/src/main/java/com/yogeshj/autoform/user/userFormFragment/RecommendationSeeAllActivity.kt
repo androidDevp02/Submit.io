@@ -23,7 +23,7 @@ import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityRecommendationSeeAllBinding
-import com.yogeshj.autoform.uploadForm.FormDetails
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import com.yogeshj.autoform.user.HomeScreenActivity.Companion.appliedFormNames
 import java.text.SimpleDateFormat
 import java.util.Calendar
