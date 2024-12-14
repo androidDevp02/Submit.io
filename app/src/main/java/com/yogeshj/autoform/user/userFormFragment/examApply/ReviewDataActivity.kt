@@ -27,7 +27,6 @@ import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityReviewDataBinding
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
-import com.yogeshj.autoform.user.HomeScreenActivity
 import com.yogeshj.autoform.user.UserMainActivity
 import com.yogeshj.autoform.user.userFormFragment.profile.ProfileInfoActivity
 import org.json.JSONObject
@@ -186,7 +185,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
 
                         if(key!=null && value!=null) {
                             userKeys.add(key)
-                            userDetails.put(key,value)
+                            userDetails[key] = value
                         }
 
                         editTextMap[key]?.setText(value)
@@ -243,7 +242,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
 
             textInputLayout.addView(editText)
             binding.editTextContainer.addView(textInputLayout)
-            editTextMap.put(detail.lowercase(),editText)
+            editTextMap[detail.lowercase()] = editText
         }
     }
 

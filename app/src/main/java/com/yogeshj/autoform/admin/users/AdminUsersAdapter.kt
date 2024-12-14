@@ -10,7 +10,6 @@ import com.yogeshj.autoform.R
 import com.yogeshj.autoform.admin.users.changeUserData.ChangeUploadFormUserDataActivity
 import com.yogeshj.autoform.admin.users.changeUserData.ChangeUserDataActivity
 import com.yogeshj.autoform.databinding.AdminUsersRvItemBinding
-import com.yogeshj.autoform.user.userFormFragment.profile.UpdateProfileActivity
 
 
 class AdminUsersAdapter(private var dataList: ArrayList<AdminUsersModel>, var context: Context) :

@@ -77,7 +77,7 @@ class SubscriptionActivity : AppCompatActivity(), PaymentResultWithDataListener 
 //            options.put("prefill",preFill)
             co.open(this@SubscriptionActivity as Activity?, options)
         } catch (e: Exception) {
-            Toast.makeText(this@SubscriptionActivity,"Error intializing",Toast.LENGTH_LONG).show()
+            Toast.makeText(this@SubscriptionActivity,"Error initializing",Toast.LENGTH_LONG).show()
             e.printStackTrace()
         }
     }

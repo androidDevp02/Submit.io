@@ -41,23 +41,25 @@ class AdminFormsAdapter(private var dataList: ArrayList<AdminFormsModel>, var co
         holder.binding.deadlineInfo.text=dataList[position].deadline
         holder.binding.examDateInfo.text=dataList[position].examDate
         holder.binding.categoryInfo.text=dataList[position].category
-        if(dataList[position].status=="Live") {
-            holder.binding.statusIcon.setImageResource(R.drawable.live_icon)
-            holder.binding.statusText.text="Live"
-            holder.binding.tentativeDate.visibility= View.GONE
-            holder.binding.tentativeDeadline.visibility= View.GONE
-        }
-        else if(dataList[position].status=="Upcoming") {
-            holder.binding.statusIcon.setImageResource(R.drawable.upcoming_icon)
-            holder.binding.statusText.text="Upcoming"
-            holder.binding.tentativeDate.visibility= View.VISIBLE
-            holder.binding.tentativeDeadline.visibility= View.VISIBLE
-        }
-        else if(dataList[position].status=="Expired") {
-            holder.binding.statusIcon.setImageResource(R.drawable.expired_icon)
-            holder.binding.statusText.text="Expired"
-            holder.binding.tentativeDate.visibility= View.GONE
-            holder.binding.tentativeDeadline.visibility= View.GONE
+        when (dataList[position].status) {
+            "Live" -> {
+                holder.binding.statusIcon.setImageResource(R.drawable.live_icon)
+                holder.binding.statusText.text= context.getString(R.string.live_txt)
+                holder.binding.tentativeDate.visibility= View.GONE
+                holder.binding.tentativeDeadline.visibility= View.GONE
+            }
+            "Upcoming" -> {
+                holder.binding.statusIcon.setImageResource(R.drawable.upcoming_icon)
+                holder.binding.statusText.text= context.getString(R.string.upcoming_txt)
+                holder.binding.tentativeDate.visibility= View.VISIBLE
+                holder.binding.tentativeDeadline.visibility= View.VISIBLE
+            }
+            "Expired" -> {
+                holder.binding.statusIcon.setImageResource(R.drawable.expired_icon)
+                holder.binding.statusText.text= context.getString(R.string.expired_txt)
+                holder.binding.tentativeDate.visibility= View.GONE
+                holder.binding.tentativeDeadline.visibility= View.GONE
+            }
         }
 
         holder.binding.feesInfo.text="${dataList[position].fees}"

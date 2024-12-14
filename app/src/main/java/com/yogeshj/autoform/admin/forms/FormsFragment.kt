@@ -26,7 +26,7 @@ class FormsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding=FragmentFormsBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -54,7 +54,7 @@ class FormsFragment : Fragment() {
                             val currentExam = examSnap.getValue(FormDetails::class.java)
                             if (currentExam!=null) {
                                 val deadlineStr = currentExam.deadline
-                                val examDeadline = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(deadlineStr)
+                                val examDeadline = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(deadlineStr!!)
                                 val currentDate = Calendar.getInstance().time
 
                                 if (examDeadline != null && examDeadline.before(currentDate)) {

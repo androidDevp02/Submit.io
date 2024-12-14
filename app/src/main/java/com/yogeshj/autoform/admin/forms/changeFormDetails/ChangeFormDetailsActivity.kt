@@ -160,7 +160,7 @@ class ChangeFormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSet
                                         )
                                         val examRef=examSnap.ref
                                         examRef.updateChildren(updatedFields).addOnSuccessListener {
-                                            Toast.makeText(this@ChangeFormDetailsActivity,"Details saved succesfully",Toast.LENGTH_LONG).show()
+                                            Toast.makeText(this@ChangeFormDetailsActivity,"Details saved successfully",Toast.LENGTH_LONG).show()
                                             finish()
                                         }.addOnFailureListener {
                                             Toast.makeText(this@ChangeFormDetailsActivity,"Failed to save details",Toast.LENGTH_LONG).show()

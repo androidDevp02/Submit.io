@@ -24,7 +24,7 @@
 
     <Button
         android:id="@+id/saveBtn"
-        android:layout_width="0dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:text="@string/save_txt"
         app:layout_constraintBottom_toTopOf="@id/adView"

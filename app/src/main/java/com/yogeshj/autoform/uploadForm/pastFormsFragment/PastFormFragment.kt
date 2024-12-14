@@ -47,7 +47,7 @@ class PastFormFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding=FragmentPastFormBinding.inflate(inflater,container,false)
         return binding.root
     }

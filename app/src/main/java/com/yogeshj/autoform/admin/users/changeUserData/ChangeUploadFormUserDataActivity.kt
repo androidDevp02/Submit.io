@@ -1,17 +1,10 @@
 package com.yogeshj.autoform.admin.users.changeUserData
 
-import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
@@ -21,11 +14,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
-import com.yogeshj.autoform.R
-import com.yogeshj.autoform.admin.AdminMainActivity
 import com.yogeshj.autoform.admin.requests.UploadFormSignUpModel
-import com.yogeshj.autoform.authentication.User
-import com.yogeshj.autoform.authentication.uploadForm.UploadFormLoginActivity
 import com.yogeshj.autoform.databinding.ActivityChangeUploadFormUserDataBinding
 
 class ChangeUploadFormUserDataActivity : AppCompatActivity() {

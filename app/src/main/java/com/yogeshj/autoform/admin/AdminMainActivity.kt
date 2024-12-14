@@ -19,7 +19,7 @@ class AdminMainActivity : AppCompatActivity() {
         binding= ActivityAdminMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-//        replaceFragment(UsersFragment())
+        replaceFragment(UsersFragment())
 
         binding.bottomNavigationBar.setOnItemSelectedListener {
             when(it.itemId){

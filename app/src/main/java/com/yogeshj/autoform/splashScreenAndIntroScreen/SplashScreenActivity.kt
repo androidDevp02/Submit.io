@@ -22,7 +22,7 @@ class SplashScreenActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val sharedPreferences = getSharedPreferences("splash", MODE_PRIVATE)
-        var edit: SharedPreferences.Editor = sharedPreferences.edit()
+        val edit: SharedPreferences.Editor = sharedPreferences.edit()
 
         Handler(Looper.getMainLooper()).postDelayed(
             {

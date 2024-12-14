@@ -128,7 +128,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Exam Category"
                 app:hintTextColor="@color/black">
 
                 <AutoCompleteTextView
@@ -136,6 +135,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#FFFFFF"
+                    android:hint="@string/exam_category_txt"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -145,7 +145,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:hint="Exam Form Status"
                 app:hintTextColor="@color/black">
 
                 <AutoCompleteTextView
@@ -153,6 +152,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="#FFFFFF"
+                    android:hint="@string/form_status_txt"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 

@@ -66,7 +66,7 @@ class CategoriesAdapter(private var dataList: ArrayList<CategoriesModel>, var co
                             val currentUser = snap.getValue(FormDetails::class.java)
                             if (currentUser != null) {
                                 val deadlineStr = currentUser.deadline
-                                val examDeadline = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(deadlineStr)
+                                val examDeadline = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(deadlineStr!!)
 
                                 val currentDate = Calendar.getInstance().time
 
@@ -98,7 +98,7 @@ class CategoriesAdapter(private var dataList: ArrayList<CategoriesModel>, var co
                                             currentUser.deadline ?: "DD/MM/YYYY",
                                             currentUser.examDate ?: "DD/MM/YYYY",
                                             0,
-                                            currentUser.fees ?: 0,
+                                            currentUser.fees,
                                             currentUser.category!!,
                                             "Expired"
                                         )
@@ -134,7 +134,7 @@ class CategoriesAdapter(private var dataList: ArrayList<CategoriesModel>, var co
                             val currentUser = snap.getValue(FormDetails::class.java)
                             if (currentUser!=null && currentUser.category==category) {
                                 val deadlineStr = currentUser.deadline
-                                val examDeadline = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(deadlineStr)
+                                val examDeadline = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(deadlineStr!!)
 
                                 val currentDate = Calendar.getInstance().time
 
@@ -151,7 +151,7 @@ class CategoriesAdapter(private var dataList: ArrayList<CategoriesModel>, var co
                                             currentUser.deadline ?: "DD/MM/YYYY",
                                             currentUser.examDate ?: "DD/MM/YYYY",
                                             0,
-                                            currentUser.fees ?: 0,
+                                            currentUser.fees,
                                             currentUser.category!!,
                                             currentUser.status!!
                                         )

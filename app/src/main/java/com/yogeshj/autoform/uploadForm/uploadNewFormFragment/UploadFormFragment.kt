@@ -38,6 +38,7 @@ import java.util.ArrayList
 import java.util.Calendar
 import java.util.Date
 
+@Suppress("DEPRECATION")
 class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding:FragmentUploadFormBinding
@@ -50,6 +51,7 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
 
     private lateinit var dialog2:Dialog
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(data!=null)
@@ -114,7 +116,7 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding= FragmentUploadFormBinding.inflate(inflater,container,false)
         return binding.root
     }

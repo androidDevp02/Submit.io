@@ -79,10 +79,11 @@ class EducationActivity : AppCompatActivity() {
                     for (snap in snapshot.children) {
                         val currentUser = snap.getValue(User::class.java)!!
                         if (currentUser.uid ==currentUserUid) {
-                            val edu_lvl=snap.child("education_level").getValue(String::class.java)
-                            if (edu_lvl!=null) {
-                                binding.educationalLvl.setText(edu_lvl)
+                            val eduLvl=snap.child("education_level").getValue(String::class.java)
+                            if (eduLvl!=null) {
+                                binding.educationalLvl.setText(eduLvl)
                             }
+
                             val course=snap.child("course").getValue(String::class.java)
                             if (course!=null) {
                                 binding.course.setText(course)

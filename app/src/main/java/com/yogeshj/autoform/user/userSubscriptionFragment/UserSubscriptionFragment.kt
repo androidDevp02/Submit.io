@@ -45,7 +45,9 @@ class UserSubscriptionFragment : Fragment() {
 
         initLoadingDialog()
 
-        Toast.makeText(context,"${Calendar.getInstance().time}", Toast.LENGTH_LONG).show()
+//        Toast.makeText(context,"${Calendar.getInstance().time}", Toast.LENGTH_LONG).show()
+
+        showLoading()
 
         val dbRef = FirebaseDatabase.getInstance().getReference("SubscriptionPayment")
         dbRef.addListenerForSingleValueEvent(object : ValueEventListener {

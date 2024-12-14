@@ -23,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.yogeshj.autoform.FirstScreenActivity
-import com.yogeshj.autoform.user.HomeScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.admin.users.changeUserData.ChangeUserDataActivity
 import com.yogeshj.autoform.authentication.User
@@ -32,6 +31,7 @@ import com.yogeshj.autoform.user.UserMainActivity
 import java.util.Date
 
 
+@Suppress("DEPRECATION")
 class ProfileInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileInfoBinding
     private lateinit var dbRef:DatabaseReference
@@ -57,6 +57,7 @@ class ProfileInfoActivity : AppCompatActivity() {
     private var currentUserUid:String?=null
     private var backToAdminScreen=false
 
+    @Deprecated("This method has been deprecated in favor of using the Activity Result API\n      which brings increased type safety via an {@link ActivityResultContract} and the prebuilt\n      contracts for common intents available in\n      {@link androidx.activity.result.contract.ActivityResultContracts}, provides hooks for\n      testing, and allow receiving results in separate, testable classes independent from your\n      activity. Use\n      {@link #registerForActivityResult(ActivityResultContract, ActivityResultCallback)}\n      with the appropriate {@link ActivityResultContract} and handling the result in the\n      {@link ActivityResultCallback#onActivityResult(Object) callback}.")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if(data!=null)

@@ -7,10 +7,8 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.view.Window
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -25,7 +23,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.yogeshj.autoform.admin.AdminMainActivity
 import com.yogeshj.autoform.uploadForm.UploadFormMainActivity
-import com.yogeshj.autoform.uploadForm.temporaryFiles.FormDetailsActivity
 import com.yogeshj.autoform.user.UserMainActivity
 
 //Admin@123
@@ -103,7 +100,7 @@ class FirstScreenActivity : AppCompatActivity() {
             })
 
             //go to upload form page if already logged in
-//            Log.d("EMAILC", auth.currentUser!!.email!!+" "+ auth.currentUser!!.uid)
+//            Log.d("EMAIL C", auth.currentUser!!.email!!+" "+ auth.currentUser!!.uid)
             val db2 = FirebaseDatabase.getInstance().getReference("UploadFormUsers")
             db2.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
