@@ -36,6 +36,8 @@ class ContactInformation : AppCompatActivity() {
         }
     }
 
+    private var currentUserUid:String?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityContactInformationBinding.inflate(layoutInflater)
@@ -57,6 +59,12 @@ class ContactInformation : AppCompatActivity() {
 
         FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
+        currentUserUid=intent.getStringExtra("uid")
+        if(currentUserUid==null)
+        {
+            currentUserUid=FirstScreenActivity.auth.currentUser!!.uid
+        }
+
         //Add address data
         val db = FirebaseDatabase.getInstance().getReference("UsersInfo")
         db.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -64,7 +72,7 @@ class ContactInformation : AppCompatActivity() {
                 if (snapshot.exists()) {
                     for (snap in snapshot.children) {
                         val currentUser = snap.getValue(User::class.java)!!
-                        if (currentUser.uid == FirstScreenActivity.auth.currentUser!!.uid) {
+                        if (currentUser.uid ==currentUserUid) {
                             binding.phone.setText(currentUser.phone)
                             binding.email.setText(currentUser.email)
                             val address = snap.child("address").getValue(String::class.java)
@@ -84,7 +92,7 @@ class ContactInformation : AppCompatActivity() {
         binding.back.setOnClickListener {
             showLoading()
 
-            val currentUserRef = db.child(FirstScreenActivity.auth.currentUser!!.uid)
+            val currentUserRef = db.child(currentUserUid!!)
             val updates = HashMap<String, Any>()
 
             if (binding.address.text.toString().isNotEmpty()) {

@@ -28,8 +28,10 @@ import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityReviewDataBinding
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import com.yogeshj.autoform.user.HomeScreenActivity
+import com.yogeshj.autoform.user.UserMainActivity
 import com.yogeshj.autoform.user.userFormFragment.profile.ProfileInfoActivity
 import org.json.JSONObject
+
 
 class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
     private lateinit var binding:ActivityReviewDataBinding
@@ -85,122 +87,13 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
             startActivity(Intent(this@ReviewDataActivity, ProfileInfoActivity::class.java))
         }
 
-
-
-        val db = FirebaseDatabase.getInstance().getReference("UploadForm")
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (snap in snapshot.children) {
-                        for (examSnap in snap.children) {
-                            if (examName == examSnap.key) {
-                                val currentExam = examSnap.getValue(FormDetails::class.java)!!
-
-                                examHostName = currentExam.examHostName!!
-                                fees = currentExam.fees
-                                examId = currentExam.uid!!
-
-                                Glide.with(this@ReviewDataActivity)
-                                    .load(currentExam.icon)
-                                    .apply(RequestOptions.circleCropTransform())
-                                    .into(binding.profilePic)
-
-
-
-
-                                val appFormDetailsSnap = examSnap.child("Application Form Details")
-                                for (detailSnap in appFormDetailsSnap.children) {
-                                    val detail = detailSnap.getValue(String::class.java)
-                                    if (detail != null) {
-                                        requiredDetails.add(detail.lowercase())
-                                    }
-                                }
-                                break
-                            }
-                        }
-                    }
-                    makeEditText()
-                }
-                hideLoading()
+        fetchExamDetails{
+            fetchUserProfileData{
+                validateAndDisplayData()
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                hideLoading()
-            }
-        })
+        }
 
 
-        val dbRef = FirebaseDatabase.getInstance().getReference("UsersInfo").child(
-            FirstScreenActivity.auth.currentUser!!.uid)
-
-        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val userKeys=HashSet<String>()
-                var dob=""
-                var gender=""
-                if(snapshot.exists()){
-
-                    for(child in snapshot.children){
-                        val key=child.key
-                        val value=child.getValue(String::class.java)
-
-                        if(key=="name")
-                            binding.name.text=value
-                        if(key=="dob")
-                            dob=value!!
-                        if(key=="gender")
-                            gender=value!!
-                        if(key=="phone")
-                            binding.phone.text=value
-                        if(key=="email")
-                            binding.email.text=value
-                        if(key=="profilePic") {
-                            Glide.with(this@ReviewDataActivity)
-                                .load(value)
-                                .placeholder(R.drawable.user_icon)
-                                .error(R.drawable.user_icon)
-                                .apply(RequestOptions.circleCropTransform())
-                                .into(binding.profilePic)
-                        }
-                        Log.d("FirebaseFields", "Key: $key, Value: $value")
-
-                        if(key!=null && value!=null) {
-                            userKeys.add(key)
-                            userDetails.put(key,value)
-                        }
-
-                        editTextMap[key]?.setText(value)
-                        editTextMap[key]?.isEnabled=false
-
-                    }
-                    binding.dobGender.text = "$dob $gender"
-                    requiredDetails.removeAll(userKeys)
-
-                    if(requiredDetails.size>0)
-                    {
-                        for(key in requiredDetails)
-                            Log.d("req",key)
-                        binding.moreDetailsRequiredLayout.visibility=View.VISIBLE
-                        binding.moreDetailsRequiredLayout.animate().alpha(1f).translationX(0f).setDuration(700).setStartDelay(500).start()
-                        binding.payBtn.visibility=View.GONE
-//                        binding.saveBtn.visibility=View.VISIBLE
-                    }
-                    else
-                    {
-                        Toast.makeText(this@ReviewDataActivity,"Make sure your profile is fully updated!",Toast.LENGTH_LONG).show()
-                        binding.payBtn.visibility=View.VISIBLE
-                        binding.payBtn.animate().alpha(1f).setDuration(700).setStartDelay(800).start()
-                        binding.moreDetailsRequiredLayout.visibility=View.GONE
-//                        binding.saveBtn.visibility=View.GONE
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("FirebaseError", "Error retrieving data", error.toException())
-                hideLoading()
-            }
-        })
 
         binding.addDataWarning.setOnClickListener {
             val intent=Intent(this@ReviewDataActivity, AdditionalDetailsRequiredActivity::class.java)
@@ -222,6 +115,113 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
             initPayment()
         }
     }
+
+    private fun fetchExamDetails(onComplete: () -> Unit) {
+        val db = FirebaseDatabase.getInstance().getReference("UploadForm")
+        db.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (snap in snapshot.children) {
+                        for (examSnap in snap.children) {
+                            if (examName == examSnap.key) {
+                                val currentExam = examSnap.getValue(FormDetails::class.java)!!
+                                examHostName = currentExam.examHostName!!
+                                fees = currentExam.fees
+                                examId = currentExam.uid!!
+
+                                val appFormDetailsSnap = examSnap.child("Application Form Details")
+                                for (detailSnap in appFormDetailsSnap.children) {
+                                    val detail = detailSnap.getValue(String::class.java)
+                                    if (detail != null) {
+                                        requiredDetails.add(detail.lowercase())
+                                    }
+                                }
+                                break
+                            }
+                        }
+                    }
+                    makeEditText()
+                }
+                onComplete()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FirebaseError", "Error retrieving exam details", error.toException())
+                hideLoading()
+            }
+        })
+    }
+
+
+    private fun fetchUserProfileData(onComplete: () -> Unit) {
+        val dbRef = FirebaseDatabase.getInstance().getReference("UsersInfo")
+            .child(FirebaseAuth.getInstance().currentUser!!.uid)
+
+        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val userKeys = HashSet<String>()
+                var dob = ""
+                var gender = ""
+
+                if (snapshot.exists()) {
+                    for (child in snapshot.children) {
+                        val key = child.key
+                        val value = child.getValue(String::class.java)
+
+                        when (key) {
+                            "name" -> binding.name.text = value
+                            "dob" -> dob = value!!
+                            "gender" -> gender = value!!
+                            "phone" -> binding.phone.text = value
+                            "email" -> binding.email.text = value
+                            "profilePic" -> Glide.with(this@ReviewDataActivity)
+                                .load(value)
+                                .placeholder(R.drawable.user_icon)
+                                .error(R.drawable.user_icon)
+                                .apply(RequestOptions.circleCropTransform())
+                                .into(binding.profilePic)
+                        }
+
+                        Log.d("FirebaseFields", "Key: $key, Value: $value")
+
+                        if(key!=null && value!=null) {
+                            userKeys.add(key)
+                            userDetails.put(key,value)
+                        }
+
+                        editTextMap[key]?.setText(value)
+                        editTextMap[key]?.isEnabled=false
+
+                    }
+                    binding.dobGender.text = "$dob $gender"
+                    requiredDetails.removeAll(userKeys)
+                }
+
+                onComplete() // Proceed to next operation
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FirebaseError", "Error retrieving user profile data", error.toException())
+                hideLoading()
+            }
+        })
+    }
+
+    private fun validateAndDisplayData() {
+        hideLoading()
+        if (requiredDetails.isNotEmpty()) {
+            for (key in requiredDetails) Log.d("req", key)
+            binding.moreDetailsRequiredLayout.visibility = View.VISIBLE
+            binding.moreDetailsRequiredLayout.animate().alpha(1f).translationX(0f)
+                .setDuration(700).setStartDelay(500).start()
+            binding.payBtn.visibility = View.GONE
+        } else {
+            binding.payBtn.visibility = View.VISIBLE
+            binding.payBtn.animate().alpha(1f).setDuration(700).setStartDelay(800).start()
+            binding.moreDetailsRequiredLayout.visibility = View.GONE
+        }
+    }
+
 
     private fun extractFormData(): Map<String, String> {
         return editTextMap.mapValues { entry ->
@@ -303,7 +303,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
                         )
                             .show()
                         hideLoading()
-                        val intent = Intent(this@ReviewDataActivity, HomeScreenActivity::class.java)
+                        val intent = Intent(this@ReviewDataActivity, UserMainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                         startActivity(intent)
                         finish()

@@ -60,8 +60,7 @@ class UsersFragment : Fragment() {
 
                         val userInfo = snap.getValue(UploadFormSignUpModel::class.java)!!
                         val profilePicUrl = snap.child("profilePic").value?.toString()?: ""
-                        dataList.add(AdminUsersModel(profilePicUrl,userInfo.headName.toString(),userInfo.instituteMailId.toString()))
-
+                        dataList.add(AdminUsersModel(profilePicUrl,userInfo.headName.toString(),userInfo.loginMailId.toString(),false))
                     }
                     myAdapter.notifyDataSetChanged()
                 }
@@ -85,7 +84,7 @@ class UsersFragment : Fragment() {
 
                         val userInfo = snap.getValue(User::class.java)!!
                         val profilePicUrl = snap.child("profilePic").value?.toString()?: R.drawable.user_icon.toString()
-                        dataList.add(AdminUsersModel(profilePicUrl,userInfo.name.toString(),userInfo.email.toString()))
+                        dataList.add(AdminUsersModel(profilePicUrl,userInfo.name.toString(),userInfo.email.toString(),true))
 
                     }
                     myAdapter.notifyDataSetChanged()

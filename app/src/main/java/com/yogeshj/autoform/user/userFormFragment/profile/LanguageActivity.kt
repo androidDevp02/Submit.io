@@ -36,6 +36,8 @@ class LanguageActivity : AppCompatActivity() {
         }
     }
 
+    private var currentUserUid:String?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityLanguageBinding.inflate(layoutInflater)
@@ -58,6 +60,11 @@ class LanguageActivity : AppCompatActivity() {
 
         FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
+        currentUserUid=intent.getStringExtra("uid")
+        if(currentUserUid==null)
+        {
+            currentUserUid=FirstScreenActivity.auth.currentUser!!.uid
+        }
 
         val db = FirebaseDatabase.getInstance().getReference("UsersInfo")
         db.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -65,7 +72,7 @@ class LanguageActivity : AppCompatActivity() {
                 if (snapshot.exists()) {
                     for (snap in snapshot.children) {
                         val currentUser = snap.getValue(User::class.java)!!
-                        if (currentUser.uid == FirstScreenActivity.auth.currentUser!!.uid) {
+                        if (currentUser.uid ==currentUserUid) {
                             val language1=snap.child("language1").getValue(String::class.java)
                             if (language1!=null) {
                                 binding.language1.setText(language1)
@@ -125,7 +132,7 @@ class LanguageActivity : AppCompatActivity() {
     }
     private fun addToDB(key: String, value: String) {
         val db = FirebaseDatabase.getInstance().getReference("UsersInfo")
-        val currentUserRef = db.child(FirstScreenActivity.auth.currentUser!!.uid)
+        val currentUserRef = db.child(currentUserUid!!)
         val updates = HashMap<String, Any>()
         updates[key]=value
         currentUserRef.updateChildren(updates).addOnSuccessListener {

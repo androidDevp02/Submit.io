@@ -37,6 +37,8 @@ class EducationActivity : AppCompatActivity() {
         }
     }
 
+    private var currentUserUid:String?=null
+
     override fun onResume() {
         super.onResume()
         val edu=resources.getStringArray(R.array.education_level)
@@ -64,13 +66,19 @@ class EducationActivity : AppCompatActivity() {
         showLoading()
         FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
+        currentUserUid=intent.getStringExtra("uid")
+        if(currentUserUid==null)
+        {
+            currentUserUid=FirstScreenActivity.auth.currentUser!!.uid
+        }
+
         val db = FirebaseDatabase.getInstance().getReference("UsersInfo")
         db.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (snap in snapshot.children) {
                         val currentUser = snap.getValue(User::class.java)!!
-                        if (currentUser.uid == FirstScreenActivity.auth.currentUser!!.uid) {
+                        if (currentUser.uid ==currentUserUid) {
                             val edu_lvl=snap.child("education_level").getValue(String::class.java)
                             if (edu_lvl!=null) {
                                 binding.educationalLvl.setText(edu_lvl)
@@ -141,7 +149,7 @@ class EducationActivity : AppCompatActivity() {
 
     private fun addToDB(key: String, value: String) {
         val db = FirebaseDatabase.getInstance().getReference("UsersInfo")
-        val currentUserRef = db.child(FirstScreenActivity.auth.currentUser!!.uid)
+        val currentUserRef = db.child(currentUserUid!!)
         val updates = HashMap<String, Any>()
         updates[key]=value
         currentUserRef.updateChildren(updates).addOnSuccessListener {

@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.yogeshj.autoform.R
+import com.yogeshj.autoform.admin.forms.changeFormDetails.ChangeFormDetailsActivity
 import com.yogeshj.autoform.databinding.AdminFormsRvItemBinding
+import com.yogeshj.autoform.uploadForm.pastFormsFragment.viewRegisteredStudents.ViewRegisteredActivity
 
 
 class AdminFormsAdapter(private var dataList: ArrayList<AdminFormsModel>, var context: Context) :
@@ -61,13 +63,19 @@ class AdminFormsAdapter(private var dataList: ArrayList<AdminFormsModel>, var co
         holder.binding.feesInfo.text="${dataList[position].fees}"
 
         holder.binding.viewFormButton.setOnClickListener {
-//            val intent= Intent(context, ExamDetailsActivity::class.java)
-//            intent.putExtra("heading",dataList[position].examName)
-//            intent.putExtra("subheading",dataList[position].examHost)
-//            intent.putExtra("registered",dataList[position].registered)
-//            intent.putExtra("fees",dataList[position].fees)
-//            intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
-//            context.startActivity(intent)
+            val intent= Intent(context, ChangeFormDetailsActivity::class.java)
+            intent.putExtra("examName",dataList[position].examName)
+            intent.putExtra("examHostName",dataList[position].examHost)
+            intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
+        }
+
+        holder.binding.markAsAppliedButton.setOnClickListener {
+            val intent= Intent(context, ViewRegisteredActivity::class.java)
+            intent.putExtra("heading",dataList[position].examName)
+//            intent.putExtra("examHostName",dataList[position].examHost)
+            intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
         }
     }
 }

@@ -1,12 +1,16 @@
 package com.yogeshj.autoform.admin.users
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.yogeshj.autoform.R
+import com.yogeshj.autoform.admin.users.changeUserData.ChangeUploadFormUserDataActivity
+import com.yogeshj.autoform.admin.users.changeUserData.ChangeUserDataActivity
 import com.yogeshj.autoform.databinding.AdminUsersRvItemBinding
+import com.yogeshj.autoform.user.userFormFragment.profile.UpdateProfileActivity
 
 
 class AdminUsersAdapter(private var dataList: ArrayList<AdminUsersModel>, var context: Context) :
@@ -32,13 +36,21 @@ class AdminUsersAdapter(private var dataList: ArrayList<AdminUsersModel>, var co
 
 
         holder.itemView.setOnClickListener {
-//            val intent= Intent(context, ExamDetailsActivity::class.java)
-//            intent.putExtra("heading",dataList[position].examName)
-//            intent.putExtra("subheading",dataList[position].examHost)
-//            intent.putExtra("registered",dataList[position].registered)
-//            intent.putExtra("fees",dataList[position].fees)
-//            intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK
-//            context.startActivity(intent)
+            if(dataList[position].isNormalUser)
+            {
+                val intent= Intent(context, ChangeUserDataActivity::class.java)
+                intent.putExtra("name",dataList[position].name)
+                intent.putExtra("email",dataList[position].email)
+                intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
+            }
+            else{
+                val intent= Intent(context, ChangeUploadFormUserDataActivity::class.java)
+                intent.putExtra("email",dataList[position].email)
+                intent.flags= Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
+            }
+
         }
     }
 

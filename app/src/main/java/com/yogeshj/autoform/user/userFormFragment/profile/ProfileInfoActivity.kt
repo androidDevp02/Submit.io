@@ -25,6 +25,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.user.HomeScreenActivity
 import com.yogeshj.autoform.R
+import com.yogeshj.autoform.admin.users.changeUserData.ChangeUserDataActivity
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityProfileInfoBinding
 import com.yogeshj.autoform.user.UserMainActivity
@@ -52,6 +53,9 @@ class ProfileInfoActivity : AppCompatActivity() {
             handler.postDelayed(this, adInterval)
         }
     }
+
+    private var currentUserUid:String?=null
+    private var backToAdminScreen=false
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
@@ -99,6 +103,13 @@ class ProfileInfoActivity : AppCompatActivity() {
         database=FirebaseDatabase.getInstance()
         storage=FirebaseStorage.getInstance()
 
+        currentUserUid=intent.getStringExtra("uid")
+        backToAdminScreen=intent.getBooleanExtra("backToAdminScreen",false)
+        if(currentUserUid==null)
+        {
+            currentUserUid=FirstScreenActivity.auth.currentUser!!.uid
+        }
+
         binding.uploadButton.setOnClickListener {
             val intent=Intent()
             intent.action=Intent.ACTION_GET_CONTENT
@@ -114,7 +125,7 @@ class ProfileInfoActivity : AppCompatActivity() {
                     for (snap in snapshot.children) {
                         val profilePicUrl = snap.child("profilePic").value?.toString()
                         val curr = snap.getValue(User::class.java)
-                        if (curr!=null && curr.uid== FirstScreenActivity.auth.currentUser!!.uid) {
+                        if (curr!=null && curr.uid==currentUserUid) {
                             currentUser=curr
                             binding.name.setText(currentUser.name)
                             binding.email.setText(currentUser.email)
@@ -138,7 +149,7 @@ class ProfileInfoActivity : AppCompatActivity() {
                     for (snap in snapshot.children) {
                         val profilePicUrl = snap.child("profilePic").value?.toString()
                         val curr = snap.getValue(User::class.java)
-                        if (curr!=null && curr.uid== FirstScreenActivity.auth.currentUser!!.uid) {
+                        if (curr!=null && curr.uid==currentUserUid) {
                             currentUser=curr
                             binding.name.setText(currentUser.name)
                             binding.email.setText(currentUser.email)
@@ -181,15 +192,23 @@ class ProfileInfoActivity : AppCompatActivity() {
                         if(it.isSuccessful){
                             reference.downloadUrl.addOnSuccessListener { uri ->
                                 dbRef = FirebaseDatabase.getInstance().getReference("UsersInfo")
-                                dbRef.child(currentUser.uid!!).child("uid").setValue(FirstScreenActivity.auth.currentUser!!.uid)
+                                dbRef.child(currentUser.uid!!).child("uid").setValue(currentUserUid)
                                 dbRef.child(currentUser.uid!!).child("phone").setValue(binding.phone.text.toString())
                                 dbRef.child(currentUser.uid!!).child("dob").setValue(binding.dob.text.toString())
                                 dbRef.child(currentUser.uid!!).child("gender").setValue(binding.gender.text.toString())
                                 dbRef.child(currentUser.uid!!).child("state").setValue(binding.state.text.toString())
                                 dbRef.child(currentUser.uid!!).child("profilePic").setValue(uri.toString())
                                 hideLoading()
-                                startActivity(Intent(this@ProfileInfoActivity, UserMainActivity::class.java))
-                                finish()
+                                if(backToAdminScreen)
+                                {
+                                    startActivity(Intent(this@ProfileInfoActivity, ChangeUserDataActivity::class.java))
+                                    finish()
+                                }
+                                else {
+                                    startActivity(Intent(this@ProfileInfoActivity, UserMainActivity::class.java))
+                                    finish()
+                                }
+
                             }
                         }
                         else {
@@ -211,8 +230,15 @@ class ProfileInfoActivity : AppCompatActivity() {
                     dbRef.child(currentUser.uid!!).child("gender").setValue(binding.gender.text.toString())
                     dbRef.child(currentUser.uid!!).child("state").setValue(binding.state.text.toString())
                     hideLoading()
-                    startActivity(Intent(this@ProfileInfoActivity, UserMainActivity::class.java))
-                    finish()
+                    if(backToAdminScreen)
+                    {
+//                        startActivity(Intent(this@ProfileInfoActivity, ChangeUserDataActivity::class.java))
+                        finish()
+                    }
+                    else {
+                        startActivity(Intent(this@ProfileInfoActivity, UserMainActivity::class.java))
+                        finish()
+                    }
                 }
             }
         }
