@@ -10,10 +10,10 @@
     <string name="issuer_txt">Issuer</string>
     <string name="awarded_date_txt">Awarded Date</string>
     <string name="education_level_txt">Education Level</string>
-    <string name="course_txt">Course</string>
-    <string name="college_school_txt">College/School</string>
-    <string name="from_txt">From</string>
-    <string name="to_txt">To</string>
+    <string name="course_txt">Course/Degree</string>
+    <string name="college_school_txt">College/School Name</string>
+    <string name="from_txt">From(YYYY)</string>
+    <string name="to_txt">To(YYYY)</string>
     <string name="percentage_cgpa_txt">Percentage/CGPA</string>
     <string name="education_txt">Education</string>
     <string name="user_name_txt">User Name</string>
@@ -52,7 +52,46 @@
         <item>National Defence Academy</item>
         <item>Indian Statistical Service</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string-array name="state">
+        <item>Andhra Pradesh</item>
+        <item>Arunachal Pradesh</item>
+        <item>Assam</item>
+        <item>Bihar</item>
+        <item>Chhattisgarh</item>
+        <item>Goa</item>
+        <item>Gujarat</item>
+        <item>Haryana</item>
+        <item>Himachal Pradesh</item>
+        <item>Jammu and Kashmir</item>
+        <item>Jharkhand</item>
+        <item>Karnataka</item>
+        <item>Kerala</item>
+        <item>Madhya Pradesh</item>
+        <item>Maharashtra</item>
+        <item>Manipur</item>
+        <item>Meghalaya</item>
+        <item>Mizoram</item>
+        <item>Nagaland</item>
+        <item>Odisha</item>
+        <item>Punjab</item>
+        <item>Rajasthan</item>
+        <item>Sikkim</item>
+        <item>Tamil Nadu</item>
+        <item>Telangana</item>
+        <item>Tripura</item>
+        <item>Uttar Pradesh</item>
+        <item>Uttarakhand</item>
+        <item>West Bengal</item>
+    </string-array>
+
+    <string-array name="proficiency">
+        <item>Beginner</item>
+        <item>Intermediate</item>
+        <item>Advanced</item>
+        <item>Native</item>
+    </string-array>
+
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="exam_category_txt">Exam Category</string>
     <string name="form_status_txt">Form Status</string>

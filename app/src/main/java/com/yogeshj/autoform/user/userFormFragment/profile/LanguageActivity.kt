@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.Window
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdRequest
@@ -37,6 +38,15 @@ class LanguageActivity : AppCompatActivity() {
     }
 
     private var currentUserUid:String?=null
+
+    override fun onResume() {
+        super.onResume()
+        val proficiency=resources.getStringArray(R.array.proficiency)
+        val arrayAdapter= ArrayAdapter(this@LanguageActivity,R.layout.dropdown_item,proficiency)
+        binding.proficiency1.setAdapter(arrayAdapter)
+        binding.proficiency2.setAdapter(arrayAdapter)
+        binding.proficiency3.setAdapter(arrayAdapter)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -111,18 +121,44 @@ class LanguageActivity : AppCompatActivity() {
             showLoading()
             if(binding.language1.text.toString().isNotEmpty() && binding.proficiency1.text.toString().isNotEmpty())
             {
-                addToDB("language1",binding.language1.text.toString())
-                addToDB("proficiency1",binding.proficiency1.text.toString())
+                if(resources.getStringArray(R.array.proficiency).contains(binding.proficiency1.text.toString())){
+                    addToDB("language1",binding.language1.text.toString())
+                    addToDB("proficiency1",binding.proficiency1.text.toString())
+                }
+                else
+                {
+                    hideLoading()
+                    Toast.makeText(this@LanguageActivity,"Please select a valid proficiency for ${binding.language1.text.toString()}",Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
             }
             if(binding.language2.text.toString().isNotEmpty() && binding.proficiency2.text.toString().isNotEmpty())
             {
-                addToDB("language2",binding.language2.text.toString())
-                addToDB("proficiency2",binding.proficiency2.text.toString())
+                if(resources.getStringArray(R.array.proficiency).contains(binding.proficiency2.text.toString())){
+                    addToDB("language2",binding.language2.text.toString())
+                    addToDB("proficiency2",binding.proficiency2.text.toString())
+                }
+                else
+                {
+                    hideLoading()
+                    Toast.makeText(this@LanguageActivity,"Please select a valid proficiency for ${binding.language2.text.toString()}",Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+
             }
             if(binding.language3.text.toString().isNotEmpty() && binding.proficiency3.text.toString().isNotEmpty())
             {
-                addToDB("language3",binding.language3.text.toString())
-                addToDB("proficiency3",binding.proficiency3.text.toString())
+                if(resources.getStringArray(R.array.proficiency).contains(binding.proficiency3.text.toString())){
+                    addToDB("language3",binding.language3.text.toString())
+                    addToDB("proficiency3",binding.proficiency3.text.toString())
+                }
+                else
+                {
+                    hideLoading()
+                    Toast.makeText(this@LanguageActivity,"Please select a valid proficiency for ${binding.language3.text.toString()}",Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+
             }
 
             hideLoading()

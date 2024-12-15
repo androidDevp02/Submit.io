@@ -3,8 +3,12 @@
     <style name="Base.Theme.AutoForm" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your light theme here. -->
          <item name="colorPrimary">#094CB3</item>
+        <item name="android:navigationBarColor">#646566</item>
     </style>
 
-    <style name="Theme.AutoForm" parent="Base.Theme.AutoForm" />
+    <style name="Theme.AutoForm" parent="Base.Theme.AutoForm" >
+        <item name="colorPrimary">#094CB3</item>
+        <item name="android:navigationBarColor">#646566</item>
+    </style>
 
 </resources>

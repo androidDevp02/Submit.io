@@ -109,8 +109,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:maxLength="50"
-                android:singleLine="true"
+                android:focusable="false"
+                android:enabled="false"
+                android:background="#BEBFC0"
                 android:textColor="#212121" />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>

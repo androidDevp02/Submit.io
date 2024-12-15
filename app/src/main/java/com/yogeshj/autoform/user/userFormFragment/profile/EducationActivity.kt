@@ -117,30 +117,63 @@ class EducationActivity : AppCompatActivity() {
             //complete it
         binding.back.setOnClickListener {
             showLoading()
-            if(binding.educationalLvl.text.toString().isNotEmpty())
+            if(binding.educationalLvl.text.toString().isNotEmpty() )
             {
-                addToDB("education_level",binding.educationalLvl.text.toString())
+                if(resources.getStringArray(R.array.education_level).contains(binding.educationalLvl.text.toString()))
+                    addToDB("education_level",binding.educationalLvl.text.toString())
+                else
+                {
+                    hideLoading()
+                    Toast.makeText(this@EducationActivity,"Please select a valid Educational Level",Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+                if(binding.course.text.toString().isNotEmpty())
+                {
+                    addToDB("course",binding.course.text.toString())
+                }
+                else{
+                    hideLoading()
+                    Toast.makeText(this@EducationActivity,"Course cannot be empty",Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+                if(binding.college.text.toString().isNotEmpty())
+                {
+                    addToDB("school",binding.college.text.toString())
+                }
+                else{
+                    hideLoading()
+                    Toast.makeText(this@EducationActivity,"College name cannot be empty",Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+                if(binding.from.text.toString().isNotEmpty())
+                {
+                    addToDB("from",binding.from.text.toString())
+                }
+                else{
+                    hideLoading()
+                    Toast.makeText(this@EducationActivity,"Please Enter the start year.",Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+                if(binding.to.text.toString().isNotEmpty())
+                {
+                    addToDB("to",binding.to.text.toString())
+                }
+                else{
+                    hideLoading()
+                    Toast.makeText(this@EducationActivity,"Please enter the end year.",Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
+                if(binding.percentageCgpa.text.toString().isNotEmpty())
+                {
+                    addToDB("cgpa",binding.percentageCgpa.text.toString())
+                }
+                else{
+                    hideLoading()
+                    Toast.makeText(this@EducationActivity,"Please enter your percentage/CGPA.",Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
             }
-            if(binding.course.text.toString().isNotEmpty())
-            {
-                addToDB("course",binding.course.text.toString())
-            }
-            if(binding.college.text.toString().isNotEmpty())
-            {
-                addToDB("school",binding.college.text.toString())
-            }
-            if(binding.from.text.toString().isNotEmpty())
-            {
-                addToDB("from",binding.from.text.toString())
-            }
-            if(binding.to.text.toString().isNotEmpty())
-            {
-                addToDB("to",binding.to.text.toString())
-            }
-            if(binding.percentageCgpa.text.toString().isNotEmpty())
-            {
-                addToDB("cgpa",binding.percentageCgpa.text.toString())
-            }
+
             hideLoading()
             Toast.makeText(this@EducationActivity,"Details Saved Successfully", Toast.LENGTH_LONG).show()
             finish()

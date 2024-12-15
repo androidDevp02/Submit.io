@@ -86,6 +86,11 @@ class UserSignUpActivity : AppCompatActivity() {
                 Snackbar.make(binding.root,"Name, Email or password cannot be empty.",Snackbar.LENGTH_LONG).show()
                 return@setOnClickListener
             }
+            else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                hideLoading()
+                Toast.makeText(this@UserSignUpActivity,"Enter a valid email address",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
 
             FirstScreenActivity.auth.createUserWithEmailAndPassword(email, password)
