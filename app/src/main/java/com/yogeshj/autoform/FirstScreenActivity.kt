@@ -9,9 +9,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import android.view.Window
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -26,8 +24,6 @@ import com.google.android.gms.ads.MobileAds
 import com.yogeshj.autoform.admin.AdminMainActivity
 import com.yogeshj.autoform.uploadForm.UploadFormMainActivity
 import com.yogeshj.autoform.user.UserMainActivity
-import com.yogeshj.autoform.user.notifications.Notification
-import com.yogeshj.autoform.user.notifications.NotificationService
 
 //Admin@123
 //5267 3181 8797 5449
@@ -56,13 +52,6 @@ class FirstScreenActivity : AppCompatActivity() {
         binding=ActivityFirstScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        val serviceIntent = Intent(this, NotificationService::class.java)
-        startService(serviceIntent)
-
-//        val notification=Notification(this)
-//        notification.showNotification("New form","New form is uploaded")
-//        Toast.makeText(this,"firstActivity",Toast.LENGTH_LONG).show()
         MobileAds.initialize(this) {}
         handler.post(loadAdRunnable)
 
