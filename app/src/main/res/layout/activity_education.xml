@@ -94,7 +94,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:singleLine="true"
                 android:textColor="#212121" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,49 +112,64 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
-                android:maxLength="50"
-                android:singleLine="true"
                 android:textColor="#212121" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/from_txt"
-            android:layout_marginBottom="16dp"
-            app:boxStrokeColor="#3F51B5"
-            app:startIconDrawable="@drawable/date_icon"
-            app:startIconTint="#3F51B5">
+            android:layout_marginBottom="16dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/from"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/from_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="date"
-                android:maxLength="10"
-                android:singleLine="true"
-                android:textColor="#212121" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/to_txt"
-            android:layout_marginBottom="16dp"
-            app:boxStrokeColor="#3F51B5"
-            app:startIconDrawable="@drawable/date_icon"
-            app:startIconTint="#3F51B5">
+                android:hint="@string/from_txt"
+                app:boxStrokeColor="#3F51B5"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/to_layout"
+                app:startIconDrawable="@drawable/date_icon"
+                app:startIconTint="#3F51B5"
+                android:layout_marginHorizontal="2dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/to"
-                android:layout_width="match_parent"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/from"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:singleLine="true"
+                    android:textColor="#212121" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/to_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:maxLength="50"
-                android:singleLine="true"
-                android:textColor="#212121" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:layout_constraintStart_toEndOf="@id/from_layout"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:hint="@string/to_txt"
+                app:boxStrokeColor="#3F51B5"
+                app:startIconDrawable="@drawable/date_icon"
+                app:startIconTint="#3F51B5"
+                android:layout_marginHorizontal="2dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:singleLine="true"
+                    android:textColor="#212121" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -172,7 +186,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:maxLength="50"
+                android:maxLength="10"
                 android:singleLine="true"
                 android:textColor="#212121" />
         </com.google.android.material.textfield.TextInputLayout>

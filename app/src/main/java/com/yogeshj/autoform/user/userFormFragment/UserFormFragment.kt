@@ -212,7 +212,7 @@ class UserFormFragment : Fragment() {
                             if (currentUser!=null && childCategory!=null && category.contains(childCategory)) {
 
                                 val deadlineStr = currentUser.deadline
-                                val examDeadline = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(deadlineStr)
+                                val examDeadline = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(deadlineStr!!)
                                 val currentDate = Calendar.getInstance().time
 
                                 if (examDeadline != null) {

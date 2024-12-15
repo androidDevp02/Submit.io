@@ -3,30 +3,29 @@ package com.yogeshj.autoform.user.notifications
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
-import android.os.Build
+import android.util.Log
+import android.widget.Toast
 import com.google.firebase.database.*
+import com.yogeshj.autoform.FirstScreenActivity
+import com.yogeshj.autoform.authentication.User
+import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 
 class NotificationService : Service() {
 
     companion object {
         const val CHANNEL_ID = "NotificationServiceChannel"
-        lateinit var database: DatabaseReference
     }
 
     override fun onCreate() {
         super.onCreate()
-        // Optional: Create the notification channel (not required for background service)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createNotificationChannel()
-        }
-
-        // Initialize Firebase Database
-        database = FirebaseDatabase.getInstance().reference
+        Log.d("NotificationService", "Service created")
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         // Listen for real-time database changes
         listenForDatabaseChanges()
+//        Toast.makeText(this, "Notification Service Started", Toast.LENGTH_LONG).show()
+        Log.d("NotificationService", "Service is running")
 
         // Return sticky so service keeps running
         return START_STICKY
@@ -39,72 +38,62 @@ class NotificationService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        // Cleanup or shutdown code if necessary
+        Log.d("NotificationService", "Service destroyed")
     }
 
-    private fun listenForDatabaseChanges() {
-        // Listen to changes in "UploadForm" node
-        val uploadFormRef = database.child("UploadForm")
-
-        uploadFormRef.addChildEventListener(object : ChildEventListener {
-            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                // Handle new form added to the database
-                val formData = snapshot.getValue(Form::class.java)
-                formData?.let {
-                    // Show notification for new form with both title and message
-                    showCustomNotification("New Form Added", "Form Title: ${it.formTitle}")
+    private fun findFieldOfInterestCategories(callback: (Set<String>) -> Unit) {
+        val category = HashSet<String>()
+        val db2 = FirebaseDatabase.getInstance().getReference("UsersInfo")
+        db2.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (snap in snapshot.children) {
+                        val currentUser = snap.getValue(User::class.java)
+                        if (currentUser != null && FirstScreenActivity.auth.currentUser?.uid == currentUser.uid) {
+                            currentUser.field1?.let { category.add(it.toString()) }
+                            currentUser.field2?.let { category.add(it.toString()) }
+                            currentUser.field3?.let { category.add(it.toString()) }
+                        }
+                    }
                 }
-            }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                // Handle form update
-                val updatedForm = snapshot.getValue(Form::class.java)
-                updatedForm?.let {
-                    // Show notification for form update with both title and message
-                    showCustomNotification("Form Updated", "Form Title: ${it.formTitle}")
-                }
-            }
-
-            override fun onChildRemoved(snapshot: DataSnapshot) {
-                // Handle form removal
-                val removedForm = snapshot.getValue(Form::class.java)
-                removedForm?.let {
-                    // Show notification for removed form with both title and message
-                    showCustomNotification("Form Removed", "Form Title: ${it.formTitle}")
-                }
-            }
-
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                // You can skip handling onChildMoved if you don't need it
+                callback(category)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle cancellation (e.g., permission issues)
+                Log.e("findFieldOfInterest", "Database error: ${error.message}")
+                callback(emptySet())
             }
         })
     }
 
-    private fun showCustomNotification(title: String, message: String) {
-        // Assuming you have a custom Notification class with a method to show notifications
-        val notification = Notification(this) // Replace with your custom class
-        notification.showNotification(title, message)
-    }
+    private fun listenForDatabaseChanges() {
+        val db = FirebaseDatabase.getInstance().getReference("UploadForm")
 
-    private fun createNotificationChannel() {
-        // Create the channel only if necessary (for devices with API level >= 26)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "Form Notifications"
-            val descriptionText = "Notifications for form changes"
-            val importance = android.app.NotificationManager.IMPORTANCE_DEFAULT
-            val channel = android.app.NotificationChannel(CHANNEL_ID, name, importance).apply {
-                description = descriptionText
+        db.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    findFieldOfInterestCategories { category ->
+                        for (snap in snapshot.children) {
+                            for (examSnap in snap.children) {
+                                val currentUser = examSnap.getValue(FormDetails::class.java)
+                                val childCategory = examSnap.child("category").getValue(String::class.java)
+                                if (currentUser != null && childCategory != null && category.contains(childCategory)) {
+                                    val notification = Notification(applicationContext)
+                                    notification.sendNotification(
+                                        "New Form Uploaded",
+                                        "A new form is uploaded for you."
+                                    )
+                                    Log.d("DatabaseChange", "Change detected in ${examSnap.key} with category $childCategory")
+                                }
+                            }
+                        }
+                    }
+                }
             }
-            val notificationManager: android.app.NotificationManager =
-                getSystemService(android.content.Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
 
-    // Data class to represent form data structure
-    data class Form(val formTitle: String = "", val formDescription: String = "") // Replace with your actual form data structure
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("listenForDatabaseChanges", "Database error: ${error.message}")
+            }
+        })
+    }
 }

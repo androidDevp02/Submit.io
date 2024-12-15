@@ -99,8 +99,12 @@ class ContactInformation : AppCompatActivity() {
                 updates["address"] = binding.address.text.toString()
             }
 
-            if (binding.phone.text.toString().isNotEmpty()) {
+            if (binding.phone.text.toString().isNotEmpty() && binding.phone.text.toString().length==10) {
                 updates["phone"] = binding.phone.text.toString()
+            }
+            else{
+                Toast.makeText(this@ContactInformation,"Please enter a valid phone number",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
             }
 
             if (binding.email.text.toString().isNotEmpty()) {

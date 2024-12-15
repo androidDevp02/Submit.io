@@ -76,7 +76,13 @@ class FieldSelectActivity : AppCompatActivity() {
         }
 
         binding.continueBtn.setOnClickListener {
+            if(selectedFields.size==0){
+                Toast.makeText(this@FieldSelectActivity,"Please select at least 1 field",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+
             showLoading()
+
             val db = FirebaseDatabase.getInstance().getReference("Users")
             db.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -88,14 +94,14 @@ class FieldSelectActivity : AppCompatActivity() {
                                 dbRef = FirebaseDatabase.getInstance().getReference("UsersInfo")
 
                                 if(selectedFields.size == 0) {
-                                    dbRef.child(currentUser.uid!!).child("name").setValue(currentUser.name)
-                                    dbRef.child(currentUser.uid!!).child("email").setValue(currentUser.email)
-                                    dbRef.child(currentUser.uid!!)
-                                        .child("field1").setValue(null)
-                                    dbRef.child(currentUser.uid!!)
-                                        .child("field2").setValue(null)
-                                    dbRef.child(currentUser.uid!!)
-                                        .child("field3").setValue(null)
+//                                    dbRef.child(currentUser.uid!!).child("name").setValue(currentUser.name)
+//                                    dbRef.child(currentUser.uid!!).child("email").setValue(currentUser.email)
+//                                    dbRef.child(currentUser.uid!!)
+//                                        .child("field1").setValue(null)
+//                                    dbRef.child(currentUser.uid!!)
+//                                        .child("field2").setValue(null)
+//                                    dbRef.child(currentUser.uid!!)
+//                                        .child("field3").setValue(null)
                                 } else if (selectedFields.size == 1) {
                                     dbRef.child(currentUser.uid!!).child("name").setValue(currentUser.name)
                                     dbRef.child(currentUser.uid!!).child("email").setValue(currentUser.email)

@@ -122,7 +122,11 @@ class UploadFormLoginActivity : AppCompatActivity() {
                 Snackbar.make(binding.emailLogin,"Email or password cannot be empty.",Snackbar.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-
+            else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                hideLoading()
+                Toast.makeText(this@UploadFormLoginActivity,"Enter a valid email address",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
 
             val db = FirebaseDatabase.getInstance().getReference("UploadFormUsers")
             db.addValueEventListener(object : ValueEventListener {

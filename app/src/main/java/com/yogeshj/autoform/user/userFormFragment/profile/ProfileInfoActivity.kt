@@ -28,7 +28,9 @@ import com.yogeshj.autoform.admin.users.changeUserData.ChangeUserDataActivity
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityProfileInfoBinding
 import com.yogeshj.autoform.user.UserMainActivity
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 
 @Suppress("DEPRECATION")
@@ -74,7 +76,12 @@ class ProfileInfoActivity : AppCompatActivity() {
         val gender=resources.getStringArray(R.array.gender)
         val arrayAdapter= ArrayAdapter(this@ProfileInfoActivity,R.layout.dropdown_item,gender)
         binding.gender.setAdapter(arrayAdapter)
+
+        val states=resources.getStringArray(R.array.state)
+        val arrayAdapter2= ArrayAdapter(this@ProfileInfoActivity,R.layout.dropdown_item,states)
+        binding.state.setAdapter(arrayAdapter2)
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -180,10 +187,37 @@ class ProfileInfoActivity : AppCompatActivity() {
 
         binding.continueBtn.setOnClickListener {
             showLoading()
+
             if(binding.name.text.toString().isEmpty() || binding.phone.text.toString().isEmpty() || binding.email.text.toString().isEmpty() || binding.dob.text.toString().isEmpty() || binding.gender.text.toString().isEmpty() || binding.state.text.toString().isEmpty())
             {
                 hideLoading()
                 Toast.makeText(this@ProfileInfoActivity,"All fields are mandatory!",Toast.LENGTH_LONG).show()
+            }
+            else if(binding.phone.text.toString().length!=10)
+            {
+                hideLoading()
+                Toast.makeText(this@ProfileInfoActivity,"Phone number should be of 10 digits",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(binding.email.text.toString()).matches()){
+                hideLoading()
+                Toast.makeText(this@ProfileInfoActivity,"Enter a valid email address",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            else if(!isValidDate(binding.dob.text.toString(), "dd/MM/yyyy")){
+                hideLoading()
+                Toast.makeText(this@ProfileInfoActivity,"Enter a valid date of birth (DD/MM/YYYY)",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            else if (!resources.getStringArray(R.array.gender).contains(binding.gender.text.toString())) {
+                hideLoading()
+                Toast.makeText(this@ProfileInfoActivity, "Please select a valid gender", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            else if (!resources.getStringArray(R.array.state).contains(binding.state.text.toString())) {
+                hideLoading()
+                Toast.makeText(this@ProfileInfoActivity, "Please select a valid state", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
             }
             else
             {
@@ -242,6 +276,22 @@ class ProfileInfoActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun isValidDate(date: String, format: String): Boolean {
+        return try {
+            val sdf = SimpleDateFormat(format, Locale.getDefault())
+            sdf.isLenient = false
+            val parsedDate = sdf.parse(date)
+
+            // check if the date is not in the future
+            if (parsedDate != null && parsedDate.after(Date())) {
+                return false
+            }
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 

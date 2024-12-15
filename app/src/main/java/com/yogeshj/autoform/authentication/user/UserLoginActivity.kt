@@ -145,7 +145,13 @@ class UserLoginActivity : AppCompatActivity() {
                         hideLoading()
                         Toast.makeText(this@UserLoginActivity,it.localizedMessage,Toast.LENGTH_LONG).show()
                     }
-            }else {
+            }
+            else if(!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+                hideLoading()
+                Toast.makeText(this@UserLoginActivity,"Enter a valid email address",Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            }
+            else {
 
                 showLoading()
                 val db = FirebaseDatabase.getInstance().getReference("Users")

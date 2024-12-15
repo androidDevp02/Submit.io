@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:title="Forms"
+<item android:title="Home"
     android:id="@+id/userForms"
-    android:icon="@drawable/ic_form"/>
+    android:icon="@drawable/ic_home"/>
 <item android:title="Applied Forms"
     android:id="@+id/applied_forms"
     android:icon="@drawable/applied_forms"/>

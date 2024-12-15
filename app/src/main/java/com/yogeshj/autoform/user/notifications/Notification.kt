@@ -11,7 +11,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
-class Notification(private val context: Context) {
+class Notification(private val context: Context?) {
 
     companion object {
         const val CHANNEL_ID = "user_notifications"
@@ -20,19 +20,26 @@ class Notification(private val context: Context) {
     // Method to create a notification channel
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createNotificationChannel() {
+        if (context == null) return
         val name = "User Notifications"
         val descriptionText = "Notifications for user activities"
         val importance = NotificationManager.IMPORTANCE_DEFAULT
         val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
             description = descriptionText
         }
-        val notificationManager: NotificationManager =
-            context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as? NotificationManager
+        notificationManager?.createNotificationChannel(channel)
     }
 
     // Method to send a notification with a dynamic title and message
-    fun sendNotification(title: String, message: String) {
+    fun sendNotification(title: String?, message: String?) {
+        if (context == null) return
+
+        // Validate title and message
+        if (title.isNullOrEmpty() || message.isNullOrEmpty()) {
+            return // Skip sending notification if title or message is empty
+        }
+
         // Check for POST_NOTIFICATIONS permission on Android 13 and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (ActivityCompat.checkSelfPermission(
@@ -40,26 +47,27 @@ class Notification(private val context: Context) {
                     Manifest.permission.POST_NOTIFICATIONS
                 ) != PackageManager.PERMISSION_GRANTED
             ) {
-                // Request the permission here if not granted
+                // Log or request permission here
                 return
             }
         }
 
         // Set up the notification
-//        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-//            .setSmallIcon(android.R.drawable.ic_dialog_info) // Change icon as needed
-//            .setContentTitle(title) // Use passed title
-//            .setContentText(message) // Use passed message
-//            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+        val builder = NotificationCompat.Builder(context, CHANNEL_ID)
+            .setSmallIcon(android.R.drawable.ic_dialog_info) // Change icon as needed
+            .setContentTitle(title) // Use passed title
+            .setContentText(message) // Use passed message
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
         // Send the notification
-//        with(NotificationManagerCompat.from(context)) {
-////            notify(System.currentTimeMillis().toInt(), builder.build())
-//        }
+        val notificationManager = NotificationManagerCompat.from(context)
+        notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
     }
 
     // Public method to handle sending notifications
-    fun showNotification(title: String, message: String) {
+    fun showNotification(title: String?, message: String?) {
+        if (context == null) return
+
         // Create the notification channel if needed (only on devices with API level >= 26)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             createNotificationChannel()

@@ -91,22 +91,21 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Proficiency"
             android:layout_marginBottom="16dp"
             app:boxStrokeColor="#3F51B5"
+            app:hintTextColor="@color/black"
             app:startIconDrawable="@drawable/phone_icon"
             app:startIconTint="#3F51B5">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/proficiency1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textColor="#212121" />
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -129,22 +128,21 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Proficiency"
             android:layout_marginBottom="16dp"
             app:boxStrokeColor="#3F51B5"
+            app:hintTextColor="@color/black"
             app:startIconDrawable="@drawable/date_icon"
             app:startIconTint="#3F51B5">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/proficiency2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textColor="#212121" />
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -166,22 +164,21 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Proficiency"
             android:layout_marginBottom="16dp"
             app:boxStrokeColor="#3F51B5"
+            app:hintTextColor="@color/black"
             app:startIconDrawable="@drawable/state_icon"
             app:startIconTint="#3F51B5">
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/proficiency3"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text"
-                android:singleLine="true"
-                android:textColor="#212121" />
+                android:layout_height="match_parent"
+                android:textColor="@color/black" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
