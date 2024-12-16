@@ -329,6 +329,20 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
                                                     uniqueKeysList.add("Language & Proficiency 3")
                                                 }
                                             }
+                                            else if(key!=null && (key=="name" || key=="email" || key=="phone" || key=="dob" || key=="gender" || key=="profilePic"))
+                                            {
+                                                if(!uniqueKeysList.contains("User Details") && !customFormOptionChosen.contains("User Details"))
+                                                {
+                                                    uniqueKeysList.add("User Details")
+                                                }
+                                            }
+                                            else if(key!=null && (key=="address" || key=="state"))
+                                            {
+                                                if(!uniqueKeysList.contains("Address Details") && !customFormOptionChosen.contains("Address Details"))
+                                                {
+                                                    uniqueKeysList.add("Address Details")
+                                                }
+                                            }
                                             else if(key != null && key!="field1" && key!="field2" && key!="field3" && key!="uid" && !uniqueKeysList.contains(key) && !customFormOptionChosen.contains(key)) {
 
                                                 uniqueKeysList.add(key)
@@ -381,6 +395,22 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
                                 else if(text=="Proficiency3")
                                 {
                                     customFormOptionChosen.remove("Language & Proficiency 3")
+                                    binding.formContainer.removeViewAt(childCount-1)
+                                    binding.formContainer.removeViewAt(childCount-2)
+                                }
+                                else if(text=="DOB")
+                                {
+                                    customFormOptionChosen.remove("User Details")
+                                    binding.formContainer.removeViewAt(childCount-1)
+                                    binding.formContainer.removeViewAt(childCount-2)
+                                    binding.formContainer.removeViewAt(childCount-3)
+                                    binding.formContainer.removeViewAt(childCount-4)
+                                    binding.formContainer.removeViewAt(childCount-5)
+                                    binding.formContainer.removeViewAt(childCount-6)
+                                }
+                                else if(text=="State")
+                                {
+                                    customFormOptionChosen.remove("Address Details")
                                     binding.formContainer.removeViewAt(childCount-1)
                                     binding.formContainer.removeViewAt(childCount-2)
                                 }
@@ -545,6 +575,38 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
                     binding.formContainer.addView(editText)
                 }
                 customFormOptionChosen.add("Language & Proficiency 3")
+            }
+            else if(selectedKey=="User Details")
+            {
+                val userFields = arrayOf("Name","ProfilePic","Email","Phone","Gender","DOB")
+                for (field in userFields) {
+                    val editText = EditText(context)
+                    editText.setText(field)
+                    editText.isFocusable=false
+                    editText.isEnabled=false
+                    editText.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    binding.formContainer.addView(editText)
+                }
+                customFormOptionChosen.add("User Details")
+            }
+            else if(selectedKey=="Address Details")
+            {
+                val addressFields = arrayOf("Address","State")
+                for (field in addressFields) {
+                    val editText = EditText(context)
+                    editText.setText(field)
+                    editText.isFocusable=false
+                    editText.isEnabled=false
+                    editText.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    binding.formContainer.addView(editText)
+                }
+                customFormOptionChosen.add("Address Details")
             }
             else {
                 val editText = EditText(context)

@@ -209,6 +209,7 @@ class UserFormFragment : Fragment() {
 
                             val currentUser = examSnap.getValue(FormDetails::class.java)
                             val childCategory = examSnap.child("category").getValue(String::class.java)
+//                            Log.d("EXAM",currentUser!!.examName+" "+currentUser!!.category)
                             if (currentUser!=null && childCategory!=null && category.contains(childCategory)) {
 
                                 val deadlineStr = currentUser.deadline

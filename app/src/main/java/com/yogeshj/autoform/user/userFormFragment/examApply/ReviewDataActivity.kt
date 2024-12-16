@@ -164,7 +164,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
 
                 if (snapshot.exists()) {
                     for (child in snapshot.children) {
-                        val key = child.key
+                        var key = child.key
                         val value = child.getValue(String::class.java)
 
                         when (key) {
@@ -182,7 +182,10 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
                         }
 
                         Log.d("FirebaseFields", "Key: $key, Value: $value")
-
+                        if(key!=null && value!=null && key=="profilePic")
+                        {
+                            key="profilepic"
+                        }
                         if(key!=null && value!=null) {
                             userKeys.add(key)
                             userDetails[key] = value
@@ -196,7 +199,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
                     requiredDetails.removeAll(userKeys)
                 }
 
-                onComplete() // Proceed to next operation
+                onComplete()
             }
 
             override fun onCancelled(error: DatabaseError) {
