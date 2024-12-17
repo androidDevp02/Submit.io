@@ -5,8 +5,8 @@
     android:layout_marginHorizontal="4dp"
     android:layout_marginBottom="8dp"
     android:background="@drawable/card_shape"
-    android:elevation="6dp"
-    android:padding="4dp">
+    android:backgroundTint="@color/backgroundColor"
+    android:elevation="6dp">
 
     <LinearLayout
         android:id="@+id/ll1"
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Heading Exam"
-                android:textColor="#212121"
+                android:textColor="@color/primaryText"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:maxLines="1"
                         android:text="Subheading or Host Name"
-                        android:textColor="#757575"
+                        android:textColor="@color/secondaryText"
                         android:textSize="14sp" />
 
                     <LinearLayout
@@ -73,28 +73,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/ll4">
 
-                        <!--                        <ImageView-->
-                        <!--                            android:id="@+id/category_img"-->
-                        <!--                            android:layout_width="24dp"-->
-                        <!--                            android:layout_height="24dp"-->
-                        <!--                            android:contentDescription="Category Icon"-->
-                        <!--                            android:src="@drawable/category_icon"-->
-                        <!--                            app:tint="#4CAF50" />-->
-
-                        <!--                        <TextView-->
-                        <!--                            android:id="@+id/category_text"-->
-                        <!--                            android:layout_width="wrap_content"-->
-                        <!--                            android:layout_height="wrap_content"-->
-                        <!--                            android:text="Category: "-->
-                        <!--                            android:textColor="#212121"-->
-                        <!--                            android:textSize="16sp" />-->
-
                         <TextView
                             android:id="@+id/category_info"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="XXXX"
-                            android:textColor="#0555AB"
+                            android:textColor="@color/highlightText"
                             android:textSize="16sp" />
 
 
@@ -120,7 +104,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="Live"
-                        android:textColor="#212121"
+                        android:textColor="@color/highlightText"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -134,8 +118,7 @@
         android:id="@+id/horizontal_line"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="2dp"
-        android:background="#E0E0E0"
+        android:background="#757575"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll1" />
@@ -157,7 +140,7 @@
             android:layout_height="24dp"
             android:contentDescription="Calendar Icon"
             android:src="@drawable/calender_icon"
-            app:tint="#4CAF50" />
+            app:tint="@color/iconColor" />
 
         <TextView
             android:id="@+id/exam_date_text"
@@ -165,7 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Exam Date: "
-            android:textColor="#212121"
+            android:textColor="@color/secondaryText"
             android:textSize="16sp" />
 
         <TextView
@@ -173,7 +156,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Date: DD/MM/YYYY"
-            android:textColor="#212121"
+            android:textColor="@color/secondaryText"
             android:textSize="16sp" />
 
         <TextView
@@ -181,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(tentative)"
-            android:textColor="#212121"
+            android:textColor="@color/secondaryText"
             android:textSize="12sp"/>
 
     </LinearLayout>
@@ -203,7 +186,7 @@
             android:layout_height="24dp"
             android:contentDescription="Deadline Icon"
             android:src="@drawable/ic_time"
-            app:tint="#4CAF50" />
+            app:tint="@color/iconColor" />
 
         <TextView
             android:id="@+id/deadline_text"
@@ -211,7 +194,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Form Deadline: "
-            android:textColor="#212121"
+            android:textColor="@color/secondaryText"
             android:textSize="16sp" />
 
         <TextView
@@ -219,14 +202,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="DD/MM/YYYY"
-            android:textColor="#212121"
+            android:textColor="@color/secondaryText"
             android:textSize="16sp" />
         <TextView
             android:id="@+id/tentative_deadline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(tentative)"
-            android:textColor="#212121"
+            android:textColor="@color/secondaryText"
             android:textSize="12sp"/>
 
     </LinearLayout>
@@ -248,7 +231,7 @@
             android:layout_height="24dp"
             android:contentDescription="Fees Icon"
             android:src="@drawable/rupee_icon"
-            app:tint="#4CAF50" />
+            app:tint="@color/iconColor" />
 
         <TextView
             android:id="@+id/fees_text"
@@ -256,7 +239,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Registration Fees: "
-            android:textColor="#212121"
+            android:textColor="@color/secondaryText"
             android:textSize="16sp" />
 
         <TextView
@@ -264,7 +247,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="000"
-            android:textColor="#212121"
+            android:textColor="@color/secondaryText"
             android:textSize="16sp" />
 
     </LinearLayout>
@@ -284,8 +267,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="View Form"
-            android:backgroundTint="#1976D2"
-            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/btnBackgroundColor"
+            android:textColor="@color/btnTextColor"
             android:textSize="12sp"
             android:textStyle="bold"
             android:padding="12dp"
@@ -297,8 +280,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Registered Students"
-            android:backgroundTint="#4CAF50"
-            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/btnBackgroundColor"
+            android:textColor="@color/btnTextColor"
             android:textSize="12sp"
             android:textStyle="bold"
             android:padding="12dp"/>

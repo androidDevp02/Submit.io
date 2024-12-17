@@ -33,16 +33,6 @@ class FieldSelectActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFieldSelectBinding.inflate(layoutInflater)
@@ -53,7 +43,8 @@ class FieldSelectActivity : AppCompatActivity() {
         FirstScreenActivity.auth = FirebaseAuth.getInstance()
 
         MobileAds.initialize(this@FieldSelectActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
 //        preSelectField()
 
@@ -130,7 +121,7 @@ class FieldSelectActivity : AppCompatActivity() {
                                     dbRef.child(currentUser.uid!!)
                                         .child("field3").setValue(selectedFields[2])
                                 }
-
+                                hideLoading()
                                 startActivity(Intent(this@FieldSelectActivity, ProfileInfoActivity::class.java))
                                 finish()
                                 break
@@ -147,38 +138,6 @@ class FieldSelectActivity : AppCompatActivity() {
             })
         }
     }
-
-//    private fun preSelectField() {
-//        val uid = FirstScreenActivity.auth.currentUser!!.uid
-//        dbRef = FirebaseDatabase.getInstance().getReference("UsersInfo").child(uid)
-//
-//        dbRef.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                val field1 = snapshot.child("field1").value as? String
-//                val field2 = snapshot.child("field2").value as? String
-//                val field3 = snapshot.child("field3").value as? String
-//
-//                val existingFields = listOfNotNull(field1, field2, field3)
-//                selectedFields.clear()
-//                selectedFields.addAll(existingFields)
-//                numSelected = selectedFields.size
-//
-//                for (i in 0 until binding.linearLayout.childCount) {
-//                    val view = binding.linearLayout.getChildAt(i)
-//                    if (view is CheckBox && view.tag in existingFields) {
-//                        view.isChecked = true
-//                        Log.d("text",view.text.toString())
-//                    }
-//                }
-//                hideLoading()
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Toast.makeText(this@FieldSelectActivity, "Failed to fetch data: ${error.message}", Toast.LENGTH_LONG).show()
-//                hideLoading()
-//            }
-//        })
-//    }
 
     private fun isCheck(id: CheckBox) {
         id.setOnCheckedChangeListener { _, isChecked ->
@@ -207,6 +166,7 @@ class FieldSelectActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -215,6 +175,7 @@ class FieldSelectActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

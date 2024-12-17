@@ -18,16 +18,6 @@ class AdminFirstScreenActivity : AppCompatActivity() {
     lateinit var myAdapter: UploadFormSignUpAdapter
     lateinit var dataList: ArrayList<UploadFormSignUpModel>
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityAdminFirstScreenBinding.inflate(layoutInflater)
@@ -36,7 +26,8 @@ class AdminFirstScreenActivity : AppCompatActivity() {
         FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         MobileAds.initialize(this@AdminFirstScreenActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
 
 

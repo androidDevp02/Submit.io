@@ -37,16 +37,6 @@ class ExamDetailsActivity : AppCompatActivity() {
 
     private lateinit var status:String
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityExamDetailsBinding.inflate(layoutInflater)
@@ -64,7 +54,8 @@ class ExamDetailsActivity : AppCompatActivity() {
 
 
         MobileAds.initialize(this@ExamDetailsActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
 
         FirstScreenActivity.auth = FirebaseAuth.getInstance()
@@ -202,6 +193,7 @@ class ExamDetailsActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -210,6 +202,7 @@ class ExamDetailsActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

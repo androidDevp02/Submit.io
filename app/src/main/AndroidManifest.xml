@@ -125,7 +125,7 @@
             android:name=".user.userFormFragment.profile.LanguageActivity"
             android:exported="false" />
         <activity
-            android:name=".user.userFormFragment.profile.AwardsAndAchievement"
+            android:name=".user.temporaryFiles.AwardsAndAchievement"
             android:exported="false" />
         <activity
             android:name=".user.userFormFragment.profile.EducationActivity"
@@ -137,7 +137,7 @@
             android:name=".user.userFormFragment.profile.UpdateProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".user.HomeScreenActivity"
+            android:name=".user.temporaryFiles.HomeScreenActivity"
             android:exported="false" />
         <activity
             android:name=".user.userFormFragment.profile.ProfileInfoActivity"

@@ -6,16 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
-    android:padding="16dp"
     tools:context=".user.userFormFragment.examApply.ExamDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="@color/navbarColor"
         android:elevation="8dp"
-        android:padding="16dp"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -30,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_arrow_back_24"
-            app:tint="#212121" />
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/header"
@@ -39,7 +38,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="4dp"
             android:text="Form Details"
-            android:textColor="#212121"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
@@ -54,7 +53,6 @@
         android:id="@+id/heading_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:elevation="6dp"
         app:cardCornerRadius="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -63,7 +61,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/cardColor">
 
             <ImageView
                 android:id="@+id/logo"
@@ -83,6 +82,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:gravity="center"
+                android:textColor="@color/primaryText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/logo" />
@@ -93,7 +93,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="SubHeading"
-                android:textColor="#357BE5"
+                android:textColor="@color/highlightText"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/exam_name" />
@@ -102,8 +102,7 @@
                 android:id="@+id/horizontal_line"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_margin="8dp"
-                android:background="#A09F9F"
+                android:background="#757575"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/exam_host" />
@@ -119,19 +118,22 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
+                    app:tint="@color/iconColor"
                     android:src="@drawable/calender_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="Exam Date:" />
+                    android:text="Exam Date:"
+                    android:textColor="@color/secondaryText"/>
 
                 <TextView
                     android:id="@+id/exam_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="00/00/0000" />
+                    android:text="00/00/0000"
+                    android:textColor="@color/secondaryText"/>
 
             </LinearLayout>
 
@@ -146,19 +148,22 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/ic_time" />
+                    android:src="@drawable/ic_time"
+                    app:tint="@color/iconColor"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="Exam Deadline:" />
+                    android:text="Exam Deadline:"
+                    android:textColor="@color/secondaryText"/>
 
                 <TextView
                     android:id="@+id/exam_deadline"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="00/00/0000" />
+                    android:text="00/00/0000"
+                    android:textColor="@color/secondaryText"/>
 
             </LinearLayout>
 
@@ -173,19 +178,22 @@
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/rupee_icon" />
+                    android:src="@drawable/rupee_icon"
+                    app:tint="@color/iconColor"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
-                    android:text="Registration Fees:" />
+                    android:text="Registration Fees:"
+                    android:textColor="@color/secondaryText"/>
 
                 <TextView
                     android:id="@+id/exam_fees"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="00" />
+                    android:text="00"
+                    android:textColor="@color/secondaryText"/>
 
             </LinearLayout>
 
@@ -214,6 +222,7 @@
             android:background="@drawable/btn_layout"
             android:text="Exam Description"
             android:textSize="12sp"
+            android:backgroundTint="@color/btnBackgroundColor"
             app:layout_constraintEnd_toStartOf="@id/eligibility_btn"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>
@@ -233,7 +242,7 @@
                 android:lineSpacingExtra="10dp"
                 android:paddingBottom="10dp"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/primaryText"
                 android:textSize="16sp" />
 
         </ScrollView>
@@ -265,7 +274,7 @@
                 android:lineSpacingExtra="10dp"
                 android:paddingBottom="10dp"
                 android:text=""
-                android:textColor="@color/black"
+                android:textColor="@color/primaryText"
                 android:textSize="16sp" />
 
         </ScrollView>

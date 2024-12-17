@@ -335,6 +335,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -343,6 +344,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 

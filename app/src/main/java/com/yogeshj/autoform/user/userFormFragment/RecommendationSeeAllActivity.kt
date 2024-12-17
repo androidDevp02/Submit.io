@@ -24,10 +24,12 @@ import com.yogeshj.autoform.R
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityRecommendationSeeAllBinding
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
-import com.yogeshj.autoform.user.HomeScreenActivity.Companion.appliedFormNames
+import com.yogeshj.autoform.user.temporaryFiles.HomeScreenActivity.Companion.appliedFormNames
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+
+//don't show already applied forms
 
 class RecommendationSeeAllActivity : AppCompatActivity() {
 
@@ -40,15 +42,6 @@ class RecommendationSeeAllActivity : AppCompatActivity() {
 
     val category=HashSet<String>()
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,7 +52,9 @@ class RecommendationSeeAllActivity : AppCompatActivity() {
         FirstScreenActivity.auth = FirebaseAuth.getInstance()
         showLoading()
         MobileAds.initialize(this@RecommendationSeeAllActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+
         binding.back.setOnClickListener {
             finish()
         }
@@ -160,6 +155,7 @@ class RecommendationSeeAllActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -168,6 +164,7 @@ class RecommendationSeeAllActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

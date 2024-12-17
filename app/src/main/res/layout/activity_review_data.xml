@@ -6,16 +6,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
-    android:padding="16dp"
     tools:context=".user.userFormFragment.examApply.ReviewDataActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="@color/navbarColor"
         android:elevation="8dp"
-        android:padding="16dp"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -30,7 +29,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_arrow_back_24"
-            app:tint="#212121" />
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/header"
@@ -39,7 +38,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="4dp"
             android:text="Review Your Data"
-            android:textColor="#212121"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@id/back"
@@ -55,7 +54,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:layout_marginTop="20dp"
+        android:backgroundTint="@color/cardColor"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="8dp"
@@ -85,6 +84,7 @@
                 app:layout_constraintTop_toTopOf="@id/profile_pic"
                 android:text="Yogesh Jaiswal"
                 android:layout_marginStart="12dp"
+                android:textColor="@color/primaryText"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 />
@@ -96,6 +96,7 @@
                 app:layout_constraintStart_toEndOf="@id/profile_pic"
                 app:layout_constraintTop_toBottomOf="@id/name"
                 android:text="08/11/2002 Male"
+                android:textColor="@color/secondaryText"
                 android:layout_marginStart="12dp"
                 android:textSize="12sp" />
 
@@ -106,6 +107,7 @@
                 app:layout_constraintStart_toEndOf="@id/profile_pic"
                 app:layout_constraintTop_toBottomOf="@id/dob_gender"
                 android:text="+917982582284"
+                android:textColor="@color/secondaryText"
                 android:layout_marginStart="12dp"
                 android:textSize="12sp" />
 
@@ -117,6 +119,7 @@
                 app:layout_constraintTop_toBottomOf="@id/phone"
                 android:text="yogesh.jaiswal21b@iiitg.ac.in"
                 android:layout_marginStart="12dp"
+                android:textColor="@color/secondaryText"
                 android:textSize="12sp" />
 
             <ImageView

@@ -15,9 +15,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
-        android:text="What is Your Field?"
+        android:text="What is Your Field of Interest?"
         android:textColor="@android:color/white"
-        android:textSize="28sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,13 +27,14 @@
         android:id="@+id/exam_host"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Please select your course (up to 3)"
+        android:text="Please select your field (up to 3)"
         android:textColor="#BBDEFB"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/exam_name" />
 
     <androidx.cardview.widget.CardView
+        android:backgroundTint="@color/uploadFormEditTextColor"
         android:id="@+id/checkboxCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -23,16 +23,6 @@ class ChangeUploadFormUserDataActivity : AppCompatActivity() {
 
     private lateinit var dbRef: DatabaseReference
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityChangeUploadFormUserDataBinding.inflate(layoutInflater)
@@ -41,7 +31,8 @@ class ChangeUploadFormUserDataActivity : AppCompatActivity() {
         FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         MobileAds.initialize(this@ChangeUploadFormUserDataActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         val loginMailIntent=intent.getStringExtra("email")
 

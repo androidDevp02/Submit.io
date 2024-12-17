@@ -113,6 +113,7 @@ class UserSubscriptionFragment : Fragment() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -121,6 +122,7 @@ class UserSubscriptionFragment : Fragment() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 

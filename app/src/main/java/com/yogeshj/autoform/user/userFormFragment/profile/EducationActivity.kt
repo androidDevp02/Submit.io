@@ -27,16 +27,6 @@ class EducationActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     private var currentUserUid:String?=null
 
     override fun onResume() {
@@ -54,7 +44,8 @@ class EducationActivity : AppCompatActivity() {
         initLoadingDialog()
 
         MobileAds.initialize(this@EducationActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.navBar.apply { alpha = 0f; translationY = -30f }
         binding.linearLayout.apply { alpha = 0f; translationY = 20f }
@@ -203,6 +194,7 @@ class EducationActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -211,6 +203,7 @@ class EducationActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

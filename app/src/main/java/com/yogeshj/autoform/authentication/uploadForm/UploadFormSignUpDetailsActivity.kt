@@ -18,23 +18,14 @@ class UploadFormSignUpDetailsActivity : AppCompatActivity() {
 
     private lateinit var dbRef: DatabaseReference
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityUploadFormSignUpDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         MobileAds.initialize(this@UploadFormSignUpDetailsActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.btnSubmit.setOnClickListener {
             if(binding.etWebsiteLink.text.toString().isEmpty() || binding.etInstituteName.text.toString().isEmpty() || binding.etHeadName.text.toString().isEmpty()

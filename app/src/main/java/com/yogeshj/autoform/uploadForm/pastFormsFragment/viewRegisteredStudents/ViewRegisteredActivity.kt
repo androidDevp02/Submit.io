@@ -30,16 +30,6 @@ class ViewRegisteredActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityViewRegisteredBinding.inflate(layoutInflater)
@@ -48,7 +38,8 @@ class ViewRegisteredActivity : AppCompatActivity() {
         initLoadingDialog()
 
         MobileAds.initialize(this@ViewRegisteredActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
 
         adapter = ViewRegisteredAdapter(datalist, this)
@@ -110,6 +101,7 @@ class ViewRegisteredActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -118,6 +110,7 @@ class ViewRegisteredActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

@@ -16,7 +16,8 @@ import com.yogeshj.autoform.user.userFormFragment.examApply.ExamDetailsActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.RecommendationCardFormRvItemsBinding
 import com.yogeshj.autoform.uploadForm.ViewLinkRegistered.ViewLinkRegisteredModel
-import com.yogeshj.autoform.user.HomeScreenActivity
+import com.yogeshj.autoform.user.UserMainActivity
+import com.yogeshj.autoform.user.temporaryFiles.HomeScreenActivity
 
 class RecommendationCardFormAdapter(private var dataList: ArrayList<RecommendationCardFormModel>, var context: Context) :
     RecyclerView.Adapter<RecommendationCardFormAdapter.ViewHolder>() {
@@ -83,7 +84,7 @@ class RecommendationCardFormAdapter(private var dataList: ArrayList<Recommendati
         }
         holder.binding.feesInfo.text="${dataList[position].fees}"
         holder.binding.markAsAppliedButton.setOnClickListener {
-            if(holder.binding.markAsAppliedButton.text=="Mark as Applied" && holder.binding.statusText.text=="Live"){
+            if(holder.binding.markAsAppliedButton.text=="Mark Applied" && holder.binding.statusText.text=="Live"){
                 val builder = AlertDialog.Builder(context)
                 builder.setTitle("Are you sure you want to mark this form as applied? This action can't be undone!")
 
@@ -94,7 +95,7 @@ class RecommendationCardFormAdapter(private var dataList: ArrayList<Recommendati
                     )
 //                    holder.binding.markAsAppliedButton.text="Applied"
 //                    holder.binding.markAsAppliedButton.isEnabled = false
-                    val intent=Intent(context,HomeScreenActivity::class.java)
+                    val intent=Intent(context, UserMainActivity::class.java)
                     intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 }
@@ -103,7 +104,7 @@ class RecommendationCardFormAdapter(private var dataList: ArrayList<Recommendati
                 }
                 builder.show()
             }
-            else if(holder.binding.markAsAppliedButton.text!="Mark as Applied"){
+            else if(holder.binding.markAsAppliedButton.text!="Mark Applied"){
                 Toast.makeText(context,"The form is already marked as filled!", Toast.LENGTH_LONG).show()
             }
             else{

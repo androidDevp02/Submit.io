@@ -4,27 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/cardColor"
     tools:context=".uploadForm.uploadNewFormFragment.UploadFormFragment">
 
     <ScrollView
         android:id="@+id/main_scroll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/background_gradient"
-        android:padding="16dp">
+        android:layout_height="match_parent">
 
+        <!--        make constraint layout from linear layout-->
         <LinearLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="16dp">
+            android:paddingHorizontal="4dp">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/nav_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
+                android:background="@color/navbarColor"
                 android:elevation="8dp"
                 android:padding="8dp">
 
@@ -45,34 +45,33 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:text="Exam Details"
-                    android:textColor="@color/black"
+                    android:textColor="@color/primaryText"
                     android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/view_forms"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toEndOf="@id/logout"
                     app:layout_constraintTop_toTopOf="parent" />
 
-<!--                <ImageView-->
-<!--                    android:id="@+id/view_forms"-->
-<!--                    android:layout_width="40dp"-->
-<!--                    android:layout_height="40dp"-->
-<!--                    android:padding="8dp"-->
-<!--                    android:src="@drawable/ic_history"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
-<!--                    app:layout_constraintEnd_toEndOf="parent"-->
-<!--                    app:layout_constraintTop_toTopOf="parent"-->
-<!--                    app:tint="#00FF0A" />-->
+                <!--                <ImageView-->
+                <!--                    android:id="@+id/view_forms"-->
+                <!--                    android:layout_width="40dp"-->
+                <!--                    android:layout_height="40dp"-->
+                <!--                    android:padding="8dp"-->
+                <!--                    android:src="@drawable/ic_history"-->
+                <!--                    android:textColor="@color/black"-->
+                <!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+                <!--                    app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                    app:layout_constraintTop_toTopOf="parent"-->
+                <!--                    app:tint="#00FF0A" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/examNameLabel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:hint="Exam Name"
                 app:hintTextColor="@color/black">
 
@@ -80,8 +79,7 @@
                     android:id="@+id/examNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:padding="12dp"
+                    android:background="@color/uploadFormEditTextColor"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,8 +96,7 @@
                     android:id="@+id/examHostNameEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:padding="12dp"
+                    android:background="@color/uploadFormEditTextColor"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,8 +116,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:backgroundTint="#236FAC"
-                android:text="Upload Exam Icon" />
+                android:backgroundTint="@color/navbarColor"
+                android:text="Upload Exam Icon"
+                android:textColor="@color/btnTextColor" />
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -128,15 +126,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:hint="Exam Category"
                 app:hintTextColor="@color/black">
 
                 <AutoCompleteTextView
                     android:id="@+id/categoryEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#FFFFFF"
+                    android:layout_height="wrap_content"
+                    android:background="@color/uploadFormEditTextColor"
                     android:inputType="none"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -146,15 +143,15 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="4dp"
                 android:hint="Exam Form Status"
                 app:hintTextColor="@color/black">
 
                 <AutoCompleteTextView
                     android:id="@+id/statusEditText"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#FFFFFF"
+                    android:layout_height="wrap_content"
+                    android:background="@color/uploadFormEditTextColor"
                     android:inputType="none"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -172,10 +169,9 @@
                     android:id="@+id/examDateEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
+                    android:background="@color/uploadFormEditTextColor"
                     android:clickable="true"
                     android:focusable="false"
-                    android:padding="12dp"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -191,10 +187,9 @@
                     android:id="@+id/deadlineEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
+                    android:background="@color/uploadFormEditTextColor"
                     android:clickable="true"
                     android:focusable="false"
-                    android:padding="12dp"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -210,8 +205,7 @@
                     android:id="@+id/examDescriptionEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:padding="12dp"
+                    android:background="@color/uploadFormEditTextColor"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -227,8 +221,7 @@
                     android:id="@+id/eligibilityEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
-                    android:padding="12dp"
+                    android:background="@color/uploadFormEditTextColor"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -259,9 +252,8 @@
                     android:id="@+id/feesEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="#FFFFFF"
+                    android:background="@color/uploadFormEditTextColor"
                     android:inputType="number"
-                    android:padding="12dp"
                     android:textColor="@color/black" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -290,25 +282,27 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="16dp"
-                android:backgroundTint="#236FAC"
-                android:text="Fill Application Form Details" />
+                android:backgroundTint="@color/navbarColor"
+                android:text="Fill Application Form Details"
+                android:textColor="@color/primaryText" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/choose_form"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/cardColor"
                 android:visibility="gone">
 
                 <TextView
                     android:id="@+id/titleText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginBottom="24dp"
                     android:text="Choose Form Submission Method"
-                    android:textColor="#3F51B5"
-                    android:textSize="20sp"
+                    android:textColor="@color/highlightText"
+                    android:textSize="24sp"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -320,6 +314,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="16dp"
                     android:background="?attr/selectableItemBackground"
+                    android:backgroundTint="@color/uploadFormEditTextColor"
                     android:clickable="true"
                     android:focusable="true"
                     android:foreground="?attr/selectableItemBackground"
@@ -334,6 +329,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/uploadFormEditTextColor"
                         android:orientation="horizontal"
                         android:padding="16dp">
 
@@ -371,6 +367,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/uploadFormEditTextColor"
                         android:orientation="horizontal"
                         android:padding="16dp">
 
@@ -398,7 +395,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:background="#F5F5F5"
+                    android:background="@color/uploadFormEditTextColor"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

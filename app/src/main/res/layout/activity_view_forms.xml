@@ -5,16 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
-    android:padding="8dp"
     tools:context=".uploadForm.pastFormsFragment.viewForm.ViewFormsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/nav_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
+        android:background="@color/navbarColor"
         android:elevation="4dp"
-        android:padding="16dp"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,7 +28,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_arrow_back_24"
-            app:tint="#212121" />
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/header"
@@ -39,10 +38,9 @@
             android:layout_marginTop="4dp"
             android:paddingEnd="8dp"
             android:text="Applied Exams"
-            android:textColor="#212121"
+            android:textColor="@color/primaryText"
             android:textSize="22sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/back"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.5" />
@@ -69,7 +67,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:text="Form Details"
-        android:textColor="#212121"
+        android:textColor="@color/primaryText"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
