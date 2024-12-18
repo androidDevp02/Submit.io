@@ -1,8 +1,12 @@
 package com.yogeshj.autoform.admin.users.changeUserData
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.Window
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.ads.AdRequest
@@ -14,6 +18,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
+import com.yogeshj.autoform.R
 import com.yogeshj.autoform.admin.requests.UploadFormSignUpModel
 import com.yogeshj.autoform.databinding.ActivityChangeUploadFormUserDataBinding
 
@@ -23,10 +28,15 @@ class ChangeUploadFormUserDataActivity : AppCompatActivity() {
 
     private lateinit var dbRef: DatabaseReference
 
+    private lateinit var dialog:Dialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityChangeUploadFormUserDataBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        initLoadingDialog()
+        showLoading()
 
         FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
@@ -60,17 +70,21 @@ class ChangeUploadFormUserDataActivity : AppCompatActivity() {
                 else{
                     Toast.makeText(this@ChangeUploadFormUserDataActivity,"No records found",Toast.LENGTH_LONG).show()
                 }
+                hideLoading()
             }
             override fun onCancelled(error: DatabaseError) {
+                hideLoading()
                 Toast.makeText(this@ChangeUploadFormUserDataActivity,"Database error: ${error.message}",Toast.LENGTH_LONG).show()
             }
         })
 
         binding.btnSubmit.setOnClickListener {
+            showLoading()
             if(binding.etWebsiteLink.text.toString().isEmpty() || binding.etInstituteName.text.toString().isEmpty() || binding.etHeadName.text.toString().isEmpty()
                 || binding.etAddress.text.toString().isEmpty() || binding.etPhone.text.toString().isEmpty() || binding.etInstituteMail.text.toString().isEmpty()
                 || binding.etAppUsageMail.text.toString().isEmpty())
             {
+                hideLoading()
                 Toast.makeText(this@ChangeUploadFormUserDataActivity,"All fields are mandatory! Please fill up all the fields.",
                     Toast.LENGTH_LONG).show()
             }
@@ -115,12 +129,15 @@ class ChangeUploadFormUserDataActivity : AppCompatActivity() {
                                     break
                                 }
                             }
+
                         }
                         else{
                             Toast.makeText(this@ChangeUploadFormUserDataActivity,"No records found",Toast.LENGTH_LONG).show()
                         }
+                        hideLoading()
                     }
                     override fun onCancelled(error: DatabaseError) {
+                        hideLoading()
                         Toast.makeText(this@ChangeUploadFormUserDataActivity,"Database error: ${error.message}",Toast.LENGTH_LONG).show()
                     }
                 })
@@ -131,5 +148,27 @@ class ChangeUploadFormUserDataActivity : AppCompatActivity() {
         }
 
 
+    }
+
+    private fun initLoadingDialog() {
+        dialog = Dialog(this@ChangeUploadFormUserDataActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_wait)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    private fun showLoading() {
+        binding.root.alpha = 0.5f
+        if (!dialog.isShowing) {
+            dialog.show()
+        }
+    }
+
+    private fun hideLoading() {
+        if (dialog.isShowing) {
+            dialog.dismiss()
+            binding.root.alpha = 1f
+        }
     }
 }

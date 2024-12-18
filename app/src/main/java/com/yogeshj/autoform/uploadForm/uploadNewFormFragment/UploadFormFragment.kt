@@ -130,6 +130,10 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
         super.onViewCreated(view, savedInstanceState)
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
+
         binding.mainScroll.apply { alpha = 0f; translationY = 30f }
         binding.main.apply { alpha = 0f; translationY = 30f }
         binding.navBar.apply { alpha = 0f; translationY = -30f }
@@ -137,10 +141,6 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
         binding.navBar.animate().alpha(1f).translationY(0f).setDuration(1000).start()
         binding.mainScroll.animate().alpha(1f).translationY(0f).setDuration(1000).start()
         binding.main.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(200).start()
-
-        showLoading()
-
-        FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         binding.main.alpha = 0f
         binding.main.animate().alpha(1f).setDuration(500).setListener(null)

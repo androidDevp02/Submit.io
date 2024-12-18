@@ -84,6 +84,7 @@ class SearchActivity : AppCompatActivity() {
                 } else {
                     setRecyclerView()
                 }
+                hideLoading()
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -109,9 +110,11 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerView() {
+        showLoading()
         myAdapter = SearchAdapter(dataList, this@SearchActivity)
         binding.recycler.layoutManager = LinearLayoutManager(this@SearchActivity)
         binding.recycler.adapter = myAdapter
+        hideLoading()
     }
 
     private fun initLoadingDialog() {

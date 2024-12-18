@@ -44,7 +44,11 @@ class PastFormFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         MobileAds.initialize(requireContext())
         val adRequest = AdRequest.Builder().build()
@@ -55,11 +59,6 @@ class PastFormFragment : Fragment() {
 
 //        binding.navBar.animate().alpha(1f).translationY(0f).setDuration(1000).start()
         binding.recyclerForms.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(200).start()
-
-
-        showLoading()
-
-        FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         dataList=ArrayList()
         binding.recyclerForms.layoutManager=LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)

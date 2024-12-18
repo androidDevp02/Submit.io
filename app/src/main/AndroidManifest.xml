@@ -51,7 +51,7 @@
             android:name=".user.userSubscriptionFragment.SubscriptionActivity"
             android:exported="false" />
         <activity
-            android:name=".user.userFormFragment.RecommendationSeeAllActivity"
+            android:name=".user.userFormFragment.recommendatioSeeAll.RecommendationSeeAllActivity"
             android:exported="false" />
         <activity
             android:name=".admin.AdminFirstScreenActivity"

@@ -1,15 +1,24 @@
 package com.yogeshj.autoform.admin.forms
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.yogeshj.autoform.FirstScreenActivity
+import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.FragmentFormsBinding
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import java.text.SimpleDateFormat
@@ -23,6 +32,8 @@ class FormsFragment : Fragment() {
     private lateinit var myAdapter: AdminFormsAdapter
     private lateinit var dataList: ArrayList<AdminFormsModel>
 
+    private lateinit var dialog:Dialog
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +44,15 @@ class FormsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
+
+        MobileAds.initialize(requireContext())
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         setRecyclerView()
     }
@@ -73,12 +93,34 @@ class FormsFragment : Fragment() {
 //                    dataList.addAll(tempDataList)
                     myAdapter.notifyDataSetChanged()
                 }
+                hideLoading()
             }
             override fun onCancelled(error: DatabaseError) {
-
+                hideLoading()
             }
         })
     }
 
+    private fun initLoadingDialog() {
+        dialog = Dialog(requireContext())
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_wait)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    private fun showLoading() {
+        binding.root.alpha = 0.5f
+        if (!dialog.isShowing) {
+            dialog.show()
+        }
+    }
+
+    private fun hideLoading() {
+        if (dialog.isShowing) {
+            dialog.dismiss()
+            binding.root.alpha = 1f
+        }
+    }
 
 }

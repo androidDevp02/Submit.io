@@ -6,8 +6,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -37,6 +35,7 @@ import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.Rec
 import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.RecommendationCardFormModel
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import com.yogeshj.autoform.user.userFormFragment.profile.UpdateProfileActivity
+import com.yogeshj.autoform.user.userFormFragment.recommendatioSeeAll.RecommendationSeeAllActivity
 import com.yogeshj.autoform.user.userFormFragment.searchForms.SearchActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -127,8 +126,8 @@ class UserFormFragment : Fragment() {
                         }
                     }
                 }
-                hideLoading()
                 onComplete()
+                hideLoading()
             }
 
             override fun onCancelled(error: DatabaseError) {

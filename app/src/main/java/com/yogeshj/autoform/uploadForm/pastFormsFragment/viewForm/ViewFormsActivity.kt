@@ -13,10 +13,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityViewFormsBinding
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
@@ -37,6 +39,8 @@ class ViewFormsActivity : AppCompatActivity() {
 
         initLoadingDialog()
         showLoading()
+
+        FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
         MobileAds.initialize(this@ViewFormsActivity)
         val adRequest = AdRequest.Builder().build()

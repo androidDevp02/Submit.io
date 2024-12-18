@@ -94,6 +94,7 @@ class ContactInformation : AppCompatActivity() {
                 updates["phone"] = binding.phone.text.toString()
             }
             else{
+                hideLoading()
                 Toast.makeText(this@ContactInformation,"Please enter a valid phone number",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }

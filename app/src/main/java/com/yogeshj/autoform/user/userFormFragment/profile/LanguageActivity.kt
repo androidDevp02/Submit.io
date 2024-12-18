@@ -44,6 +44,9 @@ class LanguageActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
         MobileAds.initialize(this@LanguageActivity)
         val adRequest = AdRequest.Builder().build()
@@ -55,11 +58,6 @@ class LanguageActivity : AppCompatActivity() {
         binding.navBar.animate().alpha(1f).translationY(0f).setDuration(1000).start()
 
         binding.linearLayout.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(200).start()
-
-
-        showLoading()
-
-        FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
         currentUserUid=intent.getStringExtra("uid")
         if(currentUserUid==null)

@@ -50,21 +50,18 @@ class ExamDetailsActivity : AppCompatActivity() {
 
 
         initLoadingDialog()
+        showLoading()
 
-
+        FirstScreenActivity.auth = FirebaseAuth.getInstance()
 
         MobileAds.initialize(this@ExamDetailsActivity)
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 
-
-        FirstScreenActivity.auth = FirebaseAuth.getInstance()
-
         binding.back.setOnClickListener {
             finish()
         }
 
-        showLoading()
         val examName=intent.getStringExtra("heading")
         val db = FirebaseDatabase.getInstance().getReference("UploadForm")
         db.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -116,22 +113,25 @@ class ExamDetailsActivity : AppCompatActivity() {
         setUpButtonListeners()
 
         binding.applyBtn.setOnClickListener {
+            showLoading()
             if(containsLink)
             {
                 val intent = Intent(Intent.ACTION_VIEW,Uri.parse(linkURL))
+                hideLoading()
                 startActivity(intent)
             }
             else if(status=="Live")
             {
                 val intent=Intent(this@ExamDetailsActivity, ReviewDataActivity::class.java)
                 intent.putExtra("heading",examName)
+                hideLoading()
                 startActivity(intent)
             }
             else
             {
+                hideLoading()
                 Toast.makeText(this@ExamDetailsActivity,"Sorry, The form is already expired!",Toast.LENGTH_LONG).show()
             }
-
         }
 
 

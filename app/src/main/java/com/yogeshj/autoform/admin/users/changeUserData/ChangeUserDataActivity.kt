@@ -53,6 +53,9 @@ class ChangeUserDataActivity : AppCompatActivity() {
 
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         MobileAds.initialize(this@ChangeUserDataActivity)
         val adRequest = AdRequest.Builder().build()
@@ -72,9 +75,7 @@ class ChangeUserDataActivity : AppCompatActivity() {
         binding.languagesCard.animate().alpha(1f).translationY(0f).setDuration(800).setStartDelay(500).start()
         binding.additionalDetailsCard.animate().alpha(1f).translationY(0f).setDuration(800).setStartDelay(600).start()
 
-        showLoading()
 
-        FirstScreenActivity.auth= FirebaseAuth.getInstance()
         val name=intent.getStringExtra("name")
         val email=intent.getStringExtra("email")
 
@@ -123,27 +124,36 @@ class ChangeUserDataActivity : AppCompatActivity() {
         fetchDataFromFirebase()
 
         binding.editProfile.setOnClickListener {
+            showLoading()
             val intent=Intent(this@ChangeUserDataActivity, ProfileInfoActivity::class.java)
             intent.putExtra("uid",currentUserUid)
             intent.putExtra("backToAdminScreen",true)
+            hideLoading()
             startActivity(intent)
+
         }
 
         binding.contactInfoCard.setOnClickListener {
+            showLoading()
             val intent=Intent(this@ChangeUserDataActivity, ContactInformation::class.java)
             intent.putExtra("uid",currentUserUid)
+            hideLoading()
             startActivity(intent)
         }
 
         binding.educationCard.setOnClickListener {
+            showLoading()
             val intent=Intent(this@ChangeUserDataActivity, EducationActivity::class.java)
             intent.putExtra("uid",currentUserUid)
+            hideLoading()
             startActivity(intent)
         }
 
         binding.languagesCard.setOnClickListener {
+            showLoading()
             val intent=Intent(this@ChangeUserDataActivity, LanguageActivity::class.java)
             intent.putExtra("uid",currentUserUid)
+            hideLoading()
             startActivity(intent)
         }
 

@@ -32,7 +32,7 @@ import com.yogeshj.autoform.user.userFormFragment.profile.UpdateProfileActivity
 import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.RecommendationCardFormAdapter
 import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.RecommendationCardFormModel
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
-import com.yogeshj.autoform.user.userFormFragment.RecommendationSeeAllActivity
+import com.yogeshj.autoform.user.userFormFragment.recommendatioSeeAll.RecommendationSeeAllActivity
 import com.yogeshj.autoform.user.userFormFragment.searchForms.SearchActivity
 import com.yogeshj.autoform.user.userSubscriptionFragment.SubscriptionActivity
 import java.text.SimpleDateFormat

@@ -38,6 +38,7 @@ class UserSignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
+        showLoading()
 
         MobileAds.initialize(this@UserSignUpActivity)
         val adRequest = AdRequest.Builder().build()
@@ -57,11 +58,10 @@ class UserSignUpActivity : AppCompatActivity() {
         startFadeInAndSlideUpAnimation(binding.btnSignUp, 1100)
         startFadeInAndSlideUpAnimation(binding.btnLogin, 1300)
 
-        FirstScreenActivity.auth= FirebaseAuth.getInstance()
-
-
+        FirstScreenActivity.auth.signOut()
 
         binding.btnLogin.setOnClickListener {
+            hideLoading()
             startActivity(Intent(this@UserSignUpActivity,UserLoginActivity::class.java))
             finish()
         }
@@ -93,7 +93,7 @@ class UserSignUpActivity : AppCompatActivity() {
 
                         FirstScreenActivity.auth.currentUser?.sendEmailVerification()
                             ?.addOnSuccessListener {
-
+                                hideLoading()
                                 Toast.makeText(this@UserSignUpActivity,"Please verify your email address before logging in",Toast.LENGTH_LONG).show()
                                 val intent = Intent(this, UserLoginActivity::class.java)
                                 if (baseContext != this@UserSignUpActivity) {
@@ -102,6 +102,7 @@ class UserSignUpActivity : AppCompatActivity() {
                                 startActivity(intent)
                             }
                             ?.addOnFailureListener {
+                                hideLoading()
                                 Toast.makeText(this@UserSignUpActivity,it.toString(),Toast.LENGTH_LONG).show()
                             }
 
@@ -126,7 +127,6 @@ class UserSignUpActivity : AppCompatActivity() {
     private fun addUserToDatabase(name: String, email: String, uid: String) {
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
         dbRef.child(uid).setValue(User(uid, name, email))
-        hideLoading()
     }
 
     private fun initLoadingDialog() {

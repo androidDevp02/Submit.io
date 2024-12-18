@@ -1,7 +1,11 @@
 package com.yogeshj.autoform.admin.forms.changeFormDetails
 
 import android.app.DatePickerDialog
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
@@ -22,6 +26,8 @@ import java.util.Calendar
 class ChangeFormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListener {
 
     private lateinit var binding:ActivityChangeFormDetailsBinding
+
+    private lateinit var dialog: Dialog
 
     override fun onResume() {
         super.onResume()
@@ -76,6 +82,8 @@ class ChangeFormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSet
         binding=ActivityChangeFormDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initLoadingDialog()
+        showLoading()
 
         FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
@@ -123,16 +131,18 @@ class ChangeFormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSet
 
                     }
                 }
+                hideLoading()
             }
             override fun onCancelled(error: DatabaseError) {
-
+                hideLoading()
             }
         })
 
         binding.back.setOnClickListener {
-
+            showLoading()
             if(binding.examNameEditText.text.toString().isEmpty() || binding.examHostNameEditText.text.toString().isEmpty() || binding.categoryEditText.text.toString().isEmpty() || binding.examDateEditText.text.toString().isEmpty() || binding.deadlineEditText.text.toString().isEmpty() || binding.examDescriptionEditText.text.toString().isEmpty() || binding.eligibilityEditText.text.toString().isEmpty() || binding.uploadedImageView.toString().isEmpty() || binding.statusEditText.text.toString().isEmpty())
             {
+                hideLoading()
                 Toast.makeText(this@ChangeFormDetailsActivity,"All fields are mandatory to proceed further!", Toast.LENGTH_LONG).show()
             }
             else{
@@ -171,13 +181,35 @@ class ChangeFormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSet
 
                             }
                         }
+                        hideLoading()
                     }
                     override fun onCancelled(error: DatabaseError) {
-
+                        hideLoading()
                     }
                 })
 
             }
+        }
+    }
+    private fun initLoadingDialog() {
+        dialog = Dialog(this@ChangeFormDetailsActivity)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setContentView(R.layout.dialog_wait)
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+    }
+
+    private fun showLoading() {
+        binding.root.alpha = 0.5f
+        if (!dialog.isShowing) {
+            dialog.show()
+        }
+    }
+
+    private fun hideLoading() {
+        if (dialog.isShowing) {
+            dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

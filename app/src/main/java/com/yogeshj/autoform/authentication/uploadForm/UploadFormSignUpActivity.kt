@@ -10,6 +10,8 @@ import android.view.Window
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
@@ -32,6 +34,11 @@ class UploadFormSignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
+
+        MobileAds.initialize(this@UploadFormSignUpActivity)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.logo.apply { alpha = 0f; translationY = -50f }
         binding.welcome.apply { alpha = 0f; translationY = -20f }
@@ -47,11 +54,12 @@ class UploadFormSignUpActivity : AppCompatActivity() {
         startFadeInAndSlideUpAnimation(binding.btnSignUp, 1100)
         startFadeInAndSlideUpAnimation(binding.btnLogin, 1300)
 
-        FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         binding.btnLogin.setOnClickListener {
+            showLoading()
             startActivity(Intent(this@UploadFormSignUpActivity, UploadFormLoginActivity::class.java))
             finish()
+            hideLoading()
         }
 
         binding.btnSignUp.setOnClickListener {
@@ -98,7 +106,6 @@ class UploadFormSignUpActivity : AppCompatActivity() {
     private fun startFadeInAndSlideUpAnimation(view: View, delay: Long) {
         view.alpha = 0f
         view.translationY = 50f
-
 
         view.animate()
             .alpha(1f)

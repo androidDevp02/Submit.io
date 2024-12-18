@@ -70,6 +70,8 @@
             app:layout_constraintTop_toBottomOf="@id/title" />
 
         <LinearLayout
+            android:layout_marginHorizontal="20dp"
+            android:gravity="center"
             android:background="@color/white"
             android:id="@+id/weekly_option"
             android:layout_width="match_parent"
@@ -99,6 +101,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginHorizontal="20dp"
+            android:gravity="center"
             android:background="@color/white"
             android:id="@+id/monthly_option"
             android:layout_width="match_parent"
@@ -128,6 +132,8 @@
         </LinearLayout>
 
         <LinearLayout
+            android:layout_marginHorizontal="20dp"
+            android:gravity="center"
             android:background="@color/white"
             android:id="@+id/yearly_option"
             android:layout_width="match_parent"
@@ -189,4 +195,14 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintStart_toStartOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-2095090407853200/8424341037" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -43,6 +43,9 @@ class EducationActivity : AppCompatActivity() {
 
         initLoadingDialog()
 
+        showLoading()
+
+        FirstScreenActivity.auth=FirebaseAuth.getInstance()
         MobileAds.initialize(this@EducationActivity)
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
@@ -54,8 +57,6 @@ class EducationActivity : AppCompatActivity() {
 
         binding.linearLayout.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(200).start()
 
-        showLoading()
-        FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
         currentUserUid=intent.getStringExtra("uid")
         if(currentUserUid==null)
@@ -105,7 +106,6 @@ class EducationActivity : AppCompatActivity() {
             }
         })
 
-            //complete it
         binding.back.setOnClickListener {
             showLoading()
             if(binding.educationalLvl.text.toString().isNotEmpty() )

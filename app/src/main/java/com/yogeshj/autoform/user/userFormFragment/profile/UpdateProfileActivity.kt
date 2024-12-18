@@ -46,6 +46,10 @@ class UpdateProfileActivity : AppCompatActivity() {
 
         initLoadingDialog()
 
+        showLoading()
+
+        FirstScreenActivity.auth=FirebaseAuth.getInstance()
+
         MobileAds.initialize(this@UpdateProfileActivity)
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
@@ -64,9 +68,7 @@ class UpdateProfileActivity : AppCompatActivity() {
         binding.languagesCard.animate().alpha(1f).translationY(0f).setDuration(800).setStartDelay(500).start()
         binding.additionalDetailsCard.animate().alpha(1f).translationY(0f).setDuration(800).setStartDelay(600).start()
 
-        showLoading()
 
-        FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
         val db = FirebaseDatabase.getInstance().getReference("UsersInfo")
         db.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -90,7 +92,6 @@ class UpdateProfileActivity : AppCompatActivity() {
                                     .error(R.drawable.user_icon)
                                     .apply(RequestOptions.circleCropTransform()).into(binding.profilePic)
                             }
-                            hideLoading()
                             break
                         }
                     }
@@ -183,7 +184,6 @@ class UpdateProfileActivity : AppCompatActivity() {
                             }
                         }
                         adapter.notifyDataSetChanged()
-                        hideLoading()
                         break
                     }
                 }

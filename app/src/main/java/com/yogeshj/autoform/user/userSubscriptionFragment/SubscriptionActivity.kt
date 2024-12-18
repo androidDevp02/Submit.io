@@ -34,6 +34,7 @@ class SubscriptionActivity : AppCompatActivity(), PaymentResultWithDataListener 
         setContentView(binding.root)
 
         initLoadingDialog()
+        showLoading()
 
         Toast.makeText(this@SubscriptionActivity,"${Calendar.getInstance().time}",Toast.LENGTH_LONG).show()
         binding.back.setOnClickListener {
@@ -53,6 +54,7 @@ class SubscriptionActivity : AppCompatActivity(), PaymentResultWithDataListener 
         binding.confirmButton.setOnClickListener {
             initPayment()
         }
+        hideLoading()
 
     }
 
@@ -77,6 +79,7 @@ class SubscriptionActivity : AppCompatActivity(), PaymentResultWithDataListener 
 //            options.put("prefill",preFill)
             co.open(this@SubscriptionActivity as Activity?, options)
         } catch (e: Exception) {
+            hideLoading()
             Toast.makeText(this@SubscriptionActivity,"Error initializing",Toast.LENGTH_LONG).show()
             e.printStackTrace()
         }
@@ -102,7 +105,6 @@ class SubscriptionActivity : AppCompatActivity(), PaymentResultWithDataListener 
 
         paymentRefUser.child(paymentId).setValue(paymentData)
             .addOnSuccessListener {
-
                 Toast.makeText(this@SubscriptionActivity,"Payment Success",Toast.LENGTH_LONG).show()
                 hideLoading()
                 val intent = Intent(this@SubscriptionActivity, UserMainActivity::class.java)
@@ -117,6 +119,7 @@ class SubscriptionActivity : AppCompatActivity(), PaymentResultWithDataListener 
     }
 
     override fun onPaymentError(p0: Int, p1: String?, p2: PaymentData?) {
+        hideLoading()
         Toast.makeText(this@SubscriptionActivity, "Error: $p2", Toast.LENGTH_LONG).show()
     }
 

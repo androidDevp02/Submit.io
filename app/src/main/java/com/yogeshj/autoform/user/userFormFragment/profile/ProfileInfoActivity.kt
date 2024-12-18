@@ -79,6 +79,11 @@ class ProfileInfoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth=FirebaseAuth.getInstance()
+        database=FirebaseDatabase.getInstance()
+        storage=FirebaseStorage.getInstance()
 
         MobileAds.initialize(this@ProfileInfoActivity)
         val adRequest = AdRequest.Builder().build()
@@ -94,13 +99,6 @@ class ProfileInfoActivity : AppCompatActivity() {
         binding.mainScroll.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(400).start()
         binding.continueBtn.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(600).start()
 
-
-
-        showLoading()
-
-        FirstScreenActivity.auth=FirebaseAuth.getInstance()
-        database=FirebaseDatabase.getInstance()
-        storage=FirebaseStorage.getInstance()
 
         currentUserUid=intent.getStringExtra("uid")
         backToAdminScreen=intent.getBooleanExtra("backToAdminScreen",false)
@@ -119,7 +117,7 @@ class ProfileInfoActivity : AppCompatActivity() {
         val db = FirebaseDatabase.getInstance().getReference("Users")
         db.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                hideLoading()
+                showLoading()
                 if (snapshot.exists()) {
                     for (snap in snapshot.children) {
                         val profilePicUrl = snap.child("profilePic").value?.toString()
@@ -133,6 +131,7 @@ class ProfileInfoActivity : AppCompatActivity() {
                         }
                     }
                 }
+                hideLoading()
             }
             override fun onCancelled(error: DatabaseError) {
                 hideLoading()
@@ -143,7 +142,7 @@ class ProfileInfoActivity : AppCompatActivity() {
         val db2 = FirebaseDatabase.getInstance().getReference("UsersInfo")
         db2.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                hideLoading()
+                showLoading()
                 if (snapshot.exists()) {
                     for (snap in snapshot.children) {
                         val profilePicUrl = snap.child("profilePic").value?.toString()
@@ -169,6 +168,7 @@ class ProfileInfoActivity : AppCompatActivity() {
                         }
                     }
                 }
+                hideLoading()
             }
             override fun onCancelled(error: DatabaseError) {
                 hideLoading()

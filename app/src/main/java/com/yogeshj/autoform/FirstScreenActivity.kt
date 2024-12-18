@@ -29,6 +29,7 @@ import com.yogeshj.autoform.user.UserMainActivity
 //5267 3181 8797 5449
 
 
+//in category buttons show which button is currently selected
 class FirstScreenActivity : AppCompatActivity() {
     private lateinit var binding:ActivityFirstScreenBinding
     private lateinit var dialog:Dialog
@@ -52,6 +53,11 @@ class FirstScreenActivity : AppCompatActivity() {
         binding=ActivityFirstScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        initLoadingDialog()
+        showLoading()
+
+        auth=FirebaseAuth.getInstance()
+
         MobileAds.initialize(this)
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
@@ -66,12 +72,6 @@ class FirstScreenActivity : AppCompatActivity() {
         binding.loginAsUploadformCard.animate().alpha(1f).translationX(0f).setDuration(1000).setStartDelay(600).start()
 
 
-        initLoadingDialog()
-
-        showLoading()
-
-        auth=FirebaseAuth.getInstance()
-
         val currentUser = auth.currentUser
         if(currentUser!=null)
         {
@@ -83,13 +83,15 @@ class FirstScreenActivity : AppCompatActivity() {
                         for (snap in snapshot.children) {
                             val curr = snap.getValue(User::class.java)!!
                             if (curr.uid == auth.currentUser!!.uid) {
+                                hideLoading()
                                 if(curr.email=="yogesh.jaiswal21b@iiitg.ac.in"){
                                     startActivity(Intent(this@FirstScreenActivity,AdminMainActivity::class.java))
+                                    finish()
                                 }
-                                else
+                                else{
                                     startActivity(Intent(this@FirstScreenActivity,UserMainActivity::class.java))
-                                hideLoading()
-                                finish()
+                                    finish()
+                                }
                                 break
                             }
                         }
@@ -109,8 +111,8 @@ class FirstScreenActivity : AppCompatActivity() {
                         for (snap in snapshot.children) {
                             val curr = snap.getValue(User::class.java)!!
                             if (curr.uid == auth.currentUser!!.uid) {
-                                startActivity(Intent(this@FirstScreenActivity,UploadFormMainActivity::class.java))
                                 hideLoading()
+                                startActivity(Intent(this@FirstScreenActivity,UploadFormMainActivity::class.java))
                                 finish()
                                 break
                             }

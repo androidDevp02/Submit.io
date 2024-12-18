@@ -12,6 +12,9 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.LinearLayout
 import android.widget.Toast
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -48,6 +51,11 @@ class UserSubscriptionFragment : Fragment() {
 //        Toast.makeText(context,"${Calendar.getInstance().time}", Toast.LENGTH_LONG).show()
 
         showLoading()
+
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
+        MobileAds.initialize(requireContext())
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         val dbRef = FirebaseDatabase.getInstance().getReference("SubscriptionPayment")
         dbRef.addListenerForSingleValueEvent(object : ValueEventListener {

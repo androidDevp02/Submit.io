@@ -53,6 +53,9 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
         setContentView(binding.root)
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth = FirebaseAuth.getInstance()
 
         binding.navBar.apply { alpha = 0f; translationY = -30f }
         binding.profileCard.apply { alpha = 0f }
@@ -62,13 +65,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
 
         binding.profileCard.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(800).setStartDelay(300).start()
 
-
         binding.scrollView.animate().alpha(1f).translationX(0f).setDuration(800).setStartDelay(600).start()
-
-
-        showLoading()
-
-        FirstScreenActivity.auth = FirebaseAuth.getInstance()
 
         userDetails=HashMap()
 
