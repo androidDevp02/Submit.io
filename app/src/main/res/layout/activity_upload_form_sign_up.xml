@@ -8,25 +8,18 @@
     android:background="@drawable/background_gradient"
     tools:context=".authentication.uploadForm.UploadFormSignUpActivity">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/top_guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
-
     <ImageView
         android:id="@+id/logo"
         android:layout_width="340dp"
-        android:layout_height="250dp"
-        android:layout_marginTop="30dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
         android:contentDescription="App logo"
         android:src="@mipmap/ic_login_foreground"
         android:scaleType="centerCrop"
         android:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/top_guideline"/>
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/welcome"
@@ -36,6 +29,7 @@
         android:textColor="@android:color/white"
         android:textSize="26sp"
         android:textStyle="bold"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/logo"/>
@@ -149,9 +143,8 @@
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:text="Already Have an Account? Log In"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:textColor="@android:color/white"
         app:cornerRadius="12dp"
         app:layout_constraintEnd_toEndOf="parent"

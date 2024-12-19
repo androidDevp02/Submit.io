@@ -38,7 +38,6 @@ class UserSignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
-        showLoading()
 
         MobileAds.initialize(this@UserSignUpActivity)
         val adRequest = AdRequest.Builder().build()
