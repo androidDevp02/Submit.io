@@ -53,6 +53,9 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
         setContentView(binding.root)
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth = FirebaseAuth.getInstance()
 
         binding.navBar.apply { alpha = 0f; translationY = -30f }
         binding.profileCard.apply { alpha = 0f }
@@ -62,13 +65,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
 
         binding.profileCard.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(800).setStartDelay(300).start()
 
-
         binding.scrollView.animate().alpha(1f).translationX(0f).setDuration(800).setStartDelay(600).start()
-
-
-        showLoading()
-
-        FirstScreenActivity.auth = FirebaseAuth.getInstance()
 
         userDetails=HashMap()
 
@@ -164,7 +161,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
 
                 if (snapshot.exists()) {
                     for (child in snapshot.children) {
-                        val key = child.key
+                        var key = child.key
                         val value = child.getValue(String::class.java)
 
                         when (key) {
@@ -182,7 +179,10 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
                         }
 
                         Log.d("FirebaseFields", "Key: $key, Value: $value")
-
+                        if(key!=null && value!=null && key=="profilePic")
+                        {
+                            key="profilepic"
+                        }
                         if(key!=null && value!=null) {
                             userKeys.add(key)
                             userDetails[key] = value
@@ -196,7 +196,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
                     requiredDetails.removeAll(userKeys)
                 }
 
-                onComplete() // Proceed to next operation
+                onComplete()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -332,6 +332,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -340,6 +341,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 

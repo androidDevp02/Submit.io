@@ -27,16 +27,6 @@ class LanguageActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     private var currentUserUid:String?=null
 
     override fun onResume() {
@@ -54,9 +44,13 @@ class LanguageActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
         MobileAds.initialize(this@LanguageActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.navBar.apply { alpha = 0f; translationY = -30f }
         binding.linearLayout.apply { alpha = 0f; translationY = 20f }
@@ -64,11 +58,6 @@ class LanguageActivity : AppCompatActivity() {
         binding.navBar.animate().alpha(1f).translationY(0f).setDuration(1000).start()
 
         binding.linearLayout.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(200).start()
-
-
-        showLoading()
-
-        FirstScreenActivity.auth=FirebaseAuth.getInstance()
 
         currentUserUid=intent.getStringExtra("uid")
         if(currentUserUid==null)
@@ -188,6 +177,7 @@ class LanguageActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -196,6 +186,7 @@ class LanguageActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

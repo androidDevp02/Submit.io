@@ -34,16 +34,6 @@ class UserLoginActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserLoginBinding.inflate(layoutInflater)
@@ -52,7 +42,8 @@ class UserLoginActivity : AppCompatActivity() {
         initLoadingDialog()
 
         MobileAds.initialize(this@UserLoginActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.logo.apply { alpha = 0f; translationY = -50f }
         binding.welcome.apply { alpha = 0f; translationY = -20f }
@@ -70,16 +61,19 @@ class UserLoginActivity : AppCompatActivity() {
 
         FirstScreenActivity.auth.signOut()
         binding.btnSignup.setOnClickListener {
+            hideLoading()
             startActivity(Intent(this@UserLoginActivity, UserSignUpActivity::class.java))
             finish()
         }
 
         binding.forgotPasswordText.setOnClickListener {
+            showLoading()
             val builder = AlertDialog.Builder(this@UserLoginActivity)
             builder.setTitle("Enter your email to reset the password")
 
             val input = EditText(this@UserLoginActivity)
             input.inputType=InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
+            hideLoading()
             builder.setView(input)
 
             builder.setPositiveButton("Send Email") { _, _ ->
@@ -129,15 +123,16 @@ class UserLoginActivity : AppCompatActivity() {
                 FirstScreenActivity.auth.signOut()
                 FirstScreenActivity.auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener {
-                        hideLoading()
                         if (it.isSuccessful) {
                             val verification=FirstScreenActivity.auth.currentUser?.isEmailVerified
                             if(verification==true){
+                                hideLoading()
                                 startActivity(Intent(this@UserLoginActivity, AdminMainActivity::class.java))
                                 finish()
                             }
                             else
                             {
+                                hideLoading()
                                 Toast.makeText(this@UserLoginActivity,"Please verify your email first!",Toast.LENGTH_LONG).show()
                             }
                         }
@@ -170,11 +165,7 @@ class UserLoginActivity : AppCompatActivity() {
 
                         if (!flag) {
                             hideLoading()
-                            Snackbar.make(
-                                binding.emailLogin,
-                                "Incorrect email. Please enter a different email or register as a new user.",
-                                Snackbar.LENGTH_LONG
-                            ).show()
+                            Snackbar.make(binding.emailLogin,"Incorrect email. Please enter a different email or register as a new user.",Snackbar.LENGTH_LONG).show()
                         } else {
                             if (email.isNotEmpty() && password.isNotEmpty()) {
                                 FirstScreenActivity.auth.signOut()
@@ -182,31 +173,17 @@ class UserLoginActivity : AppCompatActivity() {
                                     .addOnCompleteListener {
                                         if (it.isSuccessful) {
                                             hideLoading()
-                                            val verification =
-                                                FirstScreenActivity.auth.currentUser?.isEmailVerified
+                                            val verification=FirstScreenActivity.auth.currentUser?.isEmailVerified
                                             if (verification == true) {
-                                                startActivity(
-                                                    Intent(
-                                                        this@UserLoginActivity,
-                                                        FieldSelectActivity::class.java
-                                                    )
-                                                )
+                                                startActivity(Intent(this@UserLoginActivity,FieldSelectActivity::class.java))
                                                 finish()
                                             } else {
-                                                Toast.makeText(
-                                                    this@UserLoginActivity,
-                                                    "Please verify your email first!",
-                                                    Toast.LENGTH_LONG
-                                                ).show()
+                                                Toast.makeText(this@UserLoginActivity,"Please verify your email first!",Toast.LENGTH_LONG).show()
                                             }
                                         }
                                     }.addOnFailureListener {
                                         hideLoading()
-                                        Toast.makeText(
-                                            this@UserLoginActivity,
-                                            it.localizedMessage,
-                                            Toast.LENGTH_LONG
-                                        ).show()
+                                        Toast.makeText(this@UserLoginActivity,it.localizedMessage,Toast.LENGTH_LONG).show()
                                     }
                             }
                         }
@@ -229,6 +206,7 @@ class UserLoginActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -237,6 +215,7 @@ class UserLoginActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 

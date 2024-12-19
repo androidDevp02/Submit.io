@@ -33,16 +33,6 @@ class UserAppliedFormsFragment : Fragment() {
 
     private lateinit var dialog: Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,9 +45,13 @@ class UserAppliedFormsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         MobileAds.initialize(requireContext())
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.navBar.apply { alpha = 0f; translationY = -30f }
         binding.recyclerForms.apply { alpha = 0f; translationY = 20f }
@@ -66,14 +60,8 @@ class UserAppliedFormsFragment : Fragment() {
         binding.recyclerForms.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(200).start()
 
 
-        showLoading()
-
-        FirstScreenActivity.auth= FirebaseAuth.getInstance()
-
-
         dataList=ArrayList()
-        binding.recyclerForms.layoutManager=
-            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        binding.recyclerForms.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         myAdapter= ViewAppliedFormsAdapter(dataList,requireContext())
         binding.recyclerForms.adapter = myAdapter
         val db = FirebaseDatabase.getInstance().getReference("Payment")
@@ -131,6 +119,7 @@ class UserAppliedFormsFragment : Fragment() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -139,6 +128,7 @@ class UserAppliedFormsFragment : Fragment() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

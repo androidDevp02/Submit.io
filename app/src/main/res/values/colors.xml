@@ -19,5 +19,20 @@
 <!--        <color name="darkerGray">#757575</color>-->
 <!--        <color name="lightGray">#E0E0E0</color>-->
 
+    <color name="navbarColor">#111312</color>
+    <color name="navbarIconColor">#7F8180</color>
+    <color name="backgroundColor">#1E201f</color>
+    <color name="cardColor">#2B2D2C</color>
+    <color name="primaryText">#FFFFFF</color>
+    <color name="secondaryText">#B0BEC5</color>
+    <color name="highlightText">#4FC3F7</color>
+    <color name="icons">#81C784</color>
+    <color name="cardBtnBackgroundColor">#424645</color>
+    <color name="cardBtnTextColor">#A1A5A4</color>
+    <color name="btnBackgroundColor">#2B2D2C</color>
+    <color name="btnTextColor">#FFFFFF</color>
+    <color name="searchBarBackgroundColor">#313035</color>
+    <color name="searchBarTextColor">#9e9da2</color>
 
+    <color name="uploadFormEditTextColor">#C5C5C5</color>
 </resources>

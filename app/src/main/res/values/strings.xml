@@ -98,4 +98,5 @@
     <string name="live_txt">Live</string>
     <string name="upcoming_txt">Upcoming</string>
     <string name="expired_txt">Expired</string>
+    <string name="all_forms_txt">All Forms</string>
 </resources>

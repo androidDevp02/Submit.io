@@ -77,7 +77,7 @@ class NotificationService : Service() {
                             for (examSnap in snap.children) {
                                 val currentUser = examSnap.getValue(FormDetails::class.java)
                                 val childCategory = examSnap.child("category").getValue(String::class.java)
-                                if (currentUser != null && childCategory != null && category.contains(childCategory)) {
+                                if (currentUser!=null && childCategory != null && category.contains(childCategory)) {
                                     val notification = Notification(applicationContext)
                                     notification.sendNotification(
                                         "New Form Uploaded",

@@ -17,10 +17,11 @@
         android:layout_marginStart="12dp"
         android:layout_marginTop="20dp"
         android:text="Fill Your Profile"
-        android:textColor="@color/black"
+        android:textColor="@color/primaryText"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
@@ -55,7 +56,7 @@
         android:id="@+id/main_scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="#F5F5F5"
+        android:background="@color/uploadFormEditTextColor"
         app:layout_constraintBottom_toTopOf="@id/continue_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,9 +77,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:hint="Name"
-                app:boxStrokeColor="#3F51B5"
                 app:startIconDrawable="@drawable/user_icon"
-                app:startIconTint="#3F51B5">
+                app:boxStrokeColor="@color/iconColor"
+                app:startIconTint="@color/iconColor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/name"
@@ -95,7 +96,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:hint="Phone">
+                android:hint="Phone"
+                app:startIconDrawable="@drawable/phone_icon"
+                app:boxStrokeColor="@color/iconColor"
+                app:startIconTint="@color/iconColor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/phone"
@@ -114,9 +118,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:hint="Email"
-                app:boxStrokeColor="#3F51B5"
+                app:boxStrokeColor="@color/iconColor"
                 app:startIconDrawable="@drawable/email_icon"
-                app:startIconTint="#3F51B5">
+                app:startIconTint="@color/iconColor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
@@ -125,7 +129,7 @@
                     android:inputType="textEmailAddress"
                     android:focusable="false"
                     android:enabled="false"
-                    android:background="#BEBFC0"
+                    android:background="#808080"
                     android:textColor="#212121" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -135,9 +139,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:hint="DOB: DD/MM/YYYY"
-                app:boxStrokeColor="#3F51B5"
+                app:boxStrokeColor="@color/iconColor"
                 app:startIconDrawable="@drawable/date_icon"
-                app:startIconTint="#3F51B5">
+                app:startIconTint="@color/iconColor">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/dob"
@@ -155,10 +159,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:hint="Gender"
-                app:boxStrokeColor="#3F51B5"
+                app:boxStrokeColor="@color/iconColor"
                 app:hintTextColor="@color/black"
                 app:startIconDrawable="@drawable/user_icon"
-                app:startIconTint="#3F51B5">
+                app:startIconTint="@color/iconColor">
 
                 <AutoCompleteTextView
                     android:id="@+id/gender"
@@ -175,10 +179,10 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="40dp"
                 android:hint="State"
-                app:boxStrokeColor="#3F51B5"
+                app:boxStrokeColor="@color/iconColor"
                 app:hintTextColor="@color/black"
                 app:startIconDrawable="@drawable/state_icon"
-                app:startIconTint="#3F51B5">
+                app:startIconTint="@color/iconColor">
 
                 <AutoCompleteTextView
                     android:id="@+id/state"

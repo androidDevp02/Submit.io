@@ -11,7 +11,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="8dp"
+        android:background="@color/cardColor">
 
         <TextView
             android:id="@+id/tvInstituteName"
@@ -19,37 +20,50 @@
             android:layout_height="wrap_content"
             android:text="Institute Name"
             android:textSize="18sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/primaryText"/>
 
         <TextView
             android:id="@+id/tvHeadName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Head Name" />
+            android:text="Head Name"
+            android:textColor="@color/secondaryText"/>
 
         <TextView
             android:id="@+id/tvAddress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Address" />
+            android:text="Address"
+            android:textColor="@color/secondaryText"/>
 
         <TextView
             android:id="@+id/tvPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Phone" />
+            android:text="Phone"
+            android:textColor="@color/secondaryText"/>
 
         <TextView
             android:id="@+id/tvInstituteMail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Institute Email" />
+            android:text="Institute Email"
+            android:textColor="@color/secondaryText"/>
 
         <TextView
             android:id="@+id/tvLoginMail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Login Email" />
+            android:text="Login Email"
+            android:textColor="@color/secondaryText"/>
+
+        <TextView
+            android:id="@+id/tvWebsiteLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Website Link"
+            android:textColor="@color/secondaryText"/>
 
         <Button
             android:id="@+id/btnVerify"

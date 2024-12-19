@@ -32,25 +32,17 @@ class UserSignUpActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityUserSignUpBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initLoadingDialog()
+        showLoading()
 
         MobileAds.initialize(this@UserSignUpActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.logo.apply { alpha = 0f; translationY = -50f }
         binding.welcome.apply { alpha = 0f; translationY = -20f }
@@ -66,11 +58,10 @@ class UserSignUpActivity : AppCompatActivity() {
         startFadeInAndSlideUpAnimation(binding.btnSignUp, 1100)
         startFadeInAndSlideUpAnimation(binding.btnLogin, 1300)
 
-        FirstScreenActivity.auth= FirebaseAuth.getInstance()
-
-
+        FirstScreenActivity.auth.signOut()
 
         binding.btnLogin.setOnClickListener {
+            hideLoading()
             startActivity(Intent(this@UserSignUpActivity,UserLoginActivity::class.java))
             finish()
         }
@@ -102,7 +93,7 @@ class UserSignUpActivity : AppCompatActivity() {
 
                         FirstScreenActivity.auth.currentUser?.sendEmailVerification()
                             ?.addOnSuccessListener {
-
+                                hideLoading()
                                 Toast.makeText(this@UserSignUpActivity,"Please verify your email address before logging in",Toast.LENGTH_LONG).show()
                                 val intent = Intent(this, UserLoginActivity::class.java)
                                 if (baseContext != this@UserSignUpActivity) {
@@ -111,6 +102,7 @@ class UserSignUpActivity : AppCompatActivity() {
                                 startActivity(intent)
                             }
                             ?.addOnFailureListener {
+                                hideLoading()
                                 Toast.makeText(this@UserSignUpActivity,it.toString(),Toast.LENGTH_LONG).show()
                             }
 
@@ -135,7 +127,6 @@ class UserSignUpActivity : AppCompatActivity() {
     private fun addUserToDatabase(name: String, email: String, uid: String) {
         dbRef = FirebaseDatabase.getInstance().getReference("Users")
         dbRef.child(uid).setValue(User(uid, name, email))
-        hideLoading()
     }
 
     private fun initLoadingDialog() {
@@ -147,6 +138,7 @@ class UserSignUpActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -155,6 +147,7 @@ class UserSignUpActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

@@ -33,16 +33,6 @@ class UploadFormLoginActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityUploadFormLoginBinding.inflate(layoutInflater)
@@ -51,7 +41,8 @@ class UploadFormLoginActivity : AppCompatActivity() {
         initLoadingDialog()
 
         MobileAds.initialize(this@UploadFormLoginActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.logo.apply { alpha = 0f; translationY = -50f }
         binding.welcome.apply { alpha = 0f; translationY = -20f }
@@ -70,18 +61,22 @@ class UploadFormLoginActivity : AppCompatActivity() {
         FirstScreenActivity.auth.signOut()
 
         binding.forgotPasswordText.setOnClickListener {
+            showLoading()
             val builder = AlertDialog.Builder(this@UploadFormLoginActivity)
             builder.setTitle("Enter your email to reset the password")
 
             val input = EditText(this@UploadFormLoginActivity)
             input.inputType= InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
             builder.setView(input)
+            hideLoading()
 
             builder.setPositiveButton("Send Email") { _, _ ->
+                showLoading()
                 val email = input.text.toString()
                 if(email.isNotEmpty()){
                     FirstScreenActivity.auth.sendPasswordResetEmail(email)
                         .addOnSuccessListener {
+                            hideLoading()
                             Toast.makeText(this@UploadFormLoginActivity,"Please check your email to reset the password.",Toast.LENGTH_LONG).show()
                             binding.forgotPasswordText.visibility = View.GONE
                             Handler(Looper.getMainLooper()).postDelayed({
@@ -89,12 +84,14 @@ class UploadFormLoginActivity : AppCompatActivity() {
                             }, 60000)
                         }
                         .addOnFailureListener {
+                            hideLoading()
                             Toast.makeText(this@UploadFormLoginActivity,"Failed to send email. Please try again later.",Toast.LENGTH_LONG).show()
                         }
 
                 }
                 else
                 {
+                    hideLoading()
                     Toast.makeText(this@UploadFormLoginActivity,"Email cannot be empty",Toast.LENGTH_LONG).show()
                 }
             }
@@ -107,6 +104,7 @@ class UploadFormLoginActivity : AppCompatActivity() {
 
 
         binding.btnSignup.setOnClickListener {
+            hideLoading()
             startActivity(Intent(this@UploadFormLoginActivity, UploadFormSignUpDetailsActivity::class.java))
             finish()
         }
@@ -154,15 +152,15 @@ class UploadFormLoginActivity : AppCompatActivity() {
                             FirstScreenActivity.auth.signInWithEmailAndPassword(email, password)
                                 .addOnCompleteListener {
                                     if (it.isSuccessful) {
-                                        hideLoading()
-
                                         val verification=FirstScreenActivity.auth.currentUser?.isEmailVerified
                                         if(verification==true){
+                                            hideLoading()
                                             startActivity(Intent(this@UploadFormLoginActivity,UploadFormMainActivity::class.java))
                                             finish()
                                         }
                                         else
                                         {
+                                            hideLoading()
                                             Toast.makeText(this@UploadFormLoginActivity,"Please verify your email first!",Toast.LENGTH_LONG).show()
                                         }
 
@@ -191,6 +189,7 @@ class UploadFormLoginActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -199,6 +198,7 @@ class UploadFormLoginActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

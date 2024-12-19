@@ -6,13 +6,15 @@
     android:layout_marginVertical="8dp"
     android:layout_marginHorizontal="16dp"
     app:cardCornerRadius="8dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    android:background="@color/uploadFormEditTextColor">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@color/uploadFormEditTextColor">
 
         <TextView
             android:id="@+id/fieldLabel"

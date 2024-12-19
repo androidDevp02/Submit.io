@@ -32,6 +32,7 @@ class UploadFormSignUpAdapter(private var dataList: ArrayList<UploadFormSignUpMo
         holder.binding.tvPhone.text=dataList[position].instituteContact
         holder.binding.tvInstituteMail.text=dataList[position].instituteMailId
         holder.binding.tvLoginMail.text=dataList[position].loginMailId
+        holder.binding.tvWebsiteLink.text=dataList[position].websitelink
 
 
         holder.binding.btnVerify.setOnClickListener {

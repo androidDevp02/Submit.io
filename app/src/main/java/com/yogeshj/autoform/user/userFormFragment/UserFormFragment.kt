@@ -6,8 +6,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -37,6 +35,7 @@ import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.Rec
 import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.RecommendationCardFormModel
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import com.yogeshj.autoform.user.userFormFragment.profile.UpdateProfileActivity
+import com.yogeshj.autoform.user.userFormFragment.recommendatioSeeAll.RecommendationSeeAllActivity
 import com.yogeshj.autoform.user.userFormFragment.searchForms.SearchActivity
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -61,16 +60,6 @@ class UserFormFragment : Fragment() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -85,7 +74,8 @@ class UserFormFragment : Fragment() {
         FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         MobileAds.initialize(requireContext())
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         initLoadingDialog()
 
@@ -136,8 +126,8 @@ class UserFormFragment : Fragment() {
                         }
                     }
                 }
-                hideLoading()
                 onComplete()
+                hideLoading()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -209,6 +199,7 @@ class UserFormFragment : Fragment() {
 
                             val currentUser = examSnap.getValue(FormDetails::class.java)
                             val childCategory = examSnap.child("category").getValue(String::class.java)
+//                            Log.d("EXAM",currentUser!!.examName+" "+currentUser!!.category)
                             if (currentUser!=null && childCategory!=null && category.contains(childCategory)) {
 
                                 val deadlineStr = currentUser.deadline
@@ -320,6 +311,7 @@ class UserFormFragment : Fragment() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -328,6 +320,7 @@ class UserFormFragment : Fragment() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

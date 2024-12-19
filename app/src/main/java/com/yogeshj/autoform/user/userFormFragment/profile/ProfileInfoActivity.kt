@@ -46,16 +46,6 @@ class ProfileInfoActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     private var currentUserUid:String?=null
     private var backToAdminScreen=false
 
@@ -89,9 +79,15 @@ class ProfileInfoActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth=FirebaseAuth.getInstance()
+        database=FirebaseDatabase.getInstance()
+        storage=FirebaseStorage.getInstance()
 
         MobileAds.initialize(this@ProfileInfoActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.heading.apply { alpha = 0f; translationY = -20f }
         binding.imageFrame.apply { alpha = 0f; translationY = -20f }
@@ -103,13 +99,6 @@ class ProfileInfoActivity : AppCompatActivity() {
         binding.mainScroll.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(400).start()
         binding.continueBtn.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(600).start()
 
-
-
-        showLoading()
-
-        FirstScreenActivity.auth=FirebaseAuth.getInstance()
-        database=FirebaseDatabase.getInstance()
-        storage=FirebaseStorage.getInstance()
 
         currentUserUid=intent.getStringExtra("uid")
         backToAdminScreen=intent.getBooleanExtra("backToAdminScreen",false)
@@ -128,7 +117,7 @@ class ProfileInfoActivity : AppCompatActivity() {
         val db = FirebaseDatabase.getInstance().getReference("Users")
         db.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                hideLoading()
+                showLoading()
                 if (snapshot.exists()) {
                     for (snap in snapshot.children) {
                         val profilePicUrl = snap.child("profilePic").value?.toString()
@@ -142,6 +131,7 @@ class ProfileInfoActivity : AppCompatActivity() {
                         }
                     }
                 }
+                hideLoading()
             }
             override fun onCancelled(error: DatabaseError) {
                 hideLoading()
@@ -152,7 +142,7 @@ class ProfileInfoActivity : AppCompatActivity() {
         val db2 = FirebaseDatabase.getInstance().getReference("UsersInfo")
         db2.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                hideLoading()
+                showLoading()
                 if (snapshot.exists()) {
                     for (snap in snapshot.children) {
                         val profilePicUrl = snap.child("profilePic").value?.toString()
@@ -178,6 +168,7 @@ class ProfileInfoActivity : AppCompatActivity() {
                         }
                     }
                 }
+                hideLoading()
             }
             override fun onCancelled(error: DatabaseError) {
                 hideLoading()
@@ -304,6 +295,7 @@ class ProfileInfoActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -312,6 +304,7 @@ class ProfileInfoActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

@@ -26,16 +26,6 @@ class ContactInformation : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     private var currentUserUid:String?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +34,8 @@ class ContactInformation : AppCompatActivity() {
         setContentView(binding.root)
 
         MobileAds.initialize(this@ContactInformation)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.navBar.apply { alpha = 0f; translationY = -30f }
         binding.linearLayout.apply { alpha = 0f; translationY = 20f }
@@ -103,6 +94,7 @@ class ContactInformation : AppCompatActivity() {
                 updates["phone"] = binding.phone.text.toString()
             }
             else{
+                hideLoading()
                 Toast.makeText(this@ContactInformation,"Please enter a valid phone number",Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }

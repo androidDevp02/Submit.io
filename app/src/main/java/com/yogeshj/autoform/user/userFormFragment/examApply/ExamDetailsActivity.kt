@@ -37,16 +37,6 @@ class ExamDetailsActivity : AppCompatActivity() {
 
     private lateinit var status:String
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityExamDetailsBinding.inflate(layoutInflater)
@@ -60,20 +50,18 @@ class ExamDetailsActivity : AppCompatActivity() {
 
 
         initLoadingDialog()
-
-
-
-        MobileAds.initialize(this@ExamDetailsActivity)
-        handler.post(loadAdRunnable)
-
+        showLoading()
 
         FirstScreenActivity.auth = FirebaseAuth.getInstance()
+
+        MobileAds.initialize(this@ExamDetailsActivity)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.back.setOnClickListener {
             finish()
         }
 
-        showLoading()
         val examName=intent.getStringExtra("heading")
         val db = FirebaseDatabase.getInstance().getReference("UploadForm")
         db.addListenerForSingleValueEvent(object : ValueEventListener {
@@ -125,22 +113,25 @@ class ExamDetailsActivity : AppCompatActivity() {
         setUpButtonListeners()
 
         binding.applyBtn.setOnClickListener {
+            showLoading()
             if(containsLink)
             {
                 val intent = Intent(Intent.ACTION_VIEW,Uri.parse(linkURL))
+                hideLoading()
                 startActivity(intent)
             }
             else if(status=="Live")
             {
                 val intent=Intent(this@ExamDetailsActivity, ReviewDataActivity::class.java)
                 intent.putExtra("heading",examName)
+                hideLoading()
                 startActivity(intent)
             }
             else
             {
+                hideLoading()
                 Toast.makeText(this@ExamDetailsActivity,"Sorry, The form is already expired!",Toast.LENGTH_LONG).show()
             }
-
         }
 
 
@@ -202,6 +193,7 @@ class ExamDetailsActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -210,6 +202,7 @@ class ExamDetailsActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

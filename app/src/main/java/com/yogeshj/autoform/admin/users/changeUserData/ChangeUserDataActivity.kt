@@ -43,16 +43,6 @@ class ChangeUserDataActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     private lateinit var currentUserUid:String
 
 
@@ -63,9 +53,13 @@ class ChangeUserDataActivity : AppCompatActivity() {
 
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         MobileAds.initialize(this@ChangeUserDataActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         binding.navBar.apply { alpha = 0f; translationY = -30f }
         binding.profileCard.apply { alpha = 0f; translationY = -30f }
@@ -81,9 +75,7 @@ class ChangeUserDataActivity : AppCompatActivity() {
         binding.languagesCard.animate().alpha(1f).translationY(0f).setDuration(800).setStartDelay(500).start()
         binding.additionalDetailsCard.animate().alpha(1f).translationY(0f).setDuration(800).setStartDelay(600).start()
 
-        showLoading()
 
-        FirstScreenActivity.auth= FirebaseAuth.getInstance()
         val name=intent.getStringExtra("name")
         val email=intent.getStringExtra("email")
 
@@ -132,27 +124,36 @@ class ChangeUserDataActivity : AppCompatActivity() {
         fetchDataFromFirebase()
 
         binding.editProfile.setOnClickListener {
+            showLoading()
             val intent=Intent(this@ChangeUserDataActivity, ProfileInfoActivity::class.java)
             intent.putExtra("uid",currentUserUid)
             intent.putExtra("backToAdminScreen",true)
+            hideLoading()
             startActivity(intent)
+
         }
 
         binding.contactInfoCard.setOnClickListener {
+            showLoading()
             val intent=Intent(this@ChangeUserDataActivity, ContactInformation::class.java)
             intent.putExtra("uid",currentUserUid)
+            hideLoading()
             startActivity(intent)
         }
 
         binding.educationCard.setOnClickListener {
+            showLoading()
             val intent=Intent(this@ChangeUserDataActivity, EducationActivity::class.java)
             intent.putExtra("uid",currentUserUid)
+            hideLoading()
             startActivity(intent)
         }
 
         binding.languagesCard.setOnClickListener {
+            showLoading()
             val intent=Intent(this@ChangeUserDataActivity, LanguageActivity::class.java)
             intent.putExtra("uid",currentUserUid)
+            hideLoading()
             startActivity(intent)
         }
 
@@ -234,6 +235,7 @@ class ChangeUserDataActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -242,6 +244,7 @@ class ChangeUserDataActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

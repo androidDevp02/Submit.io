@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,8 @@ import java.util.ArrayList
 import java.util.Calendar
 import java.util.Date
 
+//check profile pic in uploading a custom form
+
 @Suppress("DEPRECATION")
 class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
 
@@ -50,6 +53,8 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
     private lateinit var selectedImg: Uri
 
     private lateinit var dialog2:Dialog
+
+    private val customFormOptionChosen=HashSet<String>()
 
     @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -125,6 +130,10 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
         super.onViewCreated(view, savedInstanceState)
 
         initLoadingDialog()
+        showLoading()
+
+        FirstScreenActivity.auth= FirebaseAuth.getInstance()
+
         binding.mainScroll.apply { alpha = 0f; translationY = 30f }
         binding.main.apply { alpha = 0f; translationY = 30f }
         binding.navBar.apply { alpha = 0f; translationY = -30f }
@@ -132,10 +141,6 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
         binding.navBar.animate().alpha(1f).translationY(0f).setDuration(1000).start()
         binding.mainScroll.animate().alpha(1f).translationY(0f).setDuration(1000).start()
         binding.main.animate().alpha(1f).translationY(0f).setDuration(1000).setStartDelay(200).start()
-
-        showLoading()
-
-        FirstScreenActivity.auth= FirebaseAuth.getInstance()
 
         binding.main.alpha = 0f
         binding.main.animate().alpha(1f).setDuration(500).setListener(null)
@@ -296,15 +301,49 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
                                     for (uidSnapshot in snapshot.children) {
                                         for (keySnapshot in uidSnapshot.children) {
                                             val key = keySnapshot.key
-                                            if(key!=null && key=="to" && !uniqueKeysList.contains("school start year"))
+                                            if(key!=null &&(key=="education_level" || key=="course" || key=="school" || key=="from" || key=="to" || key=="cgpa"))
                                             {
-                                                uniqueKeysList.add("school start year")
+                                                if(!uniqueKeysList.contains("Most recent education details") && !customFormOptionChosen.contains("Most recent education details"))
+                                                {
+                                                    uniqueKeysList.add("Most recent education details")
+                                                }
                                             }
-                                            else if(key!=null && key=="from" && !uniqueKeysList.contains("school end year"))
+                                            else if(key!=null &&(key=="language1" || key=="proficiency1"))
                                             {
-                                                uniqueKeysList.add("school end year")
+                                                if(!uniqueKeysList.contains("Language & Proficiency 1") && !customFormOptionChosen.contains("Language & Proficiency 1"))
+                                                {
+                                                    uniqueKeysList.add("Language & Proficiency 1")
+                                                }
                                             }
-                                            else if(key != null && key!="field1" && key!="field2" && key!="field3" && key!="uid" && !uniqueKeysList.contains(key)) {
+                                            else if(key!=null &&(key=="language2"|| key=="proficiency2"))
+                                            {
+                                                if(!uniqueKeysList.contains("Language & Proficiency 2") && !customFormOptionChosen.contains("Language & Proficiency 2"))
+                                                {
+                                                    uniqueKeysList.add("Language & Proficiency 2")
+                                                }
+                                            }
+                                            else if(key!=null &&(key=="language3"|| key=="proficiency3"))
+                                            {
+                                                if(!uniqueKeysList.contains("Language & Proficiency 3") && !customFormOptionChosen.contains("Language & Proficiency 3"))
+                                                {
+                                                    uniqueKeysList.add("Language & Proficiency 3")
+                                                }
+                                            }
+                                            else if(key!=null && (key=="name" || key=="email" || key=="phone" || key=="dob" || key=="gender" || key=="profilePic"))
+                                            {
+                                                if(!uniqueKeysList.contains("User Details") && !customFormOptionChosen.contains("User Details"))
+                                                {
+                                                    uniqueKeysList.add("User Details")
+                                                }
+                                            }
+                                            else if(key!=null && (key=="address" || key=="state"))
+                                            {
+                                                if(!uniqueKeysList.contains("Address Details") && !customFormOptionChosen.contains("Address Details"))
+                                                {
+                                                    uniqueKeysList.add("Address Details")
+                                                }
+                                            }
+                                            else if(key != null && key!="field1" && key!="field2" && key!="field3" && key!="uid" && !uniqueKeysList.contains(key) && !customFormOptionChosen.contains(key)) {
 
                                                 uniqueKeysList.add(key)
                                             }
@@ -329,8 +368,62 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
                     binding.subtractButton.setOnClickListener{
                         val childCount=binding.formContainer.childCount
                         if (childCount>0) {
-                            binding.formContainer.removeViewAt(childCount-1)
+                            val lastChild=binding.formContainer.getChildAt(childCount-1)
+                            if (lastChild is EditText) {
+                                val text = lastChild.text?.toString() ?: "No text available"
+                                if(text=="CGPA"){
+                                    customFormOptionChosen.remove("Most recent education details")
+                                    binding.formContainer.removeViewAt(childCount-1)
+                                    binding.formContainer.removeViewAt(childCount-2)
+                                    binding.formContainer.removeViewAt(childCount-3)
+                                    binding.formContainer.removeViewAt(childCount-4)
+                                    binding.formContainer.removeViewAt(childCount-5)
+                                    binding.formContainer.removeViewAt(childCount-6)
+                                }
+                                else if(text=="Proficiency1")
+                                {
+                                    customFormOptionChosen.remove("Language & Proficiency 1")
+                                    binding.formContainer.removeViewAt(childCount-1)
+                                    binding.formContainer.removeViewAt(childCount-2)
+                                }
+                                else if(text=="Proficiency2")
+                                {
+                                    customFormOptionChosen.remove("Language & Proficiency 2")
+                                    binding.formContainer.removeViewAt(childCount-1)
+                                    binding.formContainer.removeViewAt(childCount-2)
+                                }
+                                else if(text=="Proficiency3")
+                                {
+                                    customFormOptionChosen.remove("Language & Proficiency 3")
+                                    binding.formContainer.removeViewAt(childCount-1)
+                                    binding.formContainer.removeViewAt(childCount-2)
+                                }
+                                else if(text=="DOB")
+                                {
+                                    customFormOptionChosen.remove("User Details")
+                                    binding.formContainer.removeViewAt(childCount-1)
+                                    binding.formContainer.removeViewAt(childCount-2)
+                                    binding.formContainer.removeViewAt(childCount-3)
+                                    binding.formContainer.removeViewAt(childCount-4)
+                                    binding.formContainer.removeViewAt(childCount-5)
+                                    binding.formContainer.removeViewAt(childCount-6)
+                                }
+                                else if(text=="State")
+                                {
+                                    customFormOptionChosen.remove("Address Details")
+                                    binding.formContainer.removeViewAt(childCount-1)
+                                    binding.formContainer.removeViewAt(childCount-2)
+                                }
+                                else {
+                                    customFormOptionChosen.remove(text)
+                                    binding.formContainer.removeViewAt(childCount-1)
+                                }
+
+//                                Toast.makeText(context, "Removed: $text", Toast.LENGTH_SHORT).show()
+                            }
+
                         }
+
                     }
 
                     binding.done.setOnClickListener {
@@ -346,6 +439,7 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
                                 flag=true
                                 break
                             }
+
                         }
                         if(!flag) {
                             dbRef = FirebaseDatabase.getInstance().getReference("UploadForm")
@@ -418,24 +512,151 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
 
         builder.setItems(keysArray) { _, which ->
             val selectedKey = keysArray[which]
-            val editText = EditText(context)
-            if(selectedKey=="school start year")
-                editText.setText("to")
-            else if(selectedKey=="school end year")
-                editText.setText("from")
-            else if(selectedKey=="other")
-                editText.hint = "Enter the detail you want"
-            else
+
+            if (selectedKey == "Most recent education details") {
+                val educationFields = arrayOf("Education_level", "Course", "School", "From", "To", "CGPA")
+                for (field in educationFields) {
+                    val editText = EditText(context)
+                    editText.setText(field)
+                    editText.isFocusable=false
+                    editText.isEnabled=false
+                    editText.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    binding.formContainer.addView(editText)
+                }
+                customFormOptionChosen.add("Most recent education details")
+            }
+            else if(selectedKey=="Language & Proficiency 1")
+            {
+                val languageFields = arrayOf("Language1","Proficiency1")
+                for (field in languageFields) {
+                    val editText = EditText(context)
+                    editText.setText(field)
+                    editText.isFocusable=false
+                    editText.isEnabled=false
+                    editText.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    binding.formContainer.addView(editText)
+                }
+                customFormOptionChosen.add("Language & Proficiency 1")
+            }
+            else if(selectedKey=="Language & Proficiency 2")
+            {
+                val languageFields = arrayOf("Language2","Proficiency2")
+                for (field in languageFields) {
+                    val editText = EditText(context)
+                    editText.setText(field)
+                    editText.isFocusable=false
+                    editText.isEnabled=false
+                    editText.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    binding.formContainer.addView(editText)
+                }
+                customFormOptionChosen.add("Language & Proficiency 2")
+            }
+            else if(selectedKey=="Language & Proficiency 3")
+            {
+                val languageFields = arrayOf("Language3", "Proficiency3")
+                for (field in languageFields) {
+                    val editText = EditText(context)
+                    editText.setText(field)
+                    editText.isFocusable=false
+                    editText.isEnabled=false
+                    editText.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    binding.formContainer.addView(editText)
+                }
+                customFormOptionChosen.add("Language & Proficiency 3")
+            }
+            else if(selectedKey=="User Details")
+            {
+                val userFields = arrayOf("Name","ProfilePic","Email","Phone","Gender","DOB")
+                for (field in userFields) {
+                    val editText = EditText(context)
+                    editText.setText(field)
+                    editText.isFocusable=false
+                    editText.isEnabled=false
+                    editText.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    binding.formContainer.addView(editText)
+                }
+                customFormOptionChosen.add("User Details")
+            }
+            else if(selectedKey=="Address Details")
+            {
+                val addressFields = arrayOf("Address","State")
+                for (field in addressFields) {
+                    val editText = EditText(context)
+                    editText.setText(field)
+                    editText.isFocusable=false
+                    editText.isEnabled=false
+                    editText.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    binding.formContainer.addView(editText)
+                }
+                customFormOptionChosen.add("Address Details")
+            }
+            else {
+                val editText = EditText(context)
                 editText.setText(selectedKey)
-            editText.layoutParams = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            binding.formContainer.addView(editText)
+                editText.layoutParams = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
+                binding.formContainer.addView(editText)
+                if(selectedKey!="other"){
+                    customFormOptionChosen.add(selectedKey)
+                    editText.isFocusable=false
+                    editText.isEnabled=false
+                }
+                else{
+                    editText.hint = "Enter the detail you want"
+                }
+            }
         }
 
         builder.create().show()
     }
+
+
+//    private fun showKeysMenu(keysList: ArrayList<String>) {
+//        val builder = AlertDialog.Builder(context)
+//        builder.setTitle("Select the fields which you want in your form")
+//
+//        val keysArray = keysList.toTypedArray()
+//
+//        builder.setItems(keysArray) { _, which ->
+//            val selectedKey = keysArray[which]
+//            val editText = EditText(context)
+//            if(selectedKey=="school start year")
+//                editText.setText("to")
+//            else if(selectedKey=="school end year")
+//                editText.setText("from")
+//            else if(selectedKey=="other")
+//                editText.hint = "Enter the detail you want"
+//            else
+//                editText.setText(selectedKey)
+//            editText.layoutParams = LinearLayout.LayoutParams(
+//                LinearLayout.LayoutParams.MATCH_PARENT,
+//                LinearLayout.LayoutParams.WRAP_CONTENT
+//            )
+//            binding.formContainer.addView(editText)
+//        }
+//
+//        builder.create().show()
+//    }
 
 
     private fun initLoadingDialog() {
@@ -447,6 +668,7 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog2.isShowing) {
             dialog2.show()
         }
@@ -455,6 +677,7 @@ class UploadFormFragment : Fragment(),DatePickerDialog.OnDateSetListener {
     private fun hideLoading() {
         if (dialog2.isShowing) {
             dialog2.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

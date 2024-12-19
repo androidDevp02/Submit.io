@@ -428,6 +428,7 @@ class FormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog2.isShowing) {
             dialog2.show()
         }
@@ -436,6 +437,7 @@ class FormDetailsActivity : AppCompatActivity(),DatePickerDialog.OnDateSetListen
     private fun hideLoading() {
         if (dialog2.isShowing) {
             dialog2.dismiss()
+            binding.root.alpha = 1f
         }
     }
 }

@@ -29,6 +29,7 @@ import com.yogeshj.autoform.user.UserMainActivity
 //5267 3181 8797 5449
 
 
+//in category buttons show which button is currently selected
 class FirstScreenActivity : AppCompatActivity() {
     private lateinit var binding:ActivityFirstScreenBinding
     private lateinit var dialog:Dialog
@@ -37,23 +38,30 @@ class FirstScreenActivity : AppCompatActivity() {
         lateinit var auth: FirebaseAuth
     }
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
+//    private val handler = Handler(Looper.getMainLooper())
+//    private val adInterval = 31_000L
+//    private val loadAdRunnable = object : Runnable {
+//        override fun run() {
+//            val adRequest = AdRequest.Builder().build()
+//            binding.adView.loadAd(adRequest)
+//            handler.postDelayed(this, adInterval)
+//        }
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityFirstScreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        MobileAds.initialize(this) {}
-        handler.post(loadAdRunnable)
+        initLoadingDialog()
+        showLoading()
+
+        auth=FirebaseAuth.getInstance()
+
+        MobileAds.initialize(this)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
+//        handler.post(loadAdRunnable)
 
         binding.title.apply { alpha = 0f; translationY = -30f }
         binding.loginAsUserCard.apply { alpha = 0f; translationX = -30f }
@@ -64,16 +72,10 @@ class FirstScreenActivity : AppCompatActivity() {
         binding.loginAsUploadformCard.animate().alpha(1f).translationX(0f).setDuration(1000).setStartDelay(600).start()
 
 
-        initLoadingDialog()
-
-        showLoading()
-
-        auth=FirebaseAuth.getInstance()
-
         val currentUser = auth.currentUser
         if(currentUser!=null)
         {
-            //go to users/admin page if already logged in
+            showLoading()
             val db = FirebaseDatabase.getInstance().getReference("Users")
             db.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -81,35 +83,35 @@ class FirstScreenActivity : AppCompatActivity() {
                         for (snap in snapshot.children) {
                             val curr = snap.getValue(User::class.java)!!
                             if (curr.uid == auth.currentUser!!.uid) {
+                                hideLoading()
                                 if(curr.email=="yogesh.jaiswal21b@iiitg.ac.in"){
-                                    startActivity(Intent(this@FirstScreenActivity,
-                                        AdminMainActivity::class.java))
+                                    startActivity(Intent(this@FirstScreenActivity,AdminMainActivity::class.java))
+                                    finish()
                                 }
-                                else
+                                else{
                                     startActivity(Intent(this@FirstScreenActivity,UserMainActivity::class.java))
-                                finish()
+                                    finish()
+                                }
                                 break
                             }
                         }
                     }
+                    hideLoading()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-
+                    hideLoading()
                 }
             })
 
-            //go to upload form page if already logged in
-//            Log.d("EMAIL C", auth.currentUser!!.email!!+" "+ auth.currentUser!!.uid)
             val db2 = FirebaseDatabase.getInstance().getReference("UploadFormUsers")
             db2.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         for (snap in snapshot.children) {
                             val curr = snap.getValue(User::class.java)!!
-//                            Log.d("EMAILS",curr.email!!)
                             if (curr.uid == auth.currentUser!!.uid) {
-//                                Toast.makeText(this@FirstScreenActivity,"Upload From user is logged in",Toast.LENGTH_LONG).show()
+                                hideLoading()
                                 startActivity(Intent(this@FirstScreenActivity,UploadFormMainActivity::class.java))
                                 finish()
                                 break
@@ -132,11 +134,13 @@ class FirstScreenActivity : AppCompatActivity() {
 
 
         binding.loginAsUserCard.setOnClickListener {
+            hideLoading()
             startActivity(Intent(this@FirstScreenActivity,UserLoginActivity::class.java))
             finish()
         }
 
         binding.loginAsUploadformCard.setOnClickListener {
+            hideLoading()
             startActivity(Intent(this@FirstScreenActivity,UploadFormLoginActivity::class.java))
             finish()
         }
@@ -152,7 +156,7 @@ class FirstScreenActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
-        binding.root.visibility = View.INVISIBLE
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -161,7 +165,7 @@ class FirstScreenActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
-            binding.root.visibility = View.VISIBLE
+            binding.root.alpha = 1f
         }
     }
 }

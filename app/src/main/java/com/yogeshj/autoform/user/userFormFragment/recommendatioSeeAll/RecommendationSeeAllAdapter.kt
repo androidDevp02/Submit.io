@@ -1,4 +1,4 @@
-package com.yogeshj.autoform.user.userFormFragment.CardFormRecyclerView
+package com.yogeshj.autoform.user.userFormFragment.recommendatioSeeAll
 
 import android.app.AlertDialog
 import android.content.Context
@@ -12,20 +12,20 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.database.FirebaseDatabase
 import com.yogeshj.autoform.FirstScreenActivity
-import com.yogeshj.autoform.user.userFormFragment.examApply.ExamDetailsActivity
 import com.yogeshj.autoform.R
-import com.yogeshj.autoform.databinding.CardFormRvItemBinding
+import com.yogeshj.autoform.databinding.RecommendationSeeAllRvItemBinding
 import com.yogeshj.autoform.uploadForm.ViewLinkRegistered.ViewLinkRegisteredModel
 import com.yogeshj.autoform.user.UserMainActivity
-import com.yogeshj.autoform.user.temporaryFiles.HomeScreenActivity
+import com.yogeshj.autoform.user.userFormFragment.examApply.ExamDetailsActivity
+import com.yogeshj.autoform.user.userFormFragment.recommendationRecyclerView.RecommendationCardFormModel
 
-class CardFormAdapter(private var dataList: ArrayList<CardFormModel>, var context: Context) :
-    RecyclerView.Adapter<CardFormAdapter.ViewHolder>() {
+class RecommendationSeeAllAdapter(private var dataList: ArrayList<RecommendationSeeAllModel>, var context: Context) :
+    RecyclerView.Adapter<RecommendationSeeAllAdapter.ViewHolder>() {
 
-    inner class ViewHolder(var binding: CardFormRvItemBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class ViewHolder(var binding: RecommendationSeeAllRvItemBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = CardFormRvItemBinding.inflate(LayoutInflater.from(context), parent, false)
+        val view = RecommendationSeeAllRvItemBinding.inflate(LayoutInflater.from(context), parent, false)
         return ViewHolder(view)
     }
 
@@ -49,8 +49,8 @@ class CardFormAdapter(private var dataList: ArrayList<CardFormModel>, var contex
         if(dataList[position].status=="Live") {
             holder.binding.statusIcon.setImageResource(R.drawable.live_icon)
             holder.binding.statusText.text="Live"
-            holder.binding.tentativeDate.visibility=View.GONE
-            holder.binding.tentativeDeadline.visibility=View.GONE
+            holder.binding.tentativeDate.visibility= View.GONE
+            holder.binding.tentativeDeadline.visibility= View.GONE
         }
         else if(dataList[position].status=="Upcoming") {
             holder.binding.statusIcon.setImageResource(R.drawable.upcoming_icon)
@@ -77,7 +77,7 @@ class CardFormAdapter(private var dataList: ArrayList<CardFormModel>, var contex
                     )
 //                    holder.binding.markAsAppliedButton.text="Applied"
 //                    holder.binding.markAsAppliedButton.isEnabled = false
-                    val intent=Intent(context, UserMainActivity::class.java)
+                    val intent= Intent(context, UserMainActivity::class.java)
                     intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK
                     context.startActivity(intent)
                 }
@@ -89,11 +89,8 @@ class CardFormAdapter(private var dataList: ArrayList<CardFormModel>, var contex
             else if(holder.binding.markAsAppliedButton.text!="Mark Applied"){
                 Toast.makeText(context,"The form is already marked as filled!", Toast.LENGTH_LONG).show()
             }
-            else if(holder.binding.statusText.text=="Upcoming"){
-                Toast.makeText(context,"Please wait for the form to come live!", Toast.LENGTH_LONG).show()
-            }
             else{
-                Toast.makeText(context,"The form is already expired!", Toast.LENGTH_LONG).show()
+                Toast.makeText(context,"Please wait for the form to come live!", Toast.LENGTH_LONG).show()
             }
         }
 
@@ -108,4 +105,5 @@ class CardFormAdapter(private var dataList: ArrayList<CardFormModel>, var contex
             context.startActivity(intent)
         }
     }
+
 }

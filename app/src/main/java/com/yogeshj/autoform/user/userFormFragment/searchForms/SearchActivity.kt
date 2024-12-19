@@ -32,16 +32,6 @@ class SearchActivity : AppCompatActivity() {
 
     private lateinit var dialog:Dialog
 
-    private val handler = Handler(Looper.getMainLooper())
-    private val adInterval = 31_000L
-    private val loadAdRunnable = object : Runnable {
-        override fun run() {
-            val adRequest = AdRequest.Builder().build()
-            binding.adView.loadAd(adRequest)
-            handler.postDelayed(this, adInterval)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivitySearchBinding.inflate(layoutInflater)
@@ -54,7 +44,8 @@ class SearchActivity : AppCompatActivity() {
         binding.search.requestFocus()
 
         MobileAds.initialize(this@SearchActivity)
-        handler.post(loadAdRunnable)
+        val adRequest = AdRequest.Builder().build()
+        binding.adView.loadAd(adRequest)
 
         dataList=ArrayList()
 
@@ -93,6 +84,7 @@ class SearchActivity : AppCompatActivity() {
                 } else {
                     setRecyclerView()
                 }
+                hideLoading()
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -118,9 +110,11 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun setRecyclerView() {
+        showLoading()
         myAdapter = SearchAdapter(dataList, this@SearchActivity)
         binding.recycler.layoutManager = LinearLayoutManager(this@SearchActivity)
         binding.recycler.adapter = myAdapter
+        hideLoading()
     }
 
     private fun initLoadingDialog() {
@@ -132,6 +126,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun showLoading() {
+        binding.root.alpha = 0.5f
         if (!dialog.isShowing) {
             dialog.show()
         }
@@ -140,6 +135,7 @@ class SearchActivity : AppCompatActivity() {
     private fun hideLoading() {
         if (dialog.isShowing) {
             dialog.dismiss()
+            binding.root.alpha = 1f
         }
     }
 
