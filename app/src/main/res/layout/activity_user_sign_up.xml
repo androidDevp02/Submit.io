@@ -17,11 +17,11 @@
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
+        android:layout_width="340dp"
+        android:layout_height="250dp"
         android:layout_marginTop="30dp"
         android:contentDescription="App logo"
-        android:src="@drawable/logo"
+        android:src="@mipmap/ic_login_foreground"
         android:scaleType="centerCrop"
         android:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
