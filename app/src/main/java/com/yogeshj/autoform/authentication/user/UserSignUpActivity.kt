@@ -12,6 +12,8 @@ import android.view.Window
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.snackbar.Snackbar
@@ -38,6 +40,10 @@ class UserSignUpActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initLoadingDialog()
+
+        Glide.with(this@UserSignUpActivity)
+            .load(R.mipmap.ic_login_foreground)
+            .apply(RequestOptions.circleCropTransform()).into(binding.logo)
 
         MobileAds.initialize(this@UserSignUpActivity)
         val adRequest = AdRequest.Builder().build()
