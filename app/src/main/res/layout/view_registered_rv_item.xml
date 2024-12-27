@@ -31,7 +31,6 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <!-- Dropdown Button for More Details -->
         <ImageButton
             android:id="@+id/dropdownButton"
             android:layout_width="wrap_content"

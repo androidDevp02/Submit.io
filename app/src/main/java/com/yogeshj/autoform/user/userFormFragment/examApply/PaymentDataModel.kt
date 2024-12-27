@@ -7,5 +7,8 @@ data class PaymentDataModel(
     val examName:String?=null,
     val examHostName:String?=null,
     val paymentStatus: String? = null,
-    val email:String?=null
+    val email:String?=null,
+    var paymentDate:String?=null,
+    var paymentTime:String?=null,
+    var icon:String?=null
 )

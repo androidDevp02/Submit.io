@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item android:title="Home"
-    android:id="@+id/userForms"
-    android:icon="@drawable/ic_home"/>
-<item android:title="Applied Forms"
-    android:id="@+id/applied_forms"
-    android:icon="@drawable/applied_forms"/>
-<item android:title="Premium"
-    android:id="@+id/premium"
-    android:icon="@drawable/baseline_subscriptions_24"/>
+    <item
+        android:id="@+id/userForms"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+    <item
+        android:id="@+id/applied_forms"
+        android:icon="@drawable/applied_forms"
+        android:title="Link Applied" />
+    <item
+        android:id="@+id/payment_history"
+        android:icon="@drawable/payment_history_icon"
+        android:title="Payment History" />
+    <item
+        android:id="@+id/premium"
+        android:icon="@drawable/baseline_subscriptions_24"
+        android:title="Premium" />
 </menu>

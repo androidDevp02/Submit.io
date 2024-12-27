@@ -1,11 +1,18 @@
 package com.yogeshj.autoform.admin.users
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.text.InputType
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.admin.users.changeUserData.ChangeUploadFormUserDataActivity
 import com.yogeshj.autoform.admin.users.changeUserData.ChangeUserDataActivity
@@ -24,6 +31,45 @@ class AdminUsersAdapter(private var dataList: ArrayList<AdminUsersModel>, var co
 
     override fun getItemCount(): Int {
         return dataList.size
+    }
+
+    fun deleteItem(position:Int){
+//        Log.d("DELETED","Delete account performed")
+        val builder = AlertDialog.Builder(context)
+        builder.setTitle("Are you sure you want to delete ${dataList[position].name}'s account?")
+
+        val input = EditText(context)
+        input.inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI
+        builder.setView(input)
+
+        builder.setPositiveButton("Delete User") { _, _ ->
+            if(dataList[position].isNormalUser)
+            {
+//                val db=FirebaseDatabase.getInstance().getReference("Users").child(dataList[position].uid)
+//                db.removeValue()
+//                    .addOnCompleteListener {
+//                        if (it.isSuccessful) {
+//                            dataList.removeAt(position)
+//                            notifyDataSetChanged()
+//                            Toast.makeText(context, "User not deleted successfully.", Toast.LENGTH_SHORT).show()
+//                        } else {
+//                            Toast.makeText(context, "Error deleting user data: ${it.exception?.message}", Toast.LENGTH_SHORT).show()
+//                        }
+//                    }
+                notifyItemChanged(position)
+            }
+
+
+        }
+        builder.setNegativeButton("Cancel") { dialog, _ ->
+            notifyItemChanged(position)
+            dialog.cancel()
+        }
+
+        builder.show()
+
+
+
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

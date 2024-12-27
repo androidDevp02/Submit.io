@@ -15,6 +15,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,6 +32,9 @@ import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 import com.yogeshj.autoform.user.UserMainActivity
 import com.yogeshj.autoform.user.userFormFragment.profile.ProfileInfoActivity
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 
 class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
@@ -44,6 +49,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
     var examId=""
     var examName=""
     var examHostName=""
+    var examIcon=""
 
     lateinit var userDetails: HashMap<String,String>
 
@@ -122,6 +128,7 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
                             if (examName == examSnap.key) {
                                 val currentExam = examSnap.getValue(FormDetails::class.java)!!
                                 examHostName = currentExam.examHostName!!
+                                examIcon=currentExam.icon!!
                                 fees = currentExam.fees
                                 examId = currentExam.uid!!
 
@@ -228,23 +235,42 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
         }
     }
 
-
     private fun makeEditText() {
         for (detail in requiredDetails) {
-            val textInputLayout = com.google.android.material.textfield.TextInputLayout(this@ReviewDataActivity)
-            textInputLayout.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            textInputLayout.hint = detail.capitalize()
-
-            val editText = com.google.android.material.textfield.TextInputEditText(textInputLayout.context)
-
-            editText.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-            editText.textSize = 16f
-
+            val textInputLayout = TextInputLayout(this@ReviewDataActivity).apply {
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                hint = detail.replaceFirstChar { it.uppercase() }
+            }
+            val editText = TextInputEditText(textInputLayout.context).apply {
+                layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                textSize=16f
+                isFocusable = false
+                isClickable = false
+                inputType = android.text.InputType.TYPE_NULL
+            }
             textInputLayout.addView(editText)
             binding.editTextContainer.addView(textInputLayout)
             editTextMap[detail.lowercase()] = editText
         }
     }
+
+
+//    private fun makeEditText() {
+//        for (detail in requiredDetails) {
+//            val textInputLayout =TextInputLayout(this@ReviewDataActivity)
+//            textInputLayout.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+//            textInputLayout.hint = detail.capitalize()
+//
+//            val editText =TextInputEditText(textInputLayout.context)
+//
+//            editText.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+//            editText.textSize = 16f
+//
+//            textInputLayout.addView(editText)
+//            binding.editTextContainer.addView(textInputLayout)
+//            editTextMap[detail.lowercase()] = editText
+//        }
+//    }
 
 
     private fun initPayment() {
@@ -280,10 +306,17 @@ class ReviewDataActivity : AppCompatActivity(),PaymentResultWithDataListener {
         val paymentRefUser = FirebaseDatabase.getInstance().getReference("Payment")
         val paymentId = paymentRefUser.push().key
 
-         val applicationFormData = extractFormData()
+
+         val applicationFormData=extractFormData()
+
+         val currentDateTime = Calendar.getInstance().time
+         val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+         val timeFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+         val currentDate = dateFormat.format(currentDateTime)
+         val currentTime = timeFormat.format(currentDateTime)
 
 
-         val paymentData = PaymentDataModel(userId,examId,fees,examName,examHostName,"success",email)
+         val paymentData = PaymentDataModel(userId,examId,fees,examName,examHostName,"success",email,currentDate,currentTime,examIcon)
 
 
 

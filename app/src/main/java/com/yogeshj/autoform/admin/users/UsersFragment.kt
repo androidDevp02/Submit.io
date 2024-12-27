@@ -9,7 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
@@ -65,6 +67,17 @@ class UsersFragment : Fragment() {
             addUploadFormUsers()
         }
 
+        val swipeGesture=object :SwipeGesture(requireContext()){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                if(direction==ItemTouchHelper.LEFT)
+                {
+                    myAdapter.deleteItem(viewHolder.absoluteAdapterPosition)
+                }
+            }
+        }
+        val touchHelper=ItemTouchHelper(swipeGesture)
+        touchHelper.attachToRecyclerView(binding.recycler)
+
     }
 
     private fun addUploadFormUsers() {
@@ -79,7 +92,7 @@ class UsersFragment : Fragment() {
 
                         val userInfo = snap.getValue(UploadFormSignUpModel::class.java)!!
                         val profilePicUrl = snap.child("profilePic").value?.toString()?: ""
-                        dataList.add(AdminUsersModel(profilePicUrl,userInfo.headName.toString(),userInfo.loginMailId.toString(),false))
+                        dataList.add(AdminUsersModel(profilePicUrl,userInfo.headName.toString(),userInfo.loginMailId.toString(),false,userInfo.key.toString()))
                     }
                     myAdapter.notifyDataSetChanged()
                 }
@@ -105,7 +118,7 @@ class UsersFragment : Fragment() {
 
                         val userInfo = snap.getValue(User::class.java)!!
                         val profilePicUrl = snap.child("profilePic").value?.toString()?: R.drawable.user_icon.toString()
-                        dataList.add(AdminUsersModel(profilePicUrl,userInfo.name.toString(),userInfo.email.toString(),true))
+                        dataList.add(AdminUsersModel(profilePicUrl,userInfo.name.toString(),userInfo.email.toString(),true,userInfo.uid.toString()))
 
                     }
                     myAdapter.notifyDataSetChanged()

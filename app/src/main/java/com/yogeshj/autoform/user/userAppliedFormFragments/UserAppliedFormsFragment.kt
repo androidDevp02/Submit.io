@@ -64,29 +64,29 @@ class UserAppliedFormsFragment : Fragment() {
         binding.recyclerForms.layoutManager= LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         myAdapter= ViewAppliedFormsAdapter(dataList,requireContext())
         binding.recyclerForms.adapter = myAdapter
-        val db = FirebaseDatabase.getInstance().getReference("Payment")
-        db.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (paymentSnapshot in snapshot.children) {
-                        val userId = paymentSnapshot.child("userId").value as? String
-                        if (userId == FirstScreenActivity.auth.currentUser?.uid) {
-                            val name = paymentSnapshot.child("name").value as? String ?: "Unknown"
-                            val host = paymentSnapshot.child("host").value as? String?:"Unknown"
-                            val icon = paymentSnapshot.child("icon").value as? String
-                            dataList.add(ViewAppliedFormsModel(icon,name,host))
-                        }
-                    }
-
-                    myAdapter.notifyDataSetChanged()
-                }
-                hideLoading()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                hideLoading()
-            }
-        })
+//        val db = FirebaseDatabase.getInstance().getReference("Payment")
+//        db.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    for (paymentSnapshot in snapshot.children) {
+//                        val userId = paymentSnapshot.child("userId").value as? String
+//                        if (userId == FirstScreenActivity.auth.currentUser?.uid) {
+//                            val name = paymentSnapshot.child("name").value as? String ?: "Unknown"
+//                            val host = paymentSnapshot.child("host").value as? String?:"Unknown"
+//                            val icon = paymentSnapshot.child("icon").value as? String
+//                            dataList.add(ViewAppliedFormsModel(icon,name,host))
+//                        }
+//                    }
+//
+//                    myAdapter.notifyDataSetChanged()
+//                }
+//                hideLoading()
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                hideLoading()
+//            }
+//        })
         val db2 = FirebaseDatabase.getInstance().getReference("LinkApplied")
         db2.child(FirstScreenActivity.auth.currentUser?.uid?:return).addListenerForSingleValueEvent(object :
             ValueEventListener {

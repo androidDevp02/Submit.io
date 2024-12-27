@@ -86,5 +86,6 @@ dependencies {
 
     implementation(libs.google.firebase.auth.ktx)
 
-
+    //swipe icon & colors
+    implementation("it.xabaras.android:recyclerview-swipedecorator:1.4")
 }

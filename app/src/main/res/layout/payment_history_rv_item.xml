@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:background="@drawable/card_shape"
+    android:padding="12dp"
+    android:backgroundTint="@color/cardColor">
+
+    <ImageView
+        android:id="@+id/logo_img"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="Logo"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/exam_heading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Heading Exam"
+        android:textColor="@color/primaryText"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/logo_img"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.7" />
+
+    <TextView
+        android:id="@+id/sub_heading"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Sub heading"
+        app:layout_constraintStart_toStartOf="@id/exam_heading"
+        app:layout_constraintTop_toBottomOf="@id/exam_heading"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="14sp"
+        android:textColor="@color/secondaryText" />
+
+    <ImageView
+        android:id="@+id/view_form_details"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:contentDescription="Details Arrow"
+        android:src="@drawable/baseline_arrow_forward_ios_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:layout_marginStart="4dp"
+        android:id="@+id/paid"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Paid: "
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo_img"
+        android:textColor="@color/primaryText"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/rupee_icon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=" ₹"
+        app:layout_constraintStart_toEndOf="@id/paid"
+        app:layout_constraintTop_toBottomOf="@id/logo_img"
+        android:textSize="16sp"
+        android:textColor="@color/primaryText" />
+
+    <TextView
+        android:id="@+id/payment_amount"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="100"
+        app:layout_constraintStart_toEndOf="@id/rupee_icon"
+        app:layout_constraintTop_toBottomOf="@id/logo_img"
+        android:textSize="16sp"
+        android:textColor="@color/primaryText" />
+
+    <TextView
+        android:id="@+id/on"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=" on "
+        app:layout_constraintStart_toEndOf="@id/payment_amount"
+        app:layout_constraintTop_toBottomOf="@id/logo_img"
+        android:textSize="16sp"
+        android:textColor="@color/secondaryText" />
+
+
+    <TextView
+        android:id="@+id/payment_date"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="01/01/2025"
+        app:layout_constraintStart_toEndOf="@id/on"
+        app:layout_constraintTop_toBottomOf="@id/logo_img"
+        android:textSize="16sp"
+        android:textColor="@color/primaryText" />
+
+    <TextView
+        android:id="@+id/at"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text=" at "
+        app:layout_constraintStart_toEndOf="@id/payment_date"
+        app:layout_constraintTop_toBottomOf="@id/logo_img"
+        android:textSize="16sp"
+        android:textColor="@color/secondaryText" />
+
+
+
+    <TextView
+        android:id="@+id/payment_time"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="12:12:30"
+        app:layout_constraintStart_toEndOf="@id/at"
+        app:layout_constraintTop_toBottomOf="@id/logo_img"
+        android:textSize="16sp"
+        android:textColor="@color/primaryText" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
