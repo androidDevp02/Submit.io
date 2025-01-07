@@ -61,11 +61,14 @@ dependencies {
     implementation(libs.glide)
     annotationProcessor(libs.compiler)
 
+    //firebase
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.auth.ktx)
     implementation(libs.play.services.auth)
 
+    //razorpay
     implementation(libs.razorpay.checkout)
+
 
     implementation(libs.circleimageview)
 

@@ -68,8 +68,6 @@ class AdminUsersAdapter(private var dataList: ArrayList<AdminUsersModel>, var co
 
         builder.show()
 
-
-
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
