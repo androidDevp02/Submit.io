@@ -88,6 +88,13 @@ class ChangeUserDataActivity : AppCompatActivity() {
                         val currentUser = snap.getValue(User::class.java)!!
                         val profilePicUrl = snap.child("profilePic").value?.toString()
                         Log.d("NAME EMAIL",name+" "+email+" "+currentUser.email)
+                        if(currentUser.uid==null)
+                        {
+                            hideLoading()
+                            Toast.makeText(this@ChangeUserDataActivity,"Cannot open profile",Toast.LENGTH_LONG).show()
+                            finish()
+                            return
+                        }
                         if(currentUser.name==name && currentUser.email==email){
                             currentUserUid=currentUser.uid!!
                             Toast.makeText(this@ChangeUserDataActivity,"Found $name & $email",Toast.LENGTH_LONG).show()
@@ -110,18 +117,17 @@ class ChangeUserDataActivity : AppCompatActivity() {
                         }
                     }
                 }
+                dbRef= FirebaseDatabase.getInstance().getReference("UsersInfo")
+                binding.recyclerViewAdditionalDetails.layoutManager= LinearLayoutManager(this@ChangeUserDataActivity)
+                adapter= ProfileOtherDetailsAdapter(firebaseData)
+                binding.recyclerViewAdditionalDetails.adapter=adapter
+                fetchDataFromFirebase()
                 hideLoading()
             }
             override fun onCancelled(error: DatabaseError) {
                 hideLoading()
             }
         })
-
-        dbRef= FirebaseDatabase.getInstance().getReference("UsersInfo")
-        binding.recyclerViewAdditionalDetails.layoutManager= LinearLayoutManager(this@ChangeUserDataActivity)
-        adapter= ProfileOtherDetailsAdapter(firebaseData)
-        binding.recyclerViewAdditionalDetails.adapter=adapter
-        fetchDataFromFirebase()
 
         binding.editProfile.setOnClickListener {
             showLoading()

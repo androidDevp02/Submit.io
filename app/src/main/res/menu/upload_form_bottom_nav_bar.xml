@@ -6,4 +6,8 @@
     <item android:title="Past Forms"
         android:id="@+id/past_forms"
         android:icon="@drawable/applied_forms"/>
+    <item
+        android:id="@+id/feedback"
+        android:icon="@drawable/ic_feedback_24"
+        android:title="Feedback"/>
 </menu>

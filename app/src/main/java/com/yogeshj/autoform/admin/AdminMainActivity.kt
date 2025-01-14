@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import com.yogeshj.autoform.R
+import com.yogeshj.autoform.admin.feedback.AdminFeedbackFragment
 import com.yogeshj.autoform.admin.forms.FormsFragment
 import com.yogeshj.autoform.admin.requests.VerifyOrganisationsFragment
 import com.yogeshj.autoform.admin.users.UsersFragment
@@ -26,7 +27,7 @@ class AdminMainActivity : AppCompatActivity() {
                 R.id.users -> replaceFragment(UsersFragment())
                 R.id.requests -> replaceFragment(VerifyOrganisationsFragment())
                 R.id.forms -> replaceFragment(FormsFragment())
-
+                R.id.feedback->replaceFragment(AdminFeedbackFragment())
                 else -> {
 
                 }

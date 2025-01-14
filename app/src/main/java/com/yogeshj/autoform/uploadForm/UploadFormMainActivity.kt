@@ -10,6 +10,7 @@ import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityUploadFormMainBinding
 import com.yogeshj.autoform.uploadForm.pastFormsFragment.PastFormFragment
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.UploadFormFragment
+import com.yogeshj.autoform.FeedbackFragment.FeedbackFragment
 
 class UploadFormMainActivity : AppCompatActivity() {
 
@@ -26,7 +27,7 @@ class UploadFormMainActivity : AppCompatActivity() {
             when(it.itemId){
                 R.id.upload -> replaceFragment(UploadFormFragment())
                 R.id.past_forms -> replaceFragment(PastFormFragment())
-
+                R.id.feedback->replaceFragment(FeedbackFragment())
                 else -> {
 
                 }

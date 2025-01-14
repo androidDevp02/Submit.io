@@ -9,4 +9,8 @@
     <item android:title="Forms"
         android:id="@+id/forms"
         android:icon="@drawable/ic_form"/>
+    <item
+        android:id="@+id/feedback"
+        android:icon="@drawable/ic_feedback_24"
+        android:title="Feedback"/>
 </menu>

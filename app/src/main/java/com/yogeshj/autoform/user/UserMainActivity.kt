@@ -9,6 +9,7 @@ import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityUserMainBinding
 import com.yogeshj.autoform.user.userAppliedFormFragments.UserAppliedFormsFragment
+import com.yogeshj.autoform.FeedbackFragment.FeedbackFragment
 import com.yogeshj.autoform.user.userFormFragment.UserFormFragment
 import com.yogeshj.autoform.user.userPaymentHistory.UserPaymentHistoryFragment
 import com.yogeshj.autoform.user.userSubscriptionFragment.UserSubscriptionFragment
@@ -30,7 +31,7 @@ class UserMainActivity : AppCompatActivity() {
                 R.id.applied_forms -> replaceFragment(UserAppliedFormsFragment())
                 R.id.payment_history ->replaceFragment(UserPaymentHistoryFragment())
                 R.id.premium -> replaceFragment(UserSubscriptionFragment())
-
+                R.id.feedback->replaceFragment(FeedbackFragment())
                 else -> {
 
                 }
