@@ -9,11 +9,18 @@ import com.yogeshj.autoform.admin.feedback.AdminFeedbackFragment
 import com.yogeshj.autoform.admin.forms.FormsFragment
 import com.yogeshj.autoform.admin.requests.VerifyOrganisationsFragment
 import com.yogeshj.autoform.admin.users.UsersFragment
+import com.yogeshj.autoform.appExit.ExitDialog
 import com.yogeshj.autoform.databinding.ActivityAdminMainBinding
 
 class AdminMainActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityAdminMainBinding
+
+    override fun onBackPressed() {
+
+        ExitDialog.exit(this@AdminMainActivity)
+//        super.onBackPressed()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

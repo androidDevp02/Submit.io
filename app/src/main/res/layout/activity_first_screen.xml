@@ -5,9 +5,9 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
     android:layout_gravity="center"
     android:background="@drawable/background_gradient"
+    android:padding="16dp"
     tools:context=".FirstScreenActivity">
 
     <androidx.constraintlayout.widget.Guideline
@@ -15,56 +15,56 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.2" />
+        app:layout_constraintGuide_percent="0.1" />
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:contentDescription="@string/app_logo_txt"
-        android:src="@drawable/logo"
-        android:scaleType="centerCrop"
         android:elevation="8dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/top_guideline"/>
+        app:layout_constraintTop_toTopOf="@id/top_guideline" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:elevation="4dp"
         android:text="@string/select_login_type_txt"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:elevation="4dp"
-        android:textAlignment="center"
-        app:layout_constraintTop_toBottomOf="@id/logo"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/login_as_user_card"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@id/login_as_user_card" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logo" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/login_as_user_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="16dp"
         android:layout_marginTop="24dp"
-        app:layout_constraintTop_toBottomOf="@id/title"
-        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/uploadFormEditTextColor"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title"
 
-        android:backgroundTint="@color/uploadFormEditTextColor">
+        app:layout_constraintWidth_percent="0.9">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="16dp"
-            android:gravity="center_horizontal">
+            android:padding="16dp">
 
             <ImageView
                 android:layout_width="24dp"
@@ -74,11 +74,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/login_as_user_txt"
-                android:textSize="18sp"
                 android:gravity="center"
                 android:paddingStart="8dp"
-                android:textColor="@android:color/black" />
+                android:text="@string/login_as_user_txt"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
@@ -87,21 +87,21 @@
         android:id="@+id/login_as_uploadform_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:cardElevation="8dp"
-        app:cardCornerRadius="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@id/login_as_user_card"
-        app:layout_constraintStart_toStartOf="parent"
+        android:backgroundTint="@color/uploadFormEditTextColor"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintWidth_percent="0.9"
-        android:backgroundTint="@color/uploadFormEditTextColor">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_as_user_card"
+        app:layout_constraintWidth_percent="0.9">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
             android:orientation="horizontal"
-            android:padding="16dp"
-            android:gravity="center_horizontal">
+            android:padding="16dp">
 
             <ImageView
                 android:layout_width="24dp"
@@ -111,22 +111,94 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/upload_a_new_form_txt"
-                android:textSize="18sp"
                 android:paddingStart="8dp"
-                android:textColor="@android:color/black" />
+                android:text="@string/upload_a_new_form_txt"
+                android:textColor="@android:color/black"
+                android:textSize="18sp" />
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+
+    <LinearLayout
+        android:id="@+id/contact_us_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="16dp"
+        app:layout_constraintBottom_toTopOf="@id/adView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Contact Us"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/phone_icon"
+                android:drawableTint="@color/white"
+                android:text="Phone: "
+                android:textColor="@color/white" />
+
+
+            <TextView
+                android:id="@+id/contact_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:text="+917667225098"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/email_icon"
+                android:drawableTint="@color/white"
+                android:text="Email: "
+                android:textColor="@color/white" />
+
+
+            <TextView
+                android:id="@+id/contact_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:text="submitdotio@gmail.com"
+                android:textColor="@color/blue"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        ads:layout_constraintBottom_toBottomOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintEnd_toEndOf="parent"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-2095090407853200/8424341037"/>
+        ads:adUnitId="ca-app-pub-2095090407853200/8424341037"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

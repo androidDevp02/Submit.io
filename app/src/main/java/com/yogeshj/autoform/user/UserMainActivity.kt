@@ -10,6 +10,7 @@ import com.yogeshj.autoform.R
 import com.yogeshj.autoform.databinding.ActivityUserMainBinding
 import com.yogeshj.autoform.user.userAppliedFormFragments.UserAppliedFormsFragment
 import com.yogeshj.autoform.FeedbackFragment.FeedbackFragment
+import com.yogeshj.autoform.appExit.ExitDialog
 import com.yogeshj.autoform.user.userFormFragment.UserFormFragment
 import com.yogeshj.autoform.user.userPaymentHistory.UserPaymentHistoryFragment
 import com.yogeshj.autoform.user.userSubscriptionFragment.UserSubscriptionFragment
@@ -17,6 +18,12 @@ import com.yogeshj.autoform.user.userSubscriptionFragment.UserSubscriptionFragme
 class UserMainActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityUserMainBinding
+
+    override fun onBackPressed() {
+
+        ExitDialog.exit(this@UserMainActivity)
+//        super.onBackPressed()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

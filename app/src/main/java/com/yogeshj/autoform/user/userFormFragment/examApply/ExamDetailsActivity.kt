@@ -14,7 +14,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -23,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
+import com.yogeshj.autoform.ads.InterstitialAds
 import com.yogeshj.autoform.databinding.ActivityExamDetailsBinding
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.FormDetails
 
@@ -37,6 +40,7 @@ class ExamDetailsActivity : AppCompatActivity() {
 
     private lateinit var status:String
 
+    private var examName:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding=ActivityExamDetailsBinding.inflate(layoutInflater)
@@ -62,7 +66,7 @@ class ExamDetailsActivity : AppCompatActivity() {
             finish()
         }
 
-        val examName=intent.getStringExtra("heading")
+        examName=intent.getStringExtra("heading")
         val db = FirebaseDatabase.getInstance().getReference("UploadForm")
         db.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -112,28 +116,29 @@ class ExamDetailsActivity : AppCompatActivity() {
         })
         setUpButtonListeners()
 
-        binding.applyBtn.setOnClickListener {
-            showLoading()
-            if(containsLink)
-            {
-                val intent = Intent(Intent.ACTION_VIEW,Uri.parse(linkURL))
-                hideLoading()
-                startActivity(intent)
-            }
-            else if(status=="Live")
-            {
-                val intent=Intent(this@ExamDetailsActivity, ReviewDataActivity::class.java)
-                intent.putExtra("heading",examName)
-                hideLoading()
-                startActivity(intent)
-            }
-            else
-            {
-                hideLoading()
-                Toast.makeText(this@ExamDetailsActivity,"Sorry, The form is already expired!",Toast.LENGTH_LONG).show()
-            }
-        }
+        InterstitialAds.loadInterstitial(this@ExamDetailsActivity)
 
+
+        binding.applyBtn.setOnClickListener {
+            proceedToNextStep()
+//            if(InterstitialAds.mInterstitialAd!=null)
+//            {
+//                InterstitialAds.mInterstitialAd?.show(this@ExamDetailsActivity)
+//                InterstitialAds.mInterstitialAd?.fullScreenContentCallback=object :FullScreenContentCallback(){
+//                    override fun onAdDismissedFullScreenContent() {
+//                        InterstitialAds.mInterstitialAd=null
+//                        proceedToNextStep()
+//                    }
+//
+//                    override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+//                        proceedToNextStep()
+//                    }
+//                }
+//            }
+//            else{
+//                proceedToNextStep()
+//            }
+        }
 
         //Apply -> Applied
         val payDb = FirebaseDatabase.getInstance().getReference("Payment")
@@ -159,6 +164,24 @@ class ExamDetailsActivity : AppCompatActivity() {
             }
         })
 
+    }
+
+    private fun proceedToNextStep() {
+        if(containsLink)
+        {
+            val intent = Intent(Intent.ACTION_VIEW,Uri.parse(linkURL))
+            startActivity(intent)
+        }
+        else if(status=="Live")
+        {
+            val intent=Intent(this@ExamDetailsActivity, ReviewDataActivity::class.java)
+            intent.putExtra("heading",examName)
+            startActivity(intent)
+        }
+        else
+        {
+            Toast.makeText(this@ExamDetailsActivity,"Sorry, The form is already expired!",Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun setUpButtonListeners() {

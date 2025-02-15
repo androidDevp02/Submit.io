@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.admin.requests.UploadFormSignUpModel
+import com.yogeshj.autoform.appExit.ExitDialog
 import com.yogeshj.autoform.databinding.ActivityUploadFormSignUpDetailsBinding
 
 class UploadFormSignUpDetailsActivity : AppCompatActivity() {
@@ -24,6 +25,11 @@ class UploadFormSignUpDetailsActivity : AppCompatActivity() {
     private lateinit var dbRef: DatabaseReference
 
     private lateinit var dialog:Dialog
+
+    override fun onBackPressed() {
+
+        ExitDialog.exit(this@UploadFormSignUpDetailsActivity)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

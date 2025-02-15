@@ -28,6 +28,7 @@ import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.admin.AdminMainActivity
+import com.yogeshj.autoform.appExit.ExitDialog
 import com.yogeshj.autoform.databinding.ActivityUserLoginBinding
 
 class UserLoginActivity : AppCompatActivity() {
@@ -35,6 +36,11 @@ class UserLoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserLoginBinding
 
     private lateinit var dialog:Dialog
+
+    override fun onBackPressed() {
+
+        ExitDialog.exit(this@UserLoginActivity)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

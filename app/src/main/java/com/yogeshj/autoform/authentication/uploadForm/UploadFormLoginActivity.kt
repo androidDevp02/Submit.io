@@ -25,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.yogeshj.autoform.FirstScreenActivity
 import com.yogeshj.autoform.R
+import com.yogeshj.autoform.appExit.ExitDialog
 import com.yogeshj.autoform.authentication.User
 import com.yogeshj.autoform.databinding.ActivityUploadFormLoginBinding
 import com.yogeshj.autoform.uploadForm.UploadFormMainActivity
@@ -34,6 +35,11 @@ class UploadFormLoginActivity : AppCompatActivity() {
     private lateinit var binding:ActivityUploadFormLoginBinding
 
     private lateinit var dialog:Dialog
+
+    override fun onBackPressed() {
+
+        ExitDialog.exit(this@UploadFormLoginActivity)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

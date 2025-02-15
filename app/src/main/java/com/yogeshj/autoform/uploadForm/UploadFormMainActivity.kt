@@ -11,10 +11,17 @@ import com.yogeshj.autoform.databinding.ActivityUploadFormMainBinding
 import com.yogeshj.autoform.uploadForm.pastFormsFragment.PastFormFragment
 import com.yogeshj.autoform.uploadForm.uploadNewFormFragment.UploadFormFragment
 import com.yogeshj.autoform.FeedbackFragment.FeedbackFragment
+import com.yogeshj.autoform.appExit.ExitDialog
 
 class UploadFormMainActivity : AppCompatActivity() {
 
     private lateinit var binding:ActivityUploadFormMainBinding
+
+    override fun onBackPressed() {
+
+        ExitDialog.exit(this@UploadFormMainActivity)
+//        super.onBackPressed()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -63,6 +64,7 @@ class FirstScreenActivity : AppCompatActivity() {
         binding.adView.loadAd(adRequest)
 //        handler.post(loadAdRunnable)
 
+
         binding.title.apply { alpha = 0f; translationY = -30f }
         binding.loginAsUserCard.apply { alpha = 0f; translationX = -30f }
         binding.loginAsUploadformCard.apply { alpha = 0f; translationX = -30f }
@@ -71,6 +73,7 @@ class FirstScreenActivity : AppCompatActivity() {
 //        binding.loginAsAdmin.animate().alpha(1f).translationX(0f).setDuration(700).setStartDelay(500).start()
         binding.loginAsUploadformCard.animate().alpha(1f).translationX(0f).setDuration(1000).setStartDelay(600).start()
 
+        contactButtonListener()
 
         val currentUser = auth.currentUser
         if(currentUser!=null)
@@ -145,6 +148,20 @@ class FirstScreenActivity : AppCompatActivity() {
             finish()
         }
 
+    }
+
+    private fun contactButtonListener() {
+        binding.contactEmail.setOnClickListener {
+            val email=binding.contactEmail.text.toString()
+            val emailIntent=Intent(Intent.ACTION_SENDTO,Uri.fromParts("mailto",email,null));
+            startActivity(Intent.createChooser(emailIntent,"Send email..."))
+        }
+
+        binding.contactPhone.setOnClickListener {
+            val number=binding.contactPhone.text.toString().trim()
+            val intent=Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+Uri.encode(number)));
+            startActivity(intent);
+        }
     }
 
     private fun initLoadingDialog() {
