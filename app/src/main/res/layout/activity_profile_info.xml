@@ -20,8 +20,8 @@
         android:textColor="@color/primaryText"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <FrameLayout
@@ -77,8 +77,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:hint="Name"
-                app:startIconDrawable="@drawable/user_icon"
                 app:boxStrokeColor="@color/iconColor"
+                app:startIconDrawable="@drawable/user_icon"
                 app:startIconTint="@color/iconColor">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -97,8 +97,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:hint="Phone"
-                app:startIconDrawable="@drawable/phone_icon"
                 app:boxStrokeColor="@color/iconColor"
+                app:startIconDrawable="@drawable/phone_icon"
                 app:startIconTint="@color/iconColor">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -126,10 +126,10 @@
                     android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:focusable="false"
-                    android:enabled="false"
                     android:background="#808080"
+                    android:enabled="false"
+                    android:focusable="false"
+                    android:inputType="textEmailAddress"
                     android:textColor="#212121" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -214,11 +214,11 @@
         android:id="@+id/adView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        ads:layout_constraintBottom_toBottomOf="parent"
-        ads:layout_constraintStart_toStartOf="parent"
-        ads:layout_constraintEnd_toEndOf="parent"
         ads:adSize="BANNER"
-        ads:adUnitId="ca-app-pub-2095090407853200/8424341037" />
+        ads:adUnitId="ca-app-pub-2095090407853200/8424341037"
+        ads:layout_constraintBottom_toBottomOf="parent"
+        ads:layout_constraintEnd_toEndOf="parent"
+        ads:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

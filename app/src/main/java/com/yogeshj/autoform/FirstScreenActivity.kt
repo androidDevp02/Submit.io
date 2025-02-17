@@ -6,9 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
-import android.view.View
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -29,8 +26,6 @@ import com.yogeshj.autoform.user.UserMainActivity
 //Admin@123
 //5267 3181 8797 5449
 
-
-//in category buttons show which button is currently selected
 class FirstScreenActivity : AppCompatActivity() {
     private lateinit var binding:ActivityFirstScreenBinding
     private lateinit var dialog:Dialog

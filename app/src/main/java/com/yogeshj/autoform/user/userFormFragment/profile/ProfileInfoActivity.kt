@@ -8,6 +8,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Window
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -175,6 +177,8 @@ class ProfileInfoActivity : AppCompatActivity() {
             }
         })
 
+        addSlashDob()
+
 
         binding.continueBtn.setOnClickListener {
             showLoading()
@@ -268,6 +272,35 @@ class ProfileInfoActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun addSlashDob() {
+        binding.dob.addTextChangedListener(object : TextWatcher {
+            var isEditing = false
+
+            override fun afterTextChanged(s: Editable?) {
+                if (isEditing || s == null) return
+                isEditing = true
+
+                val cleanText = s.toString().replace("/", "")
+                val formattedText = StringBuilder()
+
+                for (i in cleanText.indices) {
+                    formattedText.append(cleanText[i])
+                    if ((i == 1 || i == 3) && i < cleanText.length - 1) {
+                        formattedText.append("/")
+                    }
+                }
+
+                binding.dob.setText(formattedText.toString())
+                binding.dob.setSelection(formattedText.length)
+                isEditing = false
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
+
     }
 
     private fun isValidDate(date: String, format: String): Boolean {
